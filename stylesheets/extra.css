@@ -1,10 +1,35 @@
 :root {
   --md-primary-fg-color: #1f2a44;
   --md-accent-fg-color: #c2410c;
+  --md-text-font: "Literata", Georgia, serif;
+  --heading-font: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
 }
-.md-typeset { font-size: 0.78rem; line-height: 1.6; }
-.md-typeset h1 { font-weight: 600; }
-.md-typeset table:not([class]) { font-size: 0.72rem; }
+
+/* reading column: keep lines at a comfortable length */
+.md-content__inner { max-width: 46rem; }
+.md-typeset { font-size: 0.86rem; line-height: 1.75; }
+.md-typeset p, .md-typeset li { text-align: justify; hyphens: auto; -webkit-hyphens: auto; text-justify: inter-word; }
+.md-typeset .admonition p, .md-typeset details p { text-align: left; }
+
+/* headings: a sans face against the serif body */
+.md-typeset h1, .md-typeset h2, .md-typeset h3, .md-typeset h4 {
+  font-family: var(--heading-font);
+  letter-spacing: -0.01em;
+  color: var(--md-default-fg-color);
+}
+.md-typeset h1 { font-weight: 700; font-size: 2rem; margin-bottom: 1.2rem; }
+.md-typeset h2 { font-weight: 600; font-size: 1.35rem; margin-top: 2.4rem; padding-bottom: 0.2rem; border-bottom: 1px solid var(--md-default-fg-color--lightest); }
+.md-typeset h3 { font-weight: 600; font-size: 1.05rem; margin-top: 1.8rem; }
+.md-header__title, .md-nav__title, .md-nav__link, .md-footer { font-family: var(--heading-font); }
+.md-nav { font-size: 0.72rem; }
+
+/* tables, code, math */
+.md-typeset table:not([class]) { font-size: 0.78rem; }
+.md-typeset code { font-size: 0.8em; }
+.md-typeset mjx-container[display="true"] { margin: 1.1em 0 !important; }
+
+/* admonitions */
+.md-typeset .admonition, .md-typeset details { font-size: 0.8rem; }
 .md-typeset .admonition.rigor, .md-typeset details.rigor { border-color: #c2410c; }
 .md-typeset .rigor > .admonition-title, .md-typeset .rigor > summary { background-color: rgba(194, 65, 12, 0.1); }
 .md-typeset .rigor > .admonition-title::before, .md-typeset .rigor > summary::before {
@@ -12,7 +37,9 @@
   -webkit-mask-image: var(--md-admonition-icon--abstract);
   mask-image: var(--md-admonition-icon--abstract);
 }
-.status { display: inline-block; padding: 0 .5em; border-radius: .25em; font-size: .7rem; font-weight: 600; }
+
+/* status badges (local site only) */
+.status { display: inline-block; padding: 0 .5em; border-radius: .25em; font-size: .7rem; font-weight: 600; font-family: var(--heading-font); }
 .status-draft { background: #fde68a; color: #78350f; }
 .status-review { background: #bfdbfe; color: #1e3a8a; }
 .status-done { background: #bbf7d0; color: #14532d; }

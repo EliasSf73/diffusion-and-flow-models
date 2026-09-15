@@ -48,10 +48,12 @@
         
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Serif+4:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Source Serif 4";--md-code-font:"JetBrains Mono"}</style>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Literata:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Literata";--md-code-font:"JetBrains Mono"}</style>
       
     
+    
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&display=swap">
     
       <link rel="stylesheet" href="../../stylesheets/extra.css">
     
@@ -602,10 +604,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-why-we-can-forget-omega" class="md-nav__link">
+  <a href="#2-why-we-can-forget-the-sample-space" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Why we can forget \(\Omega\)
+        2. Why we can forget the sample space
       
     </span>
   </a>
@@ -850,7 +852,7 @@ P_X(B_1 \cup B_2)
 \]</div>
 <p>In the figure, <span class="arithmatex">\(0.082 + 0.035 = 0.117\)</span> is indeed the fraction of seeds in either disk. The same argument works word for word for any number of non-overlapping regions <span class="arithmatex">\(B_1, B_2, \ldots\)</span>. <span class="arithmatex">\(\square\)</span></p>
 <p><strong>In words:</strong> every random variable manufactures a new probability on <span class="arithmatex">\(\R^d\)</span> out of the old one on <span class="arithmatex">\(\Omega\)</span>. Take the sand picture: the sand on the right is a perfectly good pile of sand, with total one kilogram, and the sand in two separate regions adds up. A generative model manufactures a probability on images out of a probability on noise in exactly this way.</p>
-<h3 id="2-why-we-can-forget-omega">2. Why we can forget <span class="arithmatex">\(\Omega\)</span><a class="headerlink" href="#2-why-we-can-forget-omega" title="Permanent link">&para;</a></h3>
+<h3 id="2-why-we-can-forget-the-sample-space">2. Why we can forget the sample space<a class="headerlink" href="#2-why-we-can-forget-the-sample-space" title="Permanent link">&para;</a></h3>
 <p>Suppose you want the average of some function of <span class="arithmatex">\(X\)</span>, say <span class="arithmatex">\(\E[X^2]\)</span> or <span class="arithmatex">\(\E[\log p(X)]\)</span>. You might think you need to know <span class="arithmatex">\(\Omega\)</span> and the function <span class="arithmatex">\(X\)</span> in detail. You do not. The distribution is enough.</p>
 <div class="admonition note">
 <p class="admonition-title">Proposition 1.5 (Law of the unconscious statistician)</p>
