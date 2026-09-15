@@ -1,0 +1,1051 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Lecture notes and derivations for a tutorial series on diffusion and flow models.">
+      
+      
+      
+        <link rel="canonical" href="https://eliassf73.github.io/diffusion-models-from-scratch/probability/01-random-variables-and-distributions/">
+      
+      
+        <link rel="prev" href="../../00-what-is-a-generative-model/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>1. Random variables and distributions - Diffusion Models, from Scratch</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Serif+4:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Source Serif 4";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-random-variables-and-distributions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Diffusion Models, from Scratch" class="md-header__button md-logo" aria-label="Diffusion Models, from Scratch" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Diffusion Models, from Scratch
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1. Random variables and distributions
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Diffusion Models, from Scratch" class="md-nav__button md-logo" aria-label="Diffusion Models, from Scratch" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Diffusion Models, from Scratch
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../syllabus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Syllabus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-what-is-a-generative-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0. What is a generative model?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Notes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    I. Probability foundations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    I. Probability foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Random variables and distributions
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Random variables and distributions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#math" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Math
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Math">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sample-space-and-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sample space and events
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#random-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Random variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-distribution-of-a-random-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The distribution of a random variable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discrete-and-continuous" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discrete and continuous
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#distribution-versus-density" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Distribution versus density
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Derivation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Derivation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-the-distribution-is-itself-a-probability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. The distribution is itself a probability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-why-we-can-forget-omega" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Why we can forget \(\Omega\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-generative-models-are-pushforwards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Generative models are pushforwards
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connection-forward" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection forward
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="1-random-variables-and-distributions">1. Random variables and distributions<a class="headerlink" href="#1-random-variables-and-distributions" title="Permanent link">&para;</a></h1>
+<p><em>Part I: Probability foundations.</em> Language for everything afterward.</p>
+<p><strong>Prerequisites:</strong> the <a href="../../00-what-is-a-generative-model/">big-picture page</a>, a first course in probability, and some calculus. Most of this note will be familiar. Read it anyway, because it fixes the words we use for the rest of the series, and it takes care with one distinction that will matter later: the difference between a <em>distribution</em> and a <em>density</em>. Diffusion models depend on it.</p>
+<h2 id="intuition">Intuition<a class="headerlink" href="#intuition" title="Permanent link">&para;</a></h2>
+<p>A generative model is a random variable.</p>
+<p>In <a href="../../00-what-is-a-generative-model/">note 0</a> we said that every generative model has two parts: something easy to sample, and a transformation that turns it into data. This note gives those two parts their proper mathematical names, and the names turn out to be old and familiar.</p>
+<p>Think about what happens when you sample from a trained image model. The computer draws some random numbers, feeds them into a big function, and out comes an image. The random numbers are the <em>outcome</em> of an experiment. The function turns each outcome into a point in <span class="arithmatex">\(\R^d\)</span>, where <span class="arithmatex">\(d\)</span> is the number of pixels. That is all a random variable is: a rule that turns outcomes into numbers.</p>
+<p>We never care which random numbers were drawn. We care about the <strong>distribution</strong> of the outputs: how likely is it that the image lands in this region of pixel space, or that one. Two models that produce the same distribution of images are, for us, the same model. So this note is about two things: what a random variable is, and what its distribution is.</p>
+<h2 id="math">Math<a class="headerlink" href="#math" title="Permanent link">&para;</a></h2>
+<h3 id="sample-space-and-events">Sample space and events<a class="headerlink" href="#sample-space-and-events" title="Permanent link">&para;</a></h3>
+<p>Start with an experiment. The <strong>sample space</strong> <span class="arithmatex">\(\Omega\)</span> is the set of everything that could happen. An <strong>event</strong> is a set of outcomes, a subset of <span class="arithmatex">\(\Omega\)</span>. A <strong>probability</strong> is a rule <span class="arithmatex">\(P\)</span> that gives each event a number between 0 and 1.</p>
+<p><em>Example.</em> Toss a coin twice. The sample space is</p>
+<div class="arithmatex">\[
+\Omega = \{HH,\; HT,\; TH,\; TT\}.
+\]</div>
+<p>"At least one head" is the event <span class="arithmatex">\(\{HH, HT, TH\}\)</span>. With a fair coin, <span class="arithmatex">\(P(\{HH, HT, TH\}) = 3/4\)</span>.</p>
+<p>The rule <span class="arithmatex">\(P\)</span> has to satisfy two things: the whole space has probability one, <span class="arithmatex">\(P(\Omega) = 1\)</span>, and if events do not overlap, their probabilities add. For disjoint <span class="arithmatex">\(A_1, A_2, \ldots\)</span>,</p>
+<div class="arithmatex">\[
+P(A_1 \cup A_2 \cup \cdots) = P(A_1) + P(A_2) + \cdots .
+\]</div>
+<p>In this series we will never write down <span class="arithmatex">\(\Omega\)</span> for a real model. It is there in the background so that every random variable in a discussion refers to one shared experiment. When we say "<span class="arithmatex">\(X\)</span> and <span class="arithmatex">\(Y\)</span> are independent" or talk about a whole path <span class="arithmatex">\(x_t\)</span> for every time <span class="arithmatex">\(t\)</span>, we mean that they are all functions of the same outcome <span class="arithmatex">\(\omega\)</span>.</p>
+<h3 id="random-variables">Random variables<a class="headerlink" href="#random-variables" title="Permanent link">&para;</a></h3>
+<div class="admonition abstract">
+<p class="admonition-title">Definition 1.1 (Random variable)</p>
+<p>A <strong>random variable</strong> is a function that assigns a number, or a vector of numbers, to each outcome of the sample space:</p>
+<div class="arithmatex">\[
+X : \Omega \to \R^d .
+\]</div>
+</div>
+<p><em>Example.</em> Toss a coin twice and let <span class="arithmatex">\(X\)</span> be the number of heads. Then</p>
+<div class="arithmatex">\[
+X(HH) = 2, \qquad X(HT) = 1, \qquad X(TH) = 1, \qquad X(TT) = 0.
+\]</div>
+<p><img alt="A random variable maps outcomes to numbers" src="../../assets/01-coins.png" /></p>
+<p>Once we have <span class="arithmatex">\(X\)</span>, we can describe events using it. "At least one head" is <span class="arithmatex">\(\{\omega : X(\omega) \ge 1\}\)</span>, which we shorten to <span class="arithmatex">\(\{X \ge 1\}\)</span>. Its probability is written <span class="arithmatex">\(P(X \ge 1)\)</span>. In general, for any region <span class="arithmatex">\(B\)</span> of <span class="arithmatex">\(\R^d\)</span>,</p>
+<div class="arithmatex">\[
+\{X \in B\} \;\text{ means }\; \{\omega \in \Omega : X(\omega) \in B\}.
+\]</div>
+<p><em>Example.</em> A generative model with a 2-dimensional latent code. The outcome is <span class="arithmatex">\(\omega = (z_1, z_2)\)</span>, two random numbers. The random variable is <span class="arithmatex">\(X(\omega) = G(z_1, z_2)\)</span>, where <span class="arithmatex">\(G\)</span> is the network. This is the noise-in, data-out picture from note 0, now with names attached: the noise vector is the outcome, and the transformation is the random variable. Same picture as the coins, with a blob of latent codes on the left and image space on the right.</p>
+<p><img alt="A generative model as a random variable: latent codes pushed through G onto data space" src="../../assets/01-pushforward.png" /></p>
+<p>Left: outcomes, here a cloud of latent codes drawn from a standard Gaussian. Right: the values <span class="arithmatex">\(X(\omega) = G(\omega)\)</span>, which for our toy model land on the spiral. Three seeds are highlighted with the points they are sent to. Compare with the coin picture: same structure, just a continuous cloud instead of four dots, and a plane instead of a line. Here <span class="arithmatex">\(G\)</span> was written by hand. Training a generative model means learning such a <span class="arithmatex">\(G\)</span> from data.</p>
+<h3 id="the-distribution-of-a-random-variable">The distribution of a random variable<a class="headerlink" href="#the-distribution-of-a-random-variable" title="Permanent link">&para;</a></h3>
+<p>There are now two places where probability can live, and it helps to keep them apart.</p>
+<ul>
+<li><strong>On the left:</strong> the outcomes <span class="arithmatex">\(\Omega\)</span>, with the probability <span class="arithmatex">\(P\)</span> we started with. For the coins, four outcomes with probability <span class="arithmatex">\(1/4\)</span> each.</li>
+<li><strong>On the right:</strong> the values in <span class="arithmatex">\(\R^d\)</span> that <span class="arithmatex">\(X\)</span> can take. For the coins, the numbers <span class="arithmatex">\(0, 1, 2\)</span>.</li>
+</ul>
+<p>The random variable <span class="arithmatex">\(X\)</span> is the bridge. It carries each outcome on the left to a point on the right. The question we care about lives on the right: <em>pick a region <span class="arithmatex">\(B\)</span> of values; how likely is it that <span class="arithmatex">\(X\)</span> lands in <span class="arithmatex">\(B\)</span>?</em> But the answer has to be computed on the left, because that is where the probabilities are. Here is the recipe.</p>
+<ol>
+<li>Pick a region <span class="arithmatex">\(B\)</span> of values.</li>
+<li>Find all outcomes <span class="arithmatex">\(\omega\)</span> that <span class="arithmatex">\(X\)</span> sends into <span class="arithmatex">\(B\)</span>. This set of outcomes is the event <span class="arithmatex">\(\{X \in B\}\)</span>. It is also called the <strong>preimage</strong> of <span class="arithmatex">\(B\)</span>, written <span class="arithmatex">\(X^{-1}(B)\)</span>.</li>
+<li>Add up the probabilities of those outcomes. That sum is <span class="arithmatex">\(P(X \in B)\)</span>.</li>
+</ol>
+<p><em>Example.</em> Coins, <span class="arithmatex">\(X\)</span> = number of heads, and <span class="arithmatex">\(B = \{1, 2\}\)</span>, the region "at least one head". Step 2: the outcomes sent into <span class="arithmatex">\(B\)</span> are <span class="arithmatex">\(HH, HT, TH\)</span>. Step 3: <span class="arithmatex">\(\tfrac14 + \tfrac14 + \tfrac14 = \tfrac34\)</span>. So <span class="arithmatex">\(P(X \in B) = 3/4\)</span>.</p>
+<p><img alt="Preimage of a region: the outcomes that land in B" src="../../assets/01-coins-preimage.png" /></p>
+<p>Do this for every region <span class="arithmatex">\(B\)</span>, and you have described everything there is to know about where <span class="arithmatex">\(X\)</span> lands. That description is the distribution.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definition 1.2 (Distribution)</p>
+<p>The <strong>distribution</strong> of <span class="arithmatex">\(X\)</span> is the rule that assigns to every region <span class="arithmatex">\(B \subseteq \R^d\)</span> the number</p>
+<div class="arithmatex">\[
+P_X(B) = P(X \in B).
+\]</div>
+<p>We write <span class="arithmatex">\(X \sim P_X\)</span>, read "<span class="arithmatex">\(X\)</span> is distributed as <span class="arithmatex">\(P_X\)</span>".</p>
+</div>
+<p><em>Example.</em> For the number of heads in two fair tosses, you do not need to go through every possible region. It is enough to do the recipe for the single values <span class="arithmatex">\(0\)</span>, <span class="arithmatex">\(1\)</span>, <span class="arithmatex">\(2\)</span>:</p>
+<table>
+<thead>
+<tr>
+<th>value <span class="arithmatex">\(x\)</span></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>outcomes sent to <span class="arithmatex">\(x\)</span></td>
+<td><span class="arithmatex">\(TT\)</span></td>
+<td><span class="arithmatex">\(HT, TH\)</span></td>
+<td><span class="arithmatex">\(HH\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(P(X = x)\)</span></td>
+<td><span class="arithmatex">\(1/4\)</span></td>
+<td><span class="arithmatex">\(1/2\)</span></td>
+<td><span class="arithmatex">\(1/4\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>For any other region <span class="arithmatex">\(B\)</span>, add up the entries for the values inside <span class="arithmatex">\(B\)</span>. So <span class="arithmatex">\(P(X \ge 1) = 1/2 + 1/4 = 3/4\)</span>, as before. The table <em>is</em> the distribution.</p>
+<p><strong>A picture to keep: sand.</strong> Imagine the probability <span class="arithmatex">\(P\)</span> as one kilogram of sand spread over the outcomes: <span class="arithmatex">\(1/4\)</span> kg on each of <span class="arithmatex">\(HH, HT, TH, TT\)</span>. The function <span class="arithmatex">\(X\)</span> picks up every grain and drops it at <span class="arithmatex">\(X(\omega)\)</span>. Grains from <span class="arithmatex">\(HT\)</span> and <span class="arithmatex">\(TH\)</span> both land at <span class="arithmatex">\(1\)</span>, so half a kilogram piles up there; a quarter lands at <span class="arithmatex">\(0\)</span> and a quarter at <span class="arithmatex">\(2\)</span>. The pile on the right is the distribution of <span class="arithmatex">\(X\)</span>. No sand is lost or created, and the amount of sand inside any region <span class="arithmatex">\(B\)</span> on the right is exactly the sand that started inside <span class="arithmatex">\(X^{-1}(B)\)</span> on the left. Because the sand is <em>pushed forward</em> along <span class="arithmatex">\(X\)</span>, the distribution is also called the <strong>pushforward</strong> of <span class="arithmatex">\(P\)</span> through <span class="arithmatex">\(X\)</span>. Remember this word. In Part VII, "normalizing flow" will mean nothing more than a pushforward through an invertible function.</p>
+<p><strong>The same recipe in the continuous case.</strong> Here is our toy generative model again. The outcomes on the left are latent seeds <span class="arithmatex">\(z\)</span>, four thousand of them drawn from a standard Gaussian. The function <span class="arithmatex">\(G\)</span> sends them onto the spiral on the right.</p>
+<p><img alt="Preimages of two regions in data space" src="../../assets/01-preimage.png" /></p>
+<p>Pick the disk <span class="arithmatex">\(B_1\)</span> on the right. Which seeds does <span class="arithmatex">\(G\)</span> send into it? Exactly the orange ones on the left. That orange set is the preimage <span class="arithmatex">\(G^{-1}(B_1)\)</span>, and <span class="arithmatex">\(P(X \in B_1)\)</span> is the fraction of all seeds that are orange. Counting gives about <span class="arithmatex">\(0.08\)</span>. You do not need to know anything about <span class="arithmatex">\(G\)</span> to read this picture. The only point is that <em>the probability of a region on the right is always measured by a set of seeds on the left.</em> That is Definition 1.2, and it is also how every generative model assigns probability to images.</p>
+<h3 id="discrete-and-continuous">Discrete and continuous<a class="headerlink" href="#discrete-and-continuous" title="Permanent link">&para;</a></h3>
+<p>There are two familiar ways to describe a distribution.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definition 1.3 (Discrete random variable, probability mass function)</p>
+<p><span class="arithmatex">\(X\)</span> is <strong>discrete</strong> if it takes only finitely many or countably many values. Its distribution is described by the <strong>probability mass function</strong></p>
+<div class="arithmatex">\[
+p_X(x) = P(X = x).
+\]</div>
+<p>Then <span class="arithmatex">\(P(X \in B) = \sum_{x \in B} p_X(x)\)</span>.</p>
+</div>
+<p>The number of heads is discrete. Its mass function is the table above.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definition 1.4 (Continuous random variable, probability density function)</p>
+<p><span class="arithmatex">\(X\)</span> is <strong>continuous</strong> if there is a function <span class="arithmatex">\(p_X \ge 0\)</span>, the <strong>probability density function</strong>, such that for every region <span class="arithmatex">\(B\)</span></p>
+<div class="arithmatex">\[
+P(X \in B) = \int_B p_X(x)\, \d x .
+\]</div>
+</div>
+<p><em>Example.</em> Spin a dial and let <span class="arithmatex">\(X\)</span> be the angle it stops at, in <span class="arithmatex">\([0, 2\pi)\)</span>. Every exact angle has probability zero, <span class="arithmatex">\(P(X = x) = 0\)</span>, so a mass function is useless. But the probability of landing in an interval is its length divided by <span class="arithmatex">\(2\pi\)</span>, so <span class="arithmatex">\(p_X(x) = 1/(2\pi)\)</span> on <span class="arithmatex">\([0, 2\pi)\)</span> and <span class="arithmatex">\(0\)</span> elsewhere.</p>
+<p><em>Example.</em> A standard Gaussian in one dimension has <span class="arithmatex">\(p_X(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}\)</span>. There will be a dedicated section on Gaussians later in Part I, since they appear in almost every formula in this series.</p>
+<p>For a real-valued <span class="arithmatex">\(X\)</span> there is a third description, the <strong>cumulative distribution function</strong></p>
+<div class="arithmatex">\[
+F_X(x) = P(X \le x).
+\]</div>
+<p>If <span class="arithmatex">\(X\)</span> is continuous and <span class="arithmatex">\(F_X\)</span> is differentiable, then <span class="arithmatex">\(p_X = F_X'\)</span>. We will rarely use it.</p>
+<h3 id="distribution-versus-density">Distribution versus density<a class="headerlink" href="#distribution-versus-density" title="Permanent link">&para;</a></h3>
+<p>Not every random variable is discrete or continuous, and the exceptions are not rare. Here is one that fits in two lines, and it is the shape of every real dataset.</p>
+<div class="admonition note">
+<p class="admonition-title">Example 1.6 (Points on a curve have no density)</p>
+<p>Let <span class="arithmatex">\(\Theta\)</span> be uniform on <span class="arithmatex">\([0, 3\pi]\)</span> and let</p>
+<div class="arithmatex">\[
+X = \big(0.15\,\Theta \cos\Theta,\; 0.15\,\Theta \sin\Theta\big) \in \R^2 .
+\]</div>
+<p>Every value of <span class="arithmatex">\(X\)</span> lies on a spiral curve <span class="arithmatex">\(C\)</span>. So <span class="arithmatex">\(P(X \in C) = 1\)</span>.</p>
+<p>Now suppose <span class="arithmatex">\(X\)</span> had a density <span class="arithmatex">\(p_X\)</span>. A curve has zero area, and the integral of any function over a set of zero area is zero. So</p>
+<div class="arithmatex">\[
+1 = P(X \in C) = \int_C p_X(x)\, \d x = 0 .
+\]</div>
+<p>Contradiction. <span class="arithmatex">\(X\)</span> has no density. It is not discrete either: each single point has probability zero.</p>
+</div>
+<p>The same argument works for any data that sits on a lower-dimensional set: a curve in the plane, a surface in space, or, if you believe the manifold hypothesis, natural images inside pixel space. For such data the symbol <span class="arithmatex">\(p_{\text{data}}(x)\)</span> does not stand for a function. This is the situation diffusion models start from, and the aside at the end of the derivation says how they get out of it.</p>
+<p>So we keep two words apart:</p>
+<ul>
+<li><strong>Distribution</strong> means the rule <span class="arithmatex">\(B \mapsto P(X \in B)\)</span>. Every random variable has one.</li>
+<li><strong>Density</strong> means the function <span class="arithmatex">\(p_X\)</span> in Definition 1.4. Not every random variable has one.</li>
+</ul>
+<p>The diffusion literature uses the two words interchangeably and writes <span class="arithmatex">\(p(x)\)</span> for both. We will do the same from Part IV on, once we have seen exactly when it is harmless.</p>
+<p><strong>Notation.</strong> In Part I, capital <span class="arithmatex">\(X\)</span> is the random variable and small <span class="arithmatex">\(x\)</span> is a value it might take. From Part IV on we will write <span class="arithmatex">\(x_t\)</span> for both, as every paper does.</p>
+<h2 id="derivation">Derivation<a class="headerlink" href="#derivation" title="Permanent link">&para;</a></h2>
+<h3 id="1-the-distribution-is-itself-a-probability">1. The distribution is itself a probability<a class="headerlink" href="#1-the-distribution-is-itself-a-probability" title="Permanent link">&para;</a></h3>
+<p>Definition 1.2 says the distribution "assigns a number to every region". Definition 1.1 said that to deserve the name <em>probability</em>, such a rule must obey two things: the whole space gets <span class="arithmatex">\(1\)</span>, and non-overlapping regions add. Does <span class="arithmatex">\(P_X\)</span> obey them? If it does, we are allowed to treat <span class="arithmatex">\(\R^d\)</span> as a sample space in its own right, with <span class="arithmatex">\(P_X\)</span> as its probability, and stop thinking about <span class="arithmatex">\(\Omega\)</span>. Let us check both rules, in words first and then in symbols.</p>
+<p><strong>Rule 1: the whole space gets probability one.</strong> Every outcome is sent <em>somewhere</em> in <span class="arithmatex">\(\R^d\)</span>, so the event "<span class="arithmatex">\(X\)</span> lands in <span class="arithmatex">\(\R^d\)</span>" is all of <span class="arithmatex">\(\Omega\)</span>:</p>
+<div class="arithmatex">\[
+P_X(\R^d) = P(X \in \R^d) = P(\Omega) = 1 .
+\]</div>
+<p><strong>Rule 2: non-overlapping regions add.</strong> Take two regions <span class="arithmatex">\(B_1\)</span> and <span class="arithmatex">\(B_2\)</span> on the right that do not overlap, like the two disks in the figure above. Look at their preimages on the left: the orange seeds and the teal seeds. Could a seed be both orange and teal? No. A seed <span class="arithmatex">\(z\)</span> has exactly one value <span class="arithmatex">\(G(z)\)</span>, and that value is in <span class="arithmatex">\(B_1\)</span>, or in <span class="arithmatex">\(B_2\)</span>, or in neither. It cannot be in both, because <span class="arithmatex">\(B_1\)</span> and <span class="arithmatex">\(B_2\)</span> share no points. So the two preimages do not overlap either. (The figure counted: zero seeds in common.)</p>
+<p>Now we are back on the left, where <span class="arithmatex">\(P\)</span> lives and where we already know that non-overlapping events add. So</p>
+<div class="arithmatex">\[
+P_X(B_1 \cup B_2)
+= P(X \in B_1 \text{ or } X \in B_2)
+= P(X \in B_1) + P(X \in B_2)
+= P_X(B_1) + P_X(B_2).
+\]</div>
+<p>In the figure, <span class="arithmatex">\(0.082 + 0.035 = 0.117\)</span> is indeed the fraction of seeds in either disk. The same argument works word for word for any number of non-overlapping regions <span class="arithmatex">\(B_1, B_2, \ldots\)</span>. <span class="arithmatex">\(\square\)</span></p>
+<p><strong>In words:</strong> every random variable manufactures a new probability on <span class="arithmatex">\(\R^d\)</span> out of the old one on <span class="arithmatex">\(\Omega\)</span>. Take the sand picture: the sand on the right is a perfectly good pile of sand, with total one kilogram, and the sand in two separate regions adds up. A generative model manufactures a probability on images out of a probability on noise in exactly this way.</p>
+<h3 id="2-why-we-can-forget-omega">2. Why we can forget <span class="arithmatex">\(\Omega\)</span><a class="headerlink" href="#2-why-we-can-forget-omega" title="Permanent link">&para;</a></h3>
+<p>Suppose you want the average of some function of <span class="arithmatex">\(X\)</span>, say <span class="arithmatex">\(\E[X^2]\)</span> or <span class="arithmatex">\(\E[\log p(X)]\)</span>. You might think you need to know <span class="arithmatex">\(\Omega\)</span> and the function <span class="arithmatex">\(X\)</span> in detail. You do not. The distribution is enough.</p>
+<div class="admonition note">
+<p class="admonition-title">Proposition 1.5 (Law of the unconscious statistician)</p>
+<p>For any function <span class="arithmatex">\(f\)</span>,</p>
+<div class="arithmatex">\[
+\E[f(X)] = \sum_x f(x)\, p_X(x) \;\;\text{(discrete)}, \qquad
+\E[f(X)] = \int f(x)\, p_X(x)\, \d x \;\;\text{(continuous)}.
+\]</div>
+</div>
+<p><em>Example.</em> Number of heads, <span class="arithmatex">\(f(x) = x^2\)</span>: <span class="arithmatex">\(\E[X^2] = 0 \cdot \tfrac14 + 1 \cdot \tfrac12 + 4 \cdot \tfrac14 = \tfrac32\)</span>. We never looked at <span class="arithmatex">\(HH, HT, TH, TT\)</span>.</p>
+<p><em>Why it is true.</em> If <span class="arithmatex">\(f\)</span> is the indicator of a region <span class="arithmatex">\(B\)</span>, so <span class="arithmatex">\(f(x) = 1\)</span> inside <span class="arithmatex">\(B\)</span> and <span class="arithmatex">\(0\)</span> outside, then <span class="arithmatex">\(\E[f(X)]\)</span> is just <span class="arithmatex">\(P(X \in B)\)</span>, which is <span class="arithmatex">\(\sum_{x \in B} p_X(x)\)</span> or <span class="arithmatex">\(\int_B p_X\)</span> by Definitions 1.3 and 1.4. Any reasonable <span class="arithmatex">\(f\)</span> can be built from indicators by adding, scaling and taking limits, and both sides of the formula respect adding, scaling and limits. <span class="arithmatex">\(\square\)</span></p>
+<p>Expectation gets its own note (note 3). The point here is only this: nothing about <span class="arithmatex">\(\Omega\)</span> survives. Learning the distribution of the data is a complete goal.</p>
+<h3 id="3-generative-models-are-pushforwards">3. Generative models are pushforwards<a class="headerlink" href="#3-generative-models-are-pushforwards" title="Permanent link">&para;</a></h3>
+<p>Now the recipe of note 0, written in the language of this note. Take a simple random variable <span class="arithmatex">\(Z\)</span> on <span class="arithmatex">\(\R^k\)</span>, usually <span class="arithmatex">\(Z \sim \N(0, I)\)</span>, and a function <span class="arithmatex">\(G : \R^k \to \R^d\)</span>. Define</p>
+<div class="arithmatex">\[
+X = G(Z).
+\]</div>
+<p><span class="arithmatex">\(X\)</span> is a random variable, because it is a function of the outcome: <span class="arithmatex">\(\omega \mapsto G(Z(\omega))\)</span>. Its distribution is</p>
+<div class="arithmatex">\[
+P(X \in B) = P(G(Z) \in B) = P\big(Z \in G^{-1}(B)\big),
+\]</div>
+<p>where <span class="arithmatex">\(G^{-1}(B)\)</span> means the set of all seeds <span class="arithmatex">\(z\)</span> with <span class="arithmatex">\(G(z) \in B\)</span>. In words: the probability that the output lands in <span class="arithmatex">\(B\)</span> is the probability that the seed lands in the set of seeds that <span class="arithmatex">\(G\)</span> sends into <span class="arithmatex">\(B\)</span>.</p>
+<p>Every model in this series is of this form. It is what note 0 called the universal recipe, and the three families described there differ only in <span class="arithmatex">\(G\)</span>, and in whether we can write down the density of <span class="arithmatex">\(X\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Simple variable <span class="arithmatex">\(Z\)</span></th>
+<th>Function <span class="arithmatex">\(G\)</span></th>
+<th>Can we write down <span class="arithmatex">\(p_X\)</span>?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flow, "follow a velocity" (Part VII)</td>
+<td><span class="arithmatex">\(\N(0, I)\)</span></td>
+<td>invertible and differentiable</td>
+<td>yes, change of variables (note 6)</td>
+</tr>
+<tr>
+<td>Variational autoencoder, "one shot" (Part III)</td>
+<td><span class="arithmatex">\(\N(0, I)\)</span> plus decoder noise</td>
+<td>a neural network</td>
+<td>only as an integral we cannot compute, so we bound it (note 15)</td>
+</tr>
+<tr>
+<td>Diffusion model, "many small steps" (Part IV)</td>
+<td><span class="arithmatex">\(\N(0, I)\)</span> plus one Gaussian per step</td>
+<td><span class="arithmatex">\(T\)</span> learned Gaussian steps</td>
+<td>only as an integral we cannot compute, so we bound it (note 21)</td>
+</tr>
+<tr>
+<td>Diffusion model, rewritten as a flow (Part VI)</td>
+<td><span class="arithmatex">\(\N(0, I)\)</span></td>
+<td>solving an ODE, invertible</td>
+<td>yes, continuous change of variables (note 32)</td>
+</tr>
+</tbody>
+</table>
+<p>"What is the likelihood of this image under my model" means "does the distribution of <span class="arithmatex">\(X\)</span> have a density, and can I evaluate it". The flow row says yes. The diffusion rows say not directly. Getting from the diffusion rows to the flow row is the spine of the series.</p>
+<h2 id="code">Code<a class="headerlink" href="#code" title="Permanent link">&para;</a></h2>
+<p>Our running example is the spiral of Example 1.6, the same spiral that appeared in every figure of note 0. The code below <em>is</em> the random variable. The random number generator plays the role of <span class="arithmatex">\(\Omega\)</span>, <code>theta</code> is the simple variable <span class="arithmatex">\(Z\)</span>, and the arithmetic is the function <span class="arithmatex">\(G\)</span>. Every later note trains a model on samples from <code>sample_spiral</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="sd">"""The running example for the whole series: a 2D spiral.</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="sd">A random variable is a function from a source of randomness to R^d.</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="sd">Here the source is a NumPy generator and the function is `sample_spiral`.</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="sd">The *law* of the random variable is what we will spend 45 notes modelling.</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="sd">"""</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="k">def</span><span class="w"> </span><span class="nf">sample_spiral</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">noise</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">rng</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="sd">"""Draw n points from the spiral law. Returns an (n, 2) array.</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="sd">    noise=0.0 gives points exactly on a curve (no density in R^2).</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="sd">    noise&gt;0   adds isotropic Gaussian noise, which gives the law a density.</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="sd">    """</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">()</span> <span class="k">if</span> <span class="n">rng</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">rng</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="n">theta</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>          <span class="c1"># base variable Z ~ Uniform</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="n">r</span> <span class="o">=</span> <span class="mf">0.15</span> <span class="o">*</span> <span class="n">theta</span>                                        <span class="c1"># deterministic map G</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">noise</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">sigma</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]):</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>        <span class="n">pts</span> <span class="o">=</span> <span class="n">sample_spiral</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">pts</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"#1f2a44"</span><span class="p">)</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">rf</span><span class="s2">"$\sigma = </span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span><span class="s2">$"</span> <span class="o">+</span> <span class="p">(</span><span class="s2">"  (no density)"</span> <span class="k">if</span> <span class="n">sigma</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">"  (has a density)"</span><span class="p">))</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>        <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">"equal"</span><span class="p">)</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([]);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>    <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">"docs/assets/01-spiral.png"</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"saved docs/assets/01-spiral.png"</span><span class="p">)</span>
+</code></pre></div>
+<p><img alt="Spiral without and with Gaussian noise" src="../../assets/01-spiral.png" /></p>
+<p>Left: <span class="arithmatex">\(\sigma = 0\)</span>. The distribution lives on a curve and, by Example 1.6, has no density. Right: <span class="arithmatex">\(\sigma = 0.1\)</span>. Adding noise gives the distribution a density; the aside at the end of the derivation explains why. The left panel is what we have. The right panel is what we can learn.</p>
+<h2 id="connection-forward">Connection forward<a class="headerlink" href="#connection-forward" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Note 2</strong> defines joint, marginal and conditional distributions, including the distribution of a clean point given a noisy one, which is what every denoiser estimates.</li>
+<li><strong>Note 3</strong> treats expectation properly and never mentions <span class="arithmatex">\(\Omega\)</span> again.</li>
+<li><strong>Note 6</strong> computes <span class="arithmatex">\(p_X\)</span> for <span class="arithmatex">\(X = G(Z)\)</span> when <span class="arithmatex">\(G\)</span> is invertible and differentiable. That is the change-of-variables formula, and it is the flow row of the table.</li>
+<li><strong>Note 19</strong> shows the DDPM forward process is repeated Gaussian noising with a shrinking signal, the operation in the aside above.</li>
+<li><strong>Note 26</strong> shows why score matching must be done on the noised distribution: Example 1.6 says the un-noised score need not exist.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../00-what-is-a-generative-model/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 0. What is a generative model?">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                0. What is a generative model?
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

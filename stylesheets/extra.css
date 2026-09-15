@@ -1,0 +1,19 @@
+:root {
+  --md-primary-fg-color: #1f2a44;
+  --md-accent-fg-color: #c2410c;
+}
+.md-typeset { font-size: 0.78rem; line-height: 1.6; }
+.md-typeset h1 { font-weight: 600; }
+.md-typeset table:not([class]) { font-size: 0.72rem; }
+.md-typeset .admonition.rigor, .md-typeset details.rigor { border-color: #c2410c; }
+.md-typeset .rigor > .admonition-title, .md-typeset .rigor > summary { background-color: rgba(194, 65, 12, 0.1); }
+.md-typeset .rigor > .admonition-title::before, .md-typeset .rigor > summary::before {
+  background-color: #c2410c;
+  -webkit-mask-image: var(--md-admonition-icon--abstract);
+  mask-image: var(--md-admonition-icon--abstract);
+}
+.status { display: inline-block; padding: 0 .5em; border-radius: .25em; font-size: .7rem; font-weight: 600; }
+.status-draft { background: #fde68a; color: #78350f; }
+.status-review { background: #bfdbfe; color: #1e3a8a; }
+.status-done { background: #bbf7d0; color: #14532d; }
+.status-todo { background: #e5e7eb; color: #374151; }
