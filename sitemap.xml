@@ -2,22 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://eliassf73.github.io/diffusion-and-flow-models/</loc>
-         <lastmod>2026-09-18</lastmod>
+         <lastmod>2026-09-19</lastmod>
     </url>
     <url>
          <loc>https://eliassf73.github.io/diffusion-and-flow-models/00-what-is-a-generative-model/</loc>
-         <lastmod>2026-09-18</lastmod>
+         <lastmod>2026-09-19</lastmod>
     </url>
     <url>
          <loc>https://eliassf73.github.io/diffusion-and-flow-models/syllabus/</loc>
-         <lastmod>2026-09-18</lastmod>
+         <lastmod>2026-09-19</lastmod>
     </url>
     <url>
          <loc>https://eliassf73.github.io/diffusion-and-flow-models/probability/01-random-variables-and-distributions/</loc>
-         <lastmod>2026-09-18</lastmod>
+         <lastmod>2026-09-19</lastmod>
     </url>
     <url>
          <loc>https://eliassf73.github.io/diffusion-and-flow-models/probability/02-joint-marginal-and-conditional-distributions/</loc>
-         <lastmod>2026-09-18</lastmod>
+         <lastmod>2026-09-19</lastmod>
+    </url>
+    <url>
+         <loc>https://eliassf73.github.io/diffusion-and-flow-models/probability/03-expectation-variance-covariance/</loc>
+         <lastmod>2026-09-19</lastmod>
     </url>
 </urlset>
