@@ -725,12 +725,16 @@
 <h3 id="many-small-steps-diffusion-models">Many small steps: diffusion models<a class="headerlink" href="#many-small-steps-diffusion-models" title="Permanent link">&para;</a></h3>
 <p>Diffusion models take a different route. Instead of going from noise to data in one jump, they do it gradually, and they use a trick to make the gradual version learnable.</p>
 <p>The trick is to first study the <em>opposite</em> direction. Take a real data point and add a little noise to it. Then a little more. Then more. After enough steps, all structure is gone and what is left is pure noise. This forward direction is trivial: no learning, just adding random numbers.</p>
-<p><img alt="Adding noise is easy; removing it is what gets learned" src="../assets/00-diffusion.png" /></p>
+<div class="widget" data-widget="morph" data-mode="forward" data-h="360"></div>
+<p class="widget-caption arithmatex">Press <em>add noise</em> and watch the spiral dissolve, or drag the slider by hand. Nothing here is learned: it is only random numbers being added. <em>Rewind</em> plays the same process backwards, which is what the model will have to learn to do.</p>
+
 <p>Now train a network to undo one step: given a slightly noisy point, predict what the slightly-less-noisy version was. That is a well-posed regression problem with unlimited training data, because we can make noisy versions of real examples for free. Generation is then: start from pure noise, apply the "undo one step" network many times, and watch a data point emerge. The transformation from noise to data is the <em>composition</em> of all those small denoising steps.</p>
 <p>When later notes say <strong>forward process</strong>, they mean adding noise. <strong>Reverse process</strong> means the learned removal. <strong>Noise prediction</strong> and <strong>score</strong> are two equivalent ways of describing what the network is asked to output at each step. All of this is Parts IV to VI.</p>
 <h3 id="follow-a-velocity-flow-models">Follow a velocity: flow models<a class="headerlink" href="#follow-a-velocity-flow-models" title="Permanent link">&para;</a></h3>
 <p>The third family also moves gradually from noise to data, but it thinks of the motion as continuous rather than as discrete steps. Imagine each noise point as a particle. The model is a <strong>velocity field</strong>: at every location and every moment in time it says which way a particle there should move and how fast. Release the particles from the noise cloud, let them drift according to the field, and if the field was learned well, they settle into the shape of the data.</p>
-<p><img alt="Points travelling along paths from noise to data" src="../assets/00-flow.png" /></p>
+<div class="widget" data-widget="morph" data-mode="flow" data-h="360"></div>
+<p class="widget-caption arithmatex">Press <em>release the particles</em>. Each dot is a noise point moving along its own path to a data point; a few paths are drawn. The model is the rule that says how fast and in which direction every point moves.</p>
+
 <p>The learning problem is to find the velocity field. Flow matching (Part VII) does this by drawing straight lines from noise points to data points, reading off the velocity along those lines, and training the network to reproduce it.</p>
 <p>Two things make flows important for us. First, because the motion is smooth and reversible, we can run it backwards and ask "which noise point produced this data point," which gives an exact likelihood, something diffusion models on their own cannot do. Second, and this is the central claim of the series, <strong>diffusion models are flow models in disguise.</strong> The many small denoising steps, in the limit of infinitely many of them, trace out a velocity field of exactly this kind. Parts V and VI are the bridge that makes that statement precise.</p>
 <h2 id="generating-on-demand">Generating on demand<a class="headerlink" href="#generating-on-demand" title="Permanent link">&para;</a></h2>
@@ -931,6 +935,8 @@
       <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="../javascripts/widgets.js"></script>
       
         <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       

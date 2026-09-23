@@ -1,3 +1,4 @@
+window.WIDGET_TEXT_SCALE = 1.4;
 window.MathJax = {
   tex: {
     inlineMath: [["\\(", "\\)"]],

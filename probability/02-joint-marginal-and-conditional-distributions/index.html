@@ -846,9 +846,15 @@ p(x \mid y) = \frac{p(x, y)}{p(y)} .
 \]</div>
 <p>The same formula, with densities, defines the conditional density in the continuous case. The rescaling by <span class="arithmatex">\(p(y)\)</span> is exactly what makes <span class="arithmatex">\(p(x \mid y)\)</span> add up (or integrate) to one over <span class="arithmatex">\(x\)</span>.</p>
 </div>
-<p>In the continuous case the "slice" is literal. Here is the noisy-number example after observing <span class="arithmatex">\(y \approx 1.5\)</span>.</p>
-<p><img alt="Conditioning is slicing the joint and renormalising" src="../../assets/02-conditional.png" /></p>
-<p>On the left, the horizontal band is the slice of the joint at the observed value. On the right, the histogram of the <span class="arithmatex">\(x\)</span>-values that fall in that band is the conditional distribution of the clean value. Before observing <span class="arithmatex">\(y\)</span>, our belief about <span class="arithmatex">\(X\)</span> was the wide dashed curve centred at <span class="arithmatex">\(0\)</span>. After observing <span class="arithmatex">\(y = 1.5\)</span>, it is the narrow solid curve centred near <span class="arithmatex">\(0.9\)</span>. Knowing the noisy copy moved our guess and tightened it. Note 4 works out the formula for the solid curve.</p>
+<p>Here is the whole noisy-bit table drawn as areas, so that the recipe can be seen rather than computed. The square has total area <span class="arithmatex">\(1\)</span>. Its width is split by how often each bit is sent, its height by what the wire does.</p>
+<div class="widget" data-widget="channel" data-prior="0.5"></div>
+<p class="widget-caption arithmatex">Click <em>observe Y = 1</em>. Everything of the other colour is dimmed, and what remains is stretched to a full bar: that stretching is the division by \(p(y)\). The two sliders change the sender and the wire; the derivation below uses them.</p>
+
+<p>In the continuous case the "slice" is literal. Here is the noisy-number example.</p>
+<div class="widget" data-widget="slice" data-kind="gauss"></div>
+<p class="widget-caption arithmatex">Drag the orange line up and down. On the left, the band is the slice of the joint at the observed value. On the right, the orange histogram is the \(x\)-values inside the band, rescaled: the conditional distribution of the clean value. The grey histogram behind it is the distribution of \(X\) before observing anything.</p>
+
+<p>Start with the line at <span class="arithmatex">\(y = 1.5\)</span>. Before observing, our belief about <span class="arithmatex">\(X\)</span> was the wide grey shape centred at <span class="arithmatex">\(0\)</span>. After observing, it is the narrow orange shape centred near <span class="arithmatex">\(0.9\)</span>. Knowing the noisy copy moved our guess and tightened it. Drag the line to <span class="arithmatex">\(y = 0\)</span>: the guess goes back to <span class="arithmatex">\(0\)</span>, but the shape stays narrow, because the observation still rules out large values. Turn the noise slider up and watch the orange shape widen and its centre creep back toward <span class="arithmatex">\(0\)</span>: a noisier copy is trusted less. The formula printed under the histogram, and where it comes from, is the subject of note 4.</p>
 <p><strong>Keep in mind.</strong> <span class="arithmatex">\(p(x \mid y)\)</span> is a distribution over <span class="arithmatex">\(x\)</span>. The <span class="arithmatex">\(y\)</span> is a fixed parameter that selects <em>which</em> distribution over <span class="arithmatex">\(x\)</span> we are talking about. Change <span class="arithmatex">\(y\)</span> and you get a different distribution over <span class="arithmatex">\(x\)</span>. Read as a function of <span class="arithmatex">\(y\)</span> with <span class="arithmatex">\(x\)</span> fixed, it is not a distribution at all: it need not integrate to one in <span class="arithmatex">\(y\)</span>. This is a common trap when reading formulas later, so it is worth saying once.</p>
 <p><strong>Two directions.</strong> There are two conditionals, <span class="arithmatex">\(p(y \mid x)\)</span> and <span class="arithmatex">\(p(x \mid y)\)</span>, and they are different objects. In both our examples, <span class="arithmatex">\(p(y \mid x)\)</span> is the <em>noising rule</em>: given the clean value, how the noisy copy is produced. We wrote it down first, by construction. The other direction, <span class="arithmatex">\(p(x \mid y)\)</span>, is the <em>denoising</em> question: given the noisy copy, what was the clean value. Nobody handed it to us; we had to compute it from the table. Turning the first into the second is what Bayes' rule does, and it gets its own note (note 5). For now the definition above is all we need.</p>
 <h3 id="independence">Independence<a class="headerlink" href="#independence" title="Permanent link">&para;</a></h3>
@@ -912,6 +918,9 @@ p(x, y) = p(x)\, p(y \mid x) = p(y)\, p(x \mid y) .
 P(X = 1 \mid Y = 0) = \frac{0.18}{0.26} \approx 0.69 .
 \]</div>
 <p>Even though the wire said <span class="arithmatex">\(0\)</span>, the sent bit was more likely a <span class="arithmatex">\(1\)</span>. The wire is right <span class="arithmatex">\(80\%\)</span> of the time, but <span class="arithmatex">\(1\)</span>s are so common that "a <span class="arithmatex">\(1\)</span> got flipped" is a better explanation of a received <span class="arithmatex">\(0\)</span> than "a <span class="arithmatex">\(0\)</span> was sent". The best denoiser does not simply trust the observation; it weighs the observation against what was likely in the first place. Hold on to this. In Part IV a neural network will be trained to do exactly this for images.</p>
+<div class="widget" data-widget="channel" data-prior="0.9"></div>
+<p class="widget-caption arithmatex">The same square with the sender biased to \(0.9\). Click <em>observe Y = 0</em> and read off \(0.69\). Then slide the flip probability toward \(0\) and watch the best guess flip back to \(0\): a reliable enough wire beats the prior.</p>
+
 <h2 id="code">Code<a class="headerlink" href="#code" title="Permanent link">&para;</a></h2>
 <p>Conditioning empirically is slicing: keep the samples whose <span class="arithmatex">\(y\)</span> lies in a thin band around the observed value and look at their <span class="arithmatex">\(x\)</span>. The code below does that for the noisy-number example and compares the slice's mean and variance with the exact answer. The function <code>denoiser</code> holds that exact answer; where it comes from is worked out in note 4, where Gaussians get their proper treatment.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="sd">"""Note 2: the joint distribution of a clean value X and its noisy version Y = X + sigma * eps.</span>
@@ -1083,6 +1092,8 @@ P(X = 1 \mid Y = 0) = \frac{0.18}{0.26} \approx 0.69 .
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="../../javascripts/widgets.js"></script>
       
         <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       

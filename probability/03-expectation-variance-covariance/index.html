@@ -777,7 +777,9 @@
 \]</div>
 </details>
 <p>A good picture: draw the distribution as a block of material sitting on a beam. The expectation is the point where the beam balances.</p>
-<p><img alt="Expectation as a balance point" src="../../assets/03-balance.png" /></p>
+<div class="widget" data-widget="balance" ></div>
+<p class="widget-caption arithmatex">Drag the triangle until the beam is level, or press <em>snap to E[X]</em>. Switch between the Bernoulli, the number of heads, and the exponential, and move the parameter: the balance point is always at the expectation, even when, as for the Bernoulli, no outcome sits there.</p>
+
 <p><strong>Expectation of a function.</strong> Often we want the average not of <span class="arithmatex">\(X\)</span> but of something computed from it, like <span class="arithmatex">\(X^2\)</span>. Note 1 already gave the rule: weight the values of the function by the probabilities of <span class="arithmatex">\(X\)</span>,</p>
 <div class="arithmatex">\[
 \E[f(X)] = \sum_x f(x)\, p(x) \qquad\text{or}\qquad \E[f(X)] = \int f(x)\, p(x)\, \d x .
@@ -830,6 +832,9 @@
 \mathrm{Var}(Y) = a^2\, \mathrm{Var}(X) + \sigma^2 .
 \]</div>
 <p>If <span class="arithmatex">\(\mathrm{Var}(X) = 1\)</span> and we choose <span class="arithmatex">\(a^2 + \sigma^2 = 1\)</span>, then <span class="arithmatex">\(\mathrm{Var}(Y) = 1\)</span> as well. The signal fades, the noise grows, and the overall scale stays put. That one line is the design principle behind the forward process of DDPM, which we meet in note 19.</p>
+<div class="widget" data-widget="variance" ></div>
+<p class="widget-caption arithmatex">Press <em>add noise</em> several times and read the variances: they climb by \(\sigma^2\) at every step. <em>Reset</em>, then press <em>shrink, then add noise</em> instead: the variance stays at \(1\) while the two humps melt into a single Gaussian. That second button is one step of a DDPM forward process.</p>
+
 <p><strong>What if they are not independent?</strong> Then rule 4 picks up a correction term. The <strong>covariance</strong> of <span class="arithmatex">\(X\)</span> and <span class="arithmatex">\(Y\)</span> is</p>
 <div class="arithmatex">\[
 \mathrm{Cov}(X, Y) = \E\big[(X - \E X)(Y - \E Y)\big],
@@ -845,8 +850,10 @@
 </div>
 <p><em>Example (the noisy bit).</em> From note 2, with a fair bit and a wire that flips with probability <span class="arithmatex">\(0.2\)</span>: <span class="arithmatex">\(p(X = 1 \mid Y = 1) = 0.8\)</span>. So <span class="arithmatex">\(\E[X \mid Y = 1] = 0 \cdot 0.2 + 1 \cdot 0.8 = 0.8\)</span>, and likewise <span class="arithmatex">\(\E[X \mid Y = 0] = 0.2\)</span>.</p>
 <p>The important thing to notice is that the answer <strong>depends on <span class="arithmatex">\(y\)</span></strong>. For each observed value there is a different slice, and each slice has its own mean. So <span class="arithmatex">\(\E[X \mid Y = y]\)</span> is really a <em>function</em> of <span class="arithmatex">\(y\)</span>. Call it <span class="arithmatex">\(g(y)\)</span>. It takes in what we observed and returns our best guess of what we did not observe.</p>
-<p><em>Example (two clean values).</em> Let the clean value be <span class="arithmatex">\(-1\)</span> or <span class="arithmatex">\(+1\)</span> with equal probability, and let the noisy copy be <span class="arithmatex">\(Y = X + 0.6\, \varepsilon\)</span>. On the left below, each horizontal band is a slice, and the diamond marks the mean of the <span class="arithmatex">\(x\)</span>-values inside it. On the right, those means are plotted against <span class="arithmatex">\(y\)</span>.</p>
-<p><img alt="Conditional expectation as the mean of each slice, and as a function of y" src="../../assets/03-conditional-mean.png" /></p>
+<p><em>Example (two clean values).</em> Let the clean value be <span class="arithmatex">\(-1\)</span> or <span class="arithmatex">\(+1\)</span> with equal probability, and let the noisy copy be <span class="arithmatex">\(Y = X + 0.6\, \varepsilon\)</span>. Drag the line below. Each position is a slice, and the diamond marks the mean of the <span class="arithmatex">\(x\)</span>-values inside it. The orange curve is that mean for every slice at once: it is the function <span class="arithmatex">\(g\)</span>.</p>
+<div class="widget" data-widget="slice" data-kind="two" data-curve="1"></div>
+<p class="widget-caption arithmatex">The clean value is \(-1\) or \(+1\); the noisy copy adds Gaussian noise. Drag the observed value and watch the diamond ride along the curve. Turn the noise up and the curve flattens: a noisier copy pulls every guess toward the middle.</p>
+
 <p>Look at the shape of <span class="arithmatex">\(g\)</span>. For a clearly positive observation like <span class="arithmatex">\(y = 1.5\)</span>, the guess is essentially <span class="arithmatex">\(+1\)</span>: the clean value was almost certainly <span class="arithmatex">\(+1\)</span>, and the extra <span class="arithmatex">\(0.5\)</span> is noise to be thrown away. Near <span class="arithmatex">\(y = 0\)</span> the observation is ambiguous and the guess slides smoothly between the two possibilities. The curve is not the diagonal: <span class="arithmatex">\(g\)</span> does not simply hand back <span class="arithmatex">\(y\)</span>. It uses what it knows about the clean values to clean up the observation. This curve is a denoiser, and it is, in one dimension, exactly what the network in a diffusion model is trained to compute.</p>
 <p>Two facts about conditional expectation are used constantly.</p>
 <div class="admonition abstract">
@@ -1050,6 +1057,8 @@ h^\star(y) = \E[X \mid Y = y]. \qquad \square
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="../../javascripts/widgets.js"></script>
       
         <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       

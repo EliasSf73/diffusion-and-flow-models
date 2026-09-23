@@ -44,3 +44,15 @@
 .status-review { background: #bfdbfe; color: #1e3a8a; }
 .status-done { background: #bbf7d0; color: #14532d; }
 .status-todo { background: #e5e7eb; color: #374151; }
+
+
+/* interactive illustrations (docs/javascripts/widgets.js) */
+.widget { margin: 1.2em 0 1.4em; }
+.widget .wcanvas { display: block; width: 100%; max-width: 100%; height: auto !important; background: #fff; border-radius: 6px; touch-action: none; }
+.widget .wbar { display: flex; flex-wrap: wrap; gap: 8px 14px; justify-content: center; align-items: center; margin-top: 0.5em; font-family: var(--heading-font); font-size: 0.72rem; color: var(--md-default-fg-color); }
+.widget .wbar button { font: 600 0.72rem var(--heading-font); color: #fff; background: var(--md-primary-fg-color); border: 0; border-radius: 6px; padding: 0.35em 0.8em; cursor: pointer; }
+.widget .wbar button:hover { background: var(--md-accent-fg-color); }
+.widget .wbar label { display: inline-flex; align-items: center; gap: 6px; }
+.widget .wbar input[type=range] { width: 130px; accent-color: var(--md-accent-fg-color); }
+.widget .wbar .wval { min-width: 3em; font-weight: 600; color: var(--md-accent-fg-color); }
+.widget-caption { font-size: 0.78rem; color: var(--md-default-fg-color--light); text-align: left; margin-top: 0.4em; }
