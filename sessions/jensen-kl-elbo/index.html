@@ -1,0 +1,1544 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Lecture notes and derivations for a tutorial series on diffusion and flow models.">
+      
+      
+        <meta name="author" content="Elias Firisa">
+      
+      
+        <link rel="canonical" href="https://eliassf73.github.io/diffusion-and-flow-models/sessions/jensen-kl-elbo/">
+      
+      
+        <link rel="prev" href="../../probability/03-expectation-variance-covariance/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>From Jensen's inequality to the ELBO - Diffusion and Flow Models, from Scratch</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#from-jensens-inequality-to-the-elbo" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Diffusion and Flow Models, from Scratch" class="md-header__button md-logo" aria-label="Diffusion and Flow Models, from Scratch" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Diffusion and Flow Models, from Scratch
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              From Jensen's inequality to the ELBO
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Diffusion and Flow Models, from Scratch" class="md-nav__button md-logo" aria-label="Diffusion and Flow Models, from Scratch" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Diffusion and Flow Models, from Scratch
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-what-is-a-generative-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0. What is a generative model?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Notes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    I. Probability foundations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    I. Probability foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probability/01-random-variables-and-distributions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Random variables and distributions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probability/02-joint-marginal-and-conditional-distributions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Joint, marginal and conditional distributions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probability/03-expectation-variance-covariance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Expectation, variance, covariance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sessions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sessions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    From Jensen's inequality to the ELBO
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    From Jensen's inequality to the ELBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#where-this-page-is-going" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where this page is going
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-jensens-inequality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Jensen's inequality
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Jensen&#39;s inequality">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-curved-functions-and-the-form-that-defines-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Curved functions, and the form that defines them
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-log-is-concave-exp-is-convex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Log is concave, exp is convex
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-an-expectation-is-a-weighted-average-jensens-inequality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 An expectation is a weighted average: Jensen's inequality
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-where-a-log-meets-an-expectation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Where a log meets an expectation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-kl-divergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. KL divergence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. KL divergence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#which-side-do-we-adjust" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Which side do we adjust?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#seeing-the-kl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Seeing the KL
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-the-goal-what-it-means-to-learn-the-data-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. The goal: what it means to learn the data distribution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-can-a-network-output-the-density-directly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Can a network output the density directly?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-a-way-around-a-hidden-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. A way around: a hidden variable
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. A way around: a hidden variable">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-describe-how-a-sample-is-made" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Describe how a sample is made
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-the-likelihood-is-an-integral" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 The likelihood is an integral
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-the-posterior-and-a-proxy-for-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 The posterior, and a proxy for it
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-the-elbo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. The ELBO
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. The ELBO">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-do-we-know-the-proxy-is-good" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How do we know the proxy is good?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-try-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Try it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-the-elbo-as-the-training-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. The ELBO as the training loss
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-where-this-goes-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Where this goes next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="from-jensens-inequality-to-the-elbo">From Jensen's inequality to the ELBO<a class="headerlink" href="#from-jensens-inequality-to-the-elbo" title="Permanent link">&para;</a></h1>
+<p><em>Sessions.</em> A note takes one topic at a time. A session page follows one line of argument across several topics, in the order that worked best when friends and I went through the material together. This one runs through convexity, Jensen's inequality, KL divergence, maximum likelihood, latent variables and the ELBO.</p>
+<p><strong>Prerequisites:</strong> notes <a href="../../probability/01-random-variables-and-distributions/">1</a>, <a href="../../probability/02-joint-marginal-and-conditional-distributions/">2</a> and <a href="../../probability/03-expectation-variance-covariance/">3</a>.</p>
+<h2 id="where-this-page-is-going">Where this page is going<a class="headerlink" href="#where-this-page-is-going" title="Permanent link">&para;</a></h2>
+<p>The goal is to make a model distribution <span class="arithmatex">\(p_\theta\)</span> close to the distribution of the data. To say what "close" means we need a way to measure how far apart two distributions are. That is the KL divergence. The one fact about the KL that everything rests on, that it is never negative, is proved with a single inequality, Jensen's. So the page builds those two tools first (sections 1 and 2), and then follows the argument:</p>
+<ol>
+<li>Learning the data distribution means maximum likelihood (section 3).</li>
+<li>A network cannot output a density directly (section 4).</li>
+<li>A hidden variable gets around that, but its likelihood is an integral we cannot compute (section 5).</li>
+<li>The ELBO is a lower bound on that likelihood which we <em>can</em> compute (sections 6 and 7), and it becomes the training loss (section 8).</li>
+</ol>
+<p>The same bound, applied to a chain of hidden variables, is how DDPM is trained. That is the next session.</p>
+<h2 id="1-jensens-inequality">1. Jensen's inequality<a class="headerlink" href="#1-jensens-inequality" title="Permanent link">&para;</a></h2>
+<p>Jensen's inequality compares two orders of doing things: average first and then apply a curved function, or apply the function first and then average.</p>
+<video class="clip" controls muted playsinline preload="none" poster="../../assets/clips/jensen-short.jpg"><source src="../../assets/clips/jensen-short.mp4" type="video/mp4"></video>
+<p class="widget-caption arithmatex">The whole section in under a minute: a chord, a weighted average sliding along it, probabilities as weights, and the log of an average against the average of the logs. Sections 1.1 to 1.4 go through it slowly.</p>
+
+<h3 id="11-curved-functions-and-the-form-that-defines-them">1.1 Curved functions, and the form that defines them<a class="headerlink" href="#11-curved-functions-and-the-form-that-defines-them" title="Permanent link">&para;</a></h3>
+<p>Draw the graph of <span class="arithmatex">\(\log u\)</span> for <span class="arithmatex">\(u &gt; 0\)</span>. It rises, but more and more slowly: it bends downward. Pick any two points on the graph and join them with a straight segment, a <strong>chord</strong>. The chord always lies <em>below</em> the graph. A function with this property is called <strong>concave</strong>. The function <span class="arithmatex">\(e^u\)</span> bends the other way: every chord lies <em>above</em> its graph. Such a function is called <strong>convex</strong>.</p>
+<p>To turn the picture into a formula we need to name a point between two numbers <span class="arithmatex">\(a\)</span> and <span class="arithmatex">\(b\)</span>. Take a weight <span class="arithmatex">\(\lambda\)</span> between <span class="arithmatex">\(0\)</span> and <span class="arithmatex">\(1\)</span> and form</p>
+<div class="arithmatex">\[
+\lambda\, a + (1 - \lambda)\, b .
+\]</div>
+<p>This is a <strong>weighted average</strong> of <span class="arithmatex">\(a\)</span> and <span class="arithmatex">\(b\)</span>. Its two coefficients, <span class="arithmatex">\(\lambda\)</span> and <span class="arithmatex">\(1 - \lambda\)</span>, are not negative and add up to one. That is what keeps the result between <span class="arithmatex">\(a\)</span> and <span class="arithmatex">\(b\)</span>: it equals <span class="arithmatex">\(a\)</span> when <span class="arithmatex">\(\lambda = 1\)</span>, <span class="arithmatex">\(b\)</span> when <span class="arithmatex">\(\lambda = 0\)</span>, and the midpoint when <span class="arithmatex">\(\lambda = \tfrac12\)</span>.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definition (concave and convex)</p>
+<p><span class="arithmatex">\(f\)</span> is <strong>concave</strong> if for any two points <span class="arithmatex">\(a, b\)</span> and any weight <span class="arithmatex">\(\lambda\)</span> between <span class="arithmatex">\(0\)</span> and <span class="arithmatex">\(1\)</span>,</p>
+<div class="arithmatex">\[
+f\big(\lambda a + (1 - \lambda) b\big) \;\ge\; \lambda f(a) + (1 - \lambda) f(b).
+\]</div>
+<p><span class="arithmatex">\(f\)</span> is <strong>convex</strong> if the inequality goes the other way, <span class="arithmatex">\(\le\)</span>.</p>
+</div>
+<p>The left side is the height of the <em>graph</em> above the point <span class="arithmatex">\(\lambda a + (1 - \lambda) b\)</span>. The right side is the height of the <em>chord</em> above the same point. So the definition says "graph above chord". The same weights appear on both sides, once inside <span class="arithmatex">\(f\)</span> and once outside: for a concave function, <strong>the function of the average is at least the average of the function.</strong></p>
+<div class="widget" data-widget="chord"></div>
+<p class="widget-caption arithmatex">Drag \(a\) and \(b\) under the plot, and move the weight \(\lambda\). The orange marker on the axis is the weighted average of \(a\) and \(b\). Above it, the ring is the height of the graph and the diamond is the height of the chord. For \(\log\) the ring is always above the diamond. Switch to \(e^u\) or \(u^2\) and it is always below.</p>
+
+<p>The same holds for any number of points <span class="arithmatex">\(a_1, \ldots, a_n\)</span>, as long as the weights <span class="arithmatex">\(\lambda_1, \ldots, \lambda_n\)</span> are not negative and add up to one:</p>
+<div class="arithmatex">\[
+f\big(\lambda_1 a_1 + \cdots + \lambda_n a_n\big) \;\ge\; \lambda_1 f(a_1) + \cdots + \lambda_n f(a_n) \qquad (f \text{ concave}).
+\]</div>
+<p>A combination <span class="arithmatex">\(c_1 a_1 + \cdots + c_n a_n\)</span> with <em>any</em> coefficients is a linear combination. A weighted average is the special case with coefficients that are not negative and sum to one, and its formal name is a <strong>convex combination</strong>.</p>
+<h3 id="12-log-is-concave-exp-is-convex">1.2 Log is concave, exp is convex<a class="headerlink" href="#12-log-is-concave-exp-is-convex" title="Permanent link">&para;</a></h3>
+<p>A function whose second derivative is never positive is concave; never negative, convex. The second derivative measures bending: negative means the slope is decreasing, so the graph bends down.</p>
+<table>
+<thead>
+<tr>
+<th>function</th>
+<th>second derivative</th>
+<th>so it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(\log u\)</span>, for <span class="arithmatex">\(u &gt; 0\)</span></td>
+<td><span class="arithmatex">\(-1/u^2 &lt; 0\)</span></td>
+<td><strong>concave</strong></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(e^u\)</span></td>
+<td><span class="arithmatex">\(e^u &gt; 0\)</span></td>
+<td><strong>convex</strong></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(u^2\)</span></td>
+<td><span class="arithmatex">\(2 &gt; 0\)</span></td>
+<td>convex</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(a u + b\)</span></td>
+<td><span class="arithmatex">\(0\)</span></td>
+<td>both: a straight line is its own chord</td>
+</tr>
+</tbody>
+</table>
+<p><strong>With numbers.</strong> For <span class="arithmatex">\(\log\)</span>, take <span class="arithmatex">\(a = 1\)</span>, <span class="arithmatex">\(b = 4\)</span> and equal weights. The function of the average is <span class="arithmatex">\(\log 2.5 = 0.916\)</span>. The average of the function is <span class="arithmatex">\(\tfrac12(\log 1 + \log 4) = 0.693\)</span>. The first is larger, as concavity says.</p>
+<p>For <span class="arithmatex">\(e^u\)</span>, take <span class="arithmatex">\(a = 0\)</span>, <span class="arithmatex">\(b = 2\)</span>. The function of the average is <span class="arithmatex">\(e^1 = 2.72\)</span>. The average of the function is <span class="arithmatex">\(\tfrac12(e^0 + e^2) = 4.19\)</span>. Now the first is smaller, as convexity says.</p>
+<h3 id="13-an-expectation-is-a-weighted-average-jensens-inequality">1.3 An expectation is a weighted average: Jensen's inequality<a class="headerlink" href="#13-an-expectation-is-a-weighted-average-jensens-inequality" title="Permanent link">&para;</a></h3>
+<div class="admonition abstract">
+<p class="admonition-title">An expectation is a weighted average</p>
+<div class="arithmatex">\[
+\E[U] = p(u_1)\, u_1 + p(u_2)\, u_2 + \cdots + p(u_n)\, u_n
+\]</div>
+<p>The probabilities are not negative and add up to one. So an expectation is a weighted average of the values of <span class="arithmatex">\(U\)</span>, with the probabilities as the weights.</p>
+</div>
+<p><em>Example.</em> The number of heads in two tosses: <span class="arithmatex">\(\tfrac14 \cdot 0 + \tfrac12 \cdot 1 + \tfrac14 \cdot 2 = 1\)</span>, with weights <span class="arithmatex">\(\tfrac14, \tfrac12, \tfrac14\)</span>.</p>
+<p>Put the values <span class="arithmatex">\(u_i\)</span> in the place of the points <span class="arithmatex">\(a_i\)</span> and the probabilities in the place of the weights. The left side of the many-point form becomes <span class="arithmatex">\(f(\E[U])\)</span> and the right side becomes <span class="arithmatex">\(\E[f(U)]\)</span>:</p>
+<div class="admonition abstract">
+<p class="admonition-title">Jensen's inequality</p>
+<p>For any random variable <span class="arithmatex">\(U\)</span>:</p>
+<div class="arithmatex">\[
+f \text{ concave:}\quad f\big(\E[U]\big) \;\ge\; \E\big[f(U)\big], \qquad\qquad f \text{ convex:}\quad f\big(\E[U]\big) \;\le\; \E\big[f(U)\big].
+\]</div>
+<p>If <span class="arithmatex">\(f\)</span> is strictly curved, equality holds only when <span class="arithmatex">\(U\)</span> is constant.</p>
+</div>
+<p>For a straight line the two sides are equal: that is the rule <span class="arithmatex">\(\E[aU + b] = a\E[U] + b\)</span> of note 3. The numbers of section 1.2 were two cases of Jensen, with <span class="arithmatex">\(U\)</span> equal to <span class="arithmatex">\(1\)</span> or <span class="arithmatex">\(4\)</span>, and to <span class="arithmatex">\(0\)</span> or <span class="arithmatex">\(2\)</span>, with probability <span class="arithmatex">\(\tfrac12\)</span> each.</p>
+<p><strong>See it.</strong> Each ▲ handle under the plot is one equally likely value of <span class="arithmatex">\(U\)</span>. The navy dots are the values <span class="arithmatex">\(f(u_i)\)</span>. Their average, the orange diamond, sits at horizontal position <span class="arithmatex">\(\E[U]\)</span> and height <span class="arithmatex">\(\E[f(U)]\)</span>. The ring on the graph directly above it is at height <span class="arithmatex">\(f(\E[U])\)</span>. The teal segment between them is the <strong>Jensen gap</strong>.</p>
+<div class="widget" data-widget="jensen"></div>
+<p class="widget-caption arithmatex">Drag the handles. With \(f = \log u\) the diamond is always below the ring; with \(u^2\) or \(e^u\), always above. Pull the points apart and the gap grows; bring them together and it shrinks to zero. Then press <em>show the tangent line</em>, which is the proof below.</p>
+
+<details class="note">
+<summary>Proof: the tangent line</summary>
+<p>Write <span class="arithmatex">\(\mu\)</span> for the number <span class="arithmatex">\(\E[U]\)</span>. This is just a name, which keeps the random <span class="arithmatex">\(U\)</span> apart from the one fixed point <span class="arithmatex">\(\mu\)</span> where we draw a tangent. For a concave <span class="arithmatex">\(f\)</span> the tangent line at <span class="arithmatex">\(\mu\)</span> lies above the graph everywhere:</p>
+<div class="arithmatex">\[
+f(u) \;\le\; f(\mu) + f'(\mu)\,(u - \mu) \qquad \text{for every } u .
+\]</div>
+<p>This holds for every value <span class="arithmatex">\(U\)</span> can take, so it holds on average. The right side is a straight line in <span class="arithmatex">\(u\)</span>, so its expectation is easy:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\E\big[f(U)\big] &amp;\le \E\big[f(\mu) + f'(\mu)(U - \mu)\big] &amp;&amp; \text{average of an inequality that holds everywhere} \\[4pt]
+&amp;= f(\mu) + f'(\mu)\,\big(\E[U] - \mu\big) &amp;&amp; f(\mu),\ f'(\mu) \text{ are fixed numbers} \\[4pt]
+&amp;= f\big(\E[U]\big) &amp;&amp; \E[U] - \mu = 0 . \qquad \square
+\end{aligned}
+\]</div>
+<p>The tangent lies above a concave graph by Taylor's theorem: <span class="arithmatex">\(f(u) = f(\mu) + f'(\mu)(u - \mu) + \tfrac12 f''(\xi)(u - \mu)^2\)</span> for some <span class="arithmatex">\(\xi\)</span> between <span class="arithmatex">\(\mu\)</span> and <span class="arithmatex">\(u\)</span>, and the last term is <span class="arithmatex">\(\le 0\)</span> when <span class="arithmatex">\(f'' \le 0\)</span>.</p>
+</details>
+<p><strong>Two quick uses.</strong></p>
+<ul>
+<li><em>Variance is never negative.</em> For the convex <span class="arithmatex">\(u^2\)</span>, Jensen gives <span class="arithmatex">\(\E[U^2] \ge (\E[U])^2\)</span>. The difference of the two sides is exactly <span class="arithmatex">\(\mathrm{Var}(U)\)</span> (note 3). So the Jensen gap for <span class="arithmatex">\(u^2\)</span> <em>is</em> the variance.</li>
+<li><em>The arithmetic mean is never below the geometric mean.</em> For positive <span class="arithmatex">\(a\)</span> and <span class="arithmatex">\(b\)</span> with probability <span class="arithmatex">\(\tfrac12\)</span> each, Jensen for <span class="arithmatex">\(\log\)</span> gives <span class="arithmatex">\(\log \tfrac{a + b}{2} \ge \tfrac12(\log a + \log b) = \log \sqrt{ab}\)</span>, so <span class="arithmatex">\(\tfrac{a + b}{2} \ge \sqrt{ab}\)</span>. For <span class="arithmatex">\(1\)</span> and <span class="arithmatex">\(4\)</span>: <span class="arithmatex">\(2.5 \ge 2\)</span>.</li>
+</ul>
+<div class="clip-pair">
+<div>
+<video class="clip" controls="controls" muted="muted" playsinline="playsinline" poster="../../assets/clips/proof-variance-nonnegative.jpg" preload="none"><source src="../../assets/clips/proof-variance-nonnegative.mp4" type="video/mp4"></video>
+<p class="widget-caption arithmatex">Variance is never negative, line by line.</p>
+</div>
+<div>
+<video class="clip" controls="controls" muted="muted" playsinline="playsinline" poster="../../assets/clips/proof-am-gm.jpg" preload="none"><source src="../../assets/clips/proof-am-gm.mp4" type="video/mp4"></video>
+<p class="widget-caption arithmatex">The arithmetic mean is never below the geometric mean.</p>
+</div>
+</div>
+<details class="question">
+<summary>Which way does the inequality go? I always forget.</summary>
+<p>Picture it rather than memorise it. Draw the concave <span class="arithmatex">\(\log\)</span> curve, put two dots on it, and mark the midpoint of the chord between them. The chord lies under the curve, so the average of the <span class="arithmatex">\(f\)</span>'s is below <span class="arithmatex">\(f\)</span> of the average. If that fails, use the numbers: <span class="arithmatex">\(\log 2.5 = 0.92\)</span> beats <span class="arithmatex">\(\tfrac12(\log 1 + \log 4) = 0.69\)</span>.</p>
+</details>
+<h3 id="14-where-a-log-meets-an-expectation">1.4 Where a log meets an expectation<a class="headerlink" href="#14-where-a-log-meets-an-expectation" title="Permanent link">&para;</a></h3>
+<p>Machine learning has two habits. It takes <strong>logarithms</strong>, because the probability of many independent data points is a product of small numbers and the log turns it into a sum. And it takes <strong>expectations</strong> over whatever it does not know: the data point, the hidden variable, the noise. So expressions with both a <span class="arithmatex">\(\log\)</span> and an <span class="arithmatex">\(\E\)</span> are everywhere, and the two do not commute. Since <span class="arithmatex">\(\log\)</span> is concave, Jensen says which is bigger:</p>
+<div class="arithmatex">\[
+\log \E[U] \;\ge\; \E[\log U] .
+\]</div>
+<p>This line is used twice on this page: to prove that the KL divergence is never negative (section 2), and to bound a log-likelihood we cannot compute (section 6).</p>
+<h2 id="2-kl-divergence">2. KL divergence<a class="headerlink" href="#2-kl-divergence" title="Permanent link">&para;</a></h2>
+<p>We need a single number that says how far apart two distributions <span class="arithmatex">\(q\)</span> and <span class="arithmatex">\(p\)</span> are. For now they are just two distributions.</p>
+<p><strong>The idea.</strong> At any point <span class="arithmatex">\(z\)</span>, compare how probable the two distributions think it is. The log of the ratio <span class="arithmatex">\(q(z)/p(z)\)</span> is positive where <span class="arithmatex">\(q\)</span> thinks <span class="arithmatex">\(z\)</span> more likely than <span class="arithmatex">\(p\)</span> does, negative where less, zero where they agree. Average that log-ratio, drawing <span class="arithmatex">\(z\)</span> from <span class="arithmatex">\(q\)</span>.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definition (Kullback–Leibler divergence)</p>
+<div class="arithmatex">\[
+\KL(q \,\|\, p) = \E_{z \sim q}\!\left[ \log \frac{q(z)}{p(z)} \right] = \sum_z q(z) \log \frac{q(z)}{p(z)} \quad\text{or}\quad \int q(z) \log \frac{q(z)}{p(z)}\, \d z .
+\]</div>
+<p>The distribution in the first slot is the one we average over.</p>
+</div>
+<p><strong>Example.</strong> Let <span class="arithmatex">\(p\)</span> be a fair coin and <span class="arithmatex">\(q\)</span> a coin that shows heads with probability <span class="arithmatex">\(0.9\)</span>:</p>
+<div class="arithmatex">\[
+\KL(q \,\|\, p) = 0.9 \log \frac{0.9}{0.5} + 0.1 \log \frac{0.1}{0.5} = 0.529 - 0.161 = 0.368 .
+\]</div>
+<p>The tails term is negative. Individual terms can be negative; the total cannot. Swapping the roles gives <span class="arithmatex">\(\KL(p \,\|\, q) = 0.5 \log \tfrac{0.5}{0.9} + 0.5 \log \tfrac{0.5}{0.1} = 0.511\)</span>, a different number. The KL is not symmetric.</p>
+<div class="admonition abstract">
+<p class="admonition-title">KL is never negative</p>
+<div class="arithmatex">\[
+\KL(q \,\|\, p) \;\ge\; 0, \qquad \text{with equality exactly when } q = p .
+\]</div>
+</div>
+<p><em>Proof, with Jensen.</em> Minus the KL flips the ratio inside the log. Then apply Jensen to the concave <span class="arithmatex">\(\log\)</span>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+-\KL(q \,\|\, p) &amp;= \E_q\!\left[ \log \frac{p(z)}{q(z)} \right] &amp;&amp; -\log a = \log \tfrac{1}{a} \\[4pt]
+&amp;\le \log \E_q\!\left[ \frac{p(z)}{q(z)} \right] &amp;&amp; \text{Jensen: } \log \text{ is concave} \\[4pt]
+&amp;= \log \sum_z q(z)\, \frac{p(z)}{q(z)} = \log \sum_z p(z) = \log 1 = 0 . &amp;&amp; \square
+\end{aligned}
+\]</div>
+<p>Equality in Jensen needs <span class="arithmatex">\(p(z)/q(z)\)</span> to be the same constant <span class="arithmatex">\(c\)</span> wherever <span class="arithmatex">\(q\)</span> has mass; both add up to one, so <span class="arithmatex">\(c = 1\)</span> and <span class="arithmatex">\(p = q\)</span>.</p>
+<video class="clip" controls muted playsinline preload="none" poster="../../assets/clips/proof-kl-nonnegative.jpg"><source src="../../assets/clips/proof-kl-nonnegative.mp4" type="video/mp4"></video>
+<p class="widget-caption arithmatex">The same proof, one line at a time.</p>
+
+<p>Since the KL is not symmetric, it is not a distance in the geometric sense. A good reading is: <strong>how badly does <span class="arithmatex">\(p\)</span> explain samples that actually come from <span class="arithmatex">\(q\)</span>?</strong></p>
+<video class="clip" controls muted playsinline preload="none" poster="../../assets/clips/kl-short.jpg"><source src="../../assets/clips/kl-short.mp4" type="video/mp4"></video>
+<p class="widget-caption arithmatex">Samples come from \(q\) and stay fixed. The model \(p\) moves until it explains them, and the KL falls to zero. This is the first row of the table below: fitting a model to data, with the data in the first slot.</p>
+
+<p><strong>Between two Gaussians</strong> the KL has a closed form:</p>
+<div class="arithmatex">\[
+\KL\big( \N(m_1, v_1) \,\|\, \N(m_2, v_2) \big) = \frac12 \left[ \log \frac{v_2}{v_1} + \frac{v_1 + (m_1 - m_2)^2}{v_2} - 1 \right].
+\]</div>
+<p>When the two variances are equal, the log term vanishes and what is left is a squared distance between the means:</p>
+<div class="arithmatex">\[
+\KL\big( \N(m_1, v) \,\|\, \N(m_2, v) \big) = \frac{(m_1 - m_2)^2}{2 v} .
+\]</div>
+<p>This second formula is the step that will turn the DDPM objective into the mean-squared-error loss everyone trains with.</p>
+<h3 id="which-side-do-we-adjust">Which side do we adjust?<a class="headerlink" href="#which-side-do-we-adjust" title="Permanent link">&para;</a></h3>
+<p>The definition fixes two roles and nothing else. The samples come from the first slot. The second slot is scored on how well it explains them. Which of the two is <em>ours</em> depends on the situation, and this page has both.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>first slot: where the samples come from</th>
+<th>second slot: scored on explaining them</th>
+<th>what we adjust</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fitting a model to data (section 3)</td>
+<td>the data</td>
+<td>the model <span class="arithmatex">\(p_\theta\)</span></td>
+<td>the second slot</td>
+</tr>
+<tr>
+<td>a proxy for a posterior (section 6)</td>
+<td>the proxy <span class="arithmatex">\(q\)</span></td>
+<td>the true posterior</td>
+<td>the first slot</td>
+</tr>
+</tbody>
+</table>
+<p>The first row is the common and intuitive one: the samples are given, and the model moves until it explains them. In the second row the thing we adjust sits in the first slot, for a practical reason: we can only average over a distribution we can draw samples from. One rule covers both: <strong>the first slot holds the distribution we can draw samples from, and we adjust whichever one is ours to adjust.</strong></p>
+<h3 id="seeing-the-kl">Seeing the KL<a class="headerlink" href="#seeing-the-kl" title="Permanent link">&para;</a></h3>
+<p>The illustration shows the second row: the navy curve is a target <span class="arithmatex">\(p\)</span>, the orange curve is a Gaussian <span class="arithmatex">\(q\)</span> that we adjust. The lower panel plots <span class="arithmatex">\(q(z) \log \tfrac{q(z)}{p(z)}\)</span>; its total area is <span class="arithmatex">\(\KL(q \,\|\, p)\)</span>.</p>
+<div class="widget" data-widget="kl"></div>
+<p class="widget-caption arithmatex">Move \(q\) with the sliders. The KL is never negative and reaches zero only when the orange curve lies on the navy one. Then switch to <em>two bumps</em> and press the two <em>minimise</em> buttons.</p>
+
+<p>With a two-bump target no single Gaussian fits, and the two directions disagree about which comes closest. Minimising <span class="arithmatex">\(\KL(q \,\|\, p)\)</span> puts <span class="arithmatex">\(q\)</span> on one bump: averaging over draws from <span class="arithmatex">\(q\)</span>, any mass <span class="arithmatex">\(q\)</span> puts in the empty valley is punished heavily, so it settles for one bump (<strong>mode-seeking</strong>). Minimising <span class="arithmatex">\(\KL(p \,\|\, q)\)</span> gives a wide Gaussian covering both bumps (<strong>mass-covering</strong>). The ELBO of section 6 uses the first, mode-seeking direction.</p>
+<details class="question">
+<summary>Why the logarithm? Why not compare q(z) and p(z) directly?</summary>
+<p>The log turns ratios into differences, and "how many times more likely" is the natural comparison for probabilities: being wrong by a factor of 2 should count the same at <span class="arithmatex">\(10^{-1}\)</span> as at <span class="arithmatex">\(10^{-6}\)</span>. Logs also make independent pieces add up: for independent coordinates, the KL of the joint is the sum of the KLs. And <span class="arithmatex">\(-\log p(z)\)</span> is the "surprise" of seeing <span class="arithmatex">\(z\)</span> when you expect <span class="arithmatex">\(p\)</span>, so the KL is the extra surprise you suffer, on average, by believing <span class="arithmatex">\(p\)</span> when the samples come from <span class="arithmatex">\(q\)</span>.</p>
+</details>
+<h2 id="3-the-goal-what-it-means-to-learn-the-data-distribution">3. The goal: what it means to learn the data distribution<a class="headerlink" href="#3-the-goal-what-it-means-to-learn-the-data-distribution" title="Permanent link">&para;</a></h2>
+<video class="clip" controls muted playsinline preload="none" poster="../../assets/clips/elbo-story.jpg"><source src="../../assets/clips/elbo-story.mp4" type="video/mp4"></video>
+<p class="widget-caption arithmatex">Sections 3 to 8 in a little over two minutes: the goal, why the direct approach fails, the hidden variable, the bound and its gap, and the ELBO as the training loss. The sections below take each step slowly.</p>
+
+<p>We have samples from an unknown distribution <span class="arithmatex">\(p_{\text{data}}(x)\)</span>. We want a distribution <span class="arithmatex">\(p_\theta(x)\)</span> with adjustable parameters <span class="arithmatex">\(\theta\)</span> that we can bring close to <span class="arithmatex">\(p_{\text{data}}\)</span>, and a way to draw new samples from it.</p>
+<p>"Close" now has a meaning: make <span class="arithmatex">\(\KL(p_{\text{data}} \,\|\, p_\theta)\)</span> small. The data sits in the first slot because the data is what we can draw samples from. The formula contains <span class="arithmatex">\(p_{\text{data}}\)</span>, which we do not know. Write it out and see how much of it we need:</p>
+<div class="arithmatex">\[
+\KL(p_{\text{data}} \,\|\, p_\theta)
+= \underbrace{\E_{\text{data}}\big[ \log p_{\text{data}}(x) \big]}_{\text{unknown, but contains no } \theta}
+\;-\; \underbrace{\E_{\text{data}}\big[ \log p_\theta(x) \big]}_{\text{an average over data}} .
+\]</div>
+<p>The first term does not change whatever we do to the model. The second is an average over data, and data is what we have. So raising the second term lowers the KL, and we never need <span class="arithmatex">\(p_{\text{data}}\)</span>.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Result (maximum likelihood)</p>
+<p>Making <span class="arithmatex">\(\KL(p_{\text{data}} \,\|\, p_\theta)\)</span> small is the same as making</p>
+<div class="arithmatex">\[
+\E_{x \sim \text{data}}\big[ \log p_\theta(x) \big] \;\approx\; \frac{1}{N} \sum_{i=1}^{N} \log p_\theta(x_i)
+\]</div>
+<p>large, where <span class="arithmatex">\(x_1, \ldots, x_N\)</span> are the training examples.</p>
+</div>
+<p>The log of the probability came out of the KL; nobody chose it. The price is that the first term stays unknown, so we can tell which of two models is closer to the data but not how far the best one still is. And the goal now rests on one ability: <strong>computing <span class="arithmatex">\(\log p_\theta(x)\)</span> for a data point.</strong></p>
+<h2 id="4-can-a-network-output-the-density-directly">4. Can a network output the density directly?<a class="headerlink" href="#4-can-a-network-output-the-density-directly" title="Permanent link">&para;</a></h2>
+<p>Flexible functions are what neural networks are for, so the direct idea is to let a network <span class="arithmatex">\(f_\theta\)</span> take <span class="arithmatex">\(x\)</span> and return a density. A density must be non-negative, which <span class="arithmatex">\(e^{f_\theta(x)}\)</span> arranges, and it must integrate to one, which needs a division:</p>
+<div class="arithmatex">\[
+p_\theta(x) = \frac{e^{f_\theta(x)}}{Z_\theta}, \qquad Z_\theta = \int e^{f_\theta(x)}\, \d x .
+\]</div>
+<p><span class="arithmatex">\(Z_\theta\)</span> is an integral over all of data space, a million dimensions for a small image, of a function defined by a network. It has no formula, cannot be computed on a grid, and changes every time <span class="arithmatex">\(\theta\)</span> changes. Without it we cannot evaluate <span class="arithmatex">\(p_\theta(x)\)</span>, which is exactly the ability section 3 asked for.</p>
+<p>Two ways around <span class="arithmatex">\(Z_\theta\)</span> come back later in the series. Differentiate: <span class="arithmatex">\(\nabla_x \log p_\theta(x) = \nabla_x f_\theta(x)\)</span> does not contain <span class="arithmatex">\(Z_\theta\)</span>, and that gradient is the <strong>score</strong> of Part V. Or split <span class="arithmatex">\(x\)</span> into coordinates and model one at a time, each a one-dimensional distribution that is easy to normalise, which is how language models work. This page takes a third way: do not write <span class="arithmatex">\(p_\theta(x)\)</span> down at all.</p>
+<details class="note">
+<summary>Two simpler attempts: a formula, and a table</summary>
+<p><img alt="Three attempts at modelling the spiral" src="../../assets/s1-attempts.png" /></p>
+<p><strong>A formula</strong>, such as a Gaussian with fitted mean and covariance, is easy to fit and to sample, but it is one bump, and no choice of parameters bends a bump into a spiral (left panel).</p>
+<p><strong>A table</strong>: cut the plane into cells and count. It takes any shape (middle panel), but with <span class="arithmatex">\(10\)</span> cells per coordinate a tiny <span class="arithmatex">\(28 \times 28\)</span> image needs <span class="arithmatex">\(10^{784}\)</span> cells, and the table gives probability zero to everything not in the training set. To learn from finite data, what we learn about one <span class="arithmatex">\(x\)</span> must tell us something about nearby <span class="arithmatex">\(x\)</span>: a function with shared parameters, a network.</p>
+<p>The right panel belongs to section 5: noise pushed through a transformation.</p>
+</details>
+<h2 id="5-a-way-around-a-hidden-variable">5. A way around: a hidden variable<a class="headerlink" href="#5-a-way-around-a-hidden-variable" title="Permanent link">&para;</a></h2>
+<h3 id="51-describe-how-a-sample-is-made">5.1 Describe how a sample is made<a class="headerlink" href="#51-describe-how-a-sample-is-made" title="Permanent link">&para;</a></h3>
+<p>Instead of writing the distribution down, describe <strong>how a sample is produced</strong>.</p>
+<p><em>The smallest example.</em> A friend has two coins in a pocket, one fair and one that shows heads <span class="arithmatex">\(90\%\)</span> of the time. Each round the friend picks one without showing you, flips it, and tells you only the result. Which coin was used is a <strong>hidden variable</strong>: it shaped the result, and it is never in the data.</p>
+<p>A <strong>latent-variable model</strong> is the same idea with a continuous hidden variable and a network:</p>
+<ul>
+<li>a <strong>prior</strong> <span class="arithmatex">\(p(z)\)</span> over the latent <span class="arithmatex">\(z\)</span>, almost always <span class="arithmatex">\(\N(0, I)\)</span>;</li>
+<li>a <strong>decoder</strong> <span class="arithmatex">\(p_\theta(x \mid z)\)</span>, a distribution over data given a latent, with a network inside.</li>
+</ul>
+<p>To generate, draw <span class="arithmatex">\(z\)</span> from the prior and then <span class="arithmatex">\(x\)</span> from the decoder. The joint is <span class="arithmatex">\(p_\theta(x, z) = p(z)\, p_\theta(x \mid z)\)</span>, and we only ever observe <span class="arithmatex">\(x\)</span>. The model is flexible and easy to sample from. But it never wrote <span class="arithmatex">\(p_\theta(x)\)</span> down.</p>
+<p><em>The example for this page.</em> One latent number and one data number:</p>
+<div class="arithmatex">\[
+z \sim \N(0, 1), \qquad x \mid z \sim \N(w z,\; s^2), \qquad w = 1,\ s = 0.8 .
+\]</div>
+<p>Draw <span class="arithmatex">\(z\)</span>, multiply by <span class="arithmatex">\(w\)</span>, add Gaussian noise. Here every quantity has an exact formula, so each claim can be checked against the truth. A real VAE replaces <span class="arithmatex">\(wz\)</span> by a network, and then nothing has a formula.</p>
+<details class="question">
+<summary>Is the hidden variable something real, like the coin in the pocket?</summary>
+<p>In the coin story it is a real cause. In a VAE or in DDPM it is a modelling device: "hidden" only means it has no observed values in the data. Nothing guarantees that a learned <span class="arithmatex">\(z\)</span> means "slant" or "thickness"; whatever meaning it has comes out of training. In DDPM the hidden variables will be noisy versions of the image, which are not in the dataset because we invent them.</p>
+</details>
+<h3 id="52-the-likelihood-is-an-integral">5.2 The likelihood is an integral<a class="headerlink" href="#52-the-likelihood-is-an-integral" title="Permanent link">&para;</a></h3>
+<p>The probability the model gives to <span class="arithmatex">\(x\)</span> is the marginal, with the latent summed out (note 2):</p>
+<div class="arithmatex">\[
+p_\theta(x) = \int p(z)\, p_\theta(x \mid z)\, \d z .
+\]</div>
+<p>Go through every latent, ask how likely it is and how likely it is to produce this <span class="arithmatex">\(x\)</span>, and add up. In the example, <span class="arithmatex">\(x = wz + s\varepsilon\)</span> is a sum of independent Gaussians with variance <span class="arithmatex">\(w^2 + s^2 = 1.64\)</span>, so for <span class="arithmatex">\(x = 1.5\)</span></p>
+<div class="arithmatex">\[
+\log p(x) = -\tfrac12 \log(2\pi \cdot 1.64) - \frac{1.5^2}{2 \cdot 1.64} = -1.852 .
+\]</div>
+<p>Keep that number; it is the truth everything below is compared with. For a network decoder with a latent of many dimensions, the integral has no closed form and cannot be done on a grid.</p>
+<details class="question">
+<summary>Why not estimate the integral by sampling z from the prior?</summary>
+<p>In one dimension it works: averaging <span class="arithmatex">\(p(x \mid z)\)</span> over 20 000 prior samples gives <span class="arithmatex">\(\log p(x)\)</span> between <span class="arithmatex">\(-1.84\)</span> and <span class="arithmatex">\(-1.87\)</span>. But in many dimensions only a tiny region of latent space produces anything like a given <span class="arithmatex">\(x\)</span>, and a latent drawn from the prior almost never lands there. The fix is to sample <span class="arithmatex">\(z\)</span> from a distribution that <em>knows about <span class="arithmatex">\(x\)</span></em>, which is the posterior of the next section.</p>
+</details>
+<h3 id="53-the-posterior-and-a-proxy-for-it">5.3 The posterior, and a proxy for it<a class="headerlink" href="#53-the-posterior-and-a-proxy-for-it" title="Permanent link">&para;</a></h3>
+<p>Given <span class="arithmatex">\(x\)</span>, which latents could have produced it? That is the <strong>posterior</strong> (note 2):</p>
+<div class="arithmatex">\[
+p_\theta(z \mid x) = \frac{p(z)\, p_\theta(x \mid z)}{p_\theta(x)} .
+\]</div>
+<p>The denominator is the integral we cannot compute. But the numerator can be computed for any <span class="arithmatex">\(z\)</span>, and the denominator does not depend on <span class="arithmatex">\(z\)</span>. So we know the posterior's <em>shape</em>; only its scale is missing. In the example it is <span class="arithmatex">\(\N(0.915,\ 0.390)\)</span> for <span class="arithmatex">\(x = 1.5\)</span>.</p>
+<p>Since the true posterior is out of reach in general, we bring in a <strong>proxy</strong>: a distribution <span class="arithmatex">\(q(z)\)</span> of our own, simple enough to sample from and evaluate, usually a Gaussian with an adjustable mean and variance. In a VAE a second network, the encoder, produces it.</p>
+<details class="question">
+<summary>We only want to generate. Why do we need the direction from x to z?</summary>
+<p>For training. To improve the decoder on a data point <span class="arithmatex">\(x\)</span>, we need to know which latents should have produced it, so we can push the decoder's output for those latents toward <span class="arithmatex">\(x\)</span>. In DDPM this direction comes for free: it is the noising process.</p>
+</details>
+<h2 id="6-the-elbo">6. The ELBO<a class="headerlink" href="#6-the-elbo" title="Permanent link">&para;</a></h2>
+<p>Fix one data point <span class="arithmatex">\(x\)</span> and any proxy <span class="arithmatex">\(q(z)\)</span>. Each line uses one fact:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\log p_\theta(x)
+&amp;= \E_{q}\big[ \log p_\theta(x) \big]
+&amp;&amp; \log p_\theta(x) \text{ does not depend on } z \\[4pt]
+&amp;= \E_{q}\!\left[ \log \frac{p_\theta(x, z)}{p_\theta(z \mid x)} \right]
+&amp;&amp; \text{definition of the posterior} \\[4pt]
+&amp;= \E_{q}\!\left[ \log \left( \frac{p_\theta(x, z)}{q(z)} \cdot \frac{q(z)}{p_\theta(z \mid x)} \right) \right]
+&amp;&amp; \text{multiply and divide by } q(z) \\[4pt]
+&amp;= \underbrace{\E_{q}\!\left[ \log \frac{p_\theta(x, z)}{q(z)} \right]}_{\text{ELBO}}
+ \;+\; \underbrace{\E_{q}\!\left[ \log \frac{q(z)}{p_\theta(z \mid x)} \right]}_{\KL(q \,\|\, p_\theta(z \mid x))}
+&amp;&amp; \text{log of a product is a sum}
+\end{aligned}
+\]</div>
+<div class="admonition abstract">
+<p class="admonition-title">Result (the ELBO identity)</p>
+<div class="arithmatex">\[
+\log p_\theta(x) \;=\; \text{ELBO}(q, \theta) \;+\; \KL\big( q \,\|\, p_\theta(z \mid x) \big) \;\ge\; \text{ELBO}(q, \theta),
+\]</div>
+<p>since the KL is never negative. ELBO stands for <strong>evidence lower bound</strong>; "evidence" is an old name for <span class="arithmatex">\(p(x)\)</span>.</p>
+</div>
+<ul>
+<li><strong>The ELBO is computable.</strong> It needs only the joint <span class="arithmatex">\(p(z)\, p_\theta(x \mid z)\)</span> and our own <span class="arithmatex">\(q\)</span>, and it is an expectation under <span class="arithmatex">\(q\)</span>, so it can be estimated by sampling from <span class="arithmatex">\(q\)</span>.</li>
+<li><strong>The gap is exactly the KL from <span class="arithmatex">\(q\)</span> to the true posterior.</strong> If <span class="arithmatex">\(q\)</span> is the posterior, the bound is an equality.</li>
+<li><strong>The left side does not depend on <span class="arithmatex">\(q\)</span>.</strong> So raising the ELBO through <span class="arithmatex">\(q\)</span> can only shrink the gap.</li>
+</ul>
+<details class="note">
+<summary>The two-line derivation, with Jensen</summary>
+<p>Multiply and divide by <span class="arithmatex">\(q\)</span> inside the integral, and use <span class="arithmatex">\(\log \E \ge \E \log\)</span> from section 1.4:</p>
+<div class="arithmatex">\[
+\log p_\theta(x) = \log \E_q\!\left[ \frac{p_\theta(x, z)}{q(z)} \right] \;\ge\; \E_q\!\left[ \log \frac{p_\theta(x, z)}{q(z)} \right].
+\]</div>
+<p>Quicker, but it only says the bound holds. The derivation above also says what the gap <em>is</em>.</p>
+</details>
+<h3 id="how-do-we-know-the-proxy-is-good">How do we know the proxy is good?<a class="headerlink" href="#how-do-we-know-the-proxy-is-good" title="Permanent link">&para;</a></h3>
+<p>We cannot compare <span class="arithmatex">\(q\)</span> with the true posterior directly, because we do not have the true posterior. The identity does it for us. Its left side does not depend on <span class="arithmatex">\(q\)</span>, so whenever a change to <span class="arithmatex">\(q\)</span> raises the ELBO, the KL from <span class="arithmatex">\(q\)</span> to the true posterior drops by exactly the same amount. We minimise a distance we cannot compute by maximising a quantity we can.</p>
+<p>This is the same move as in section 3. There the unknown was the data distribution, and the KL to it fell as an average over data rose. Here the unknown is the posterior, and the KL to it falls as the ELBO rises. In both cases an unknown constant is left over, so we can rank proxies but not read off how far the best one still is.</p>
+<details class="question">
+<summary>Does the gap ever actually close?</summary>
+<p>Only if the family of <span class="arithmatex">\(q\)</span> contains the true posterior. In the example it does, because the true posterior is Gaussian; the explorer below lets you close the gap by hand. For a network decoder the true posterior is generally not Gaussian and a gap remains. In DDPM, the posteriors that matter are exactly Gaussian, which is one reason the method is so clean.</p>
+</details>
+<h2 id="7-try-it">7. Try it<a class="headerlink" href="#7-try-it" title="Permanent link">&para;</a></h2>
+<p>The example with <span class="arithmatex">\(x = 1.5\)</span>. The navy curve is the true posterior; the orange curve is <span class="arithmatex">\(q\)</span>, starting at the prior.</p>
+<div class="widget" data-widget="elbo"></div>
+<p class="widget-caption arithmatex">The navy line on the right is \(\log p(x)\); it never moves when you change \(q\). The orange dot is the ELBO, and the strip between them is the gap, exactly \(\KL(q \,\|\, \text{true posterior})\). Try to push the dot past the line: you cannot. Then press <em>set q to the true posterior</em>.</p>
+
+<table>
+<thead>
+<tr>
+<th>proxy <span class="arithmatex">\(q\)</span></th>
+<th>reconstruction</th>
+<th><span class="arithmatex">\(-\KL(q \| \text{prior})\)</span></th>
+<th>ELBO</th>
+<th>gap</th>
+<th>ELBO + gap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>the prior, <span class="arithmatex">\(\N(0, 1)\)</span></td>
+<td><span class="arithmatex">\(-3.235\)</span></td>
+<td><span class="arithmatex">\(0\)</span></td>
+<td><span class="arithmatex">\(-3.235\)</span></td>
+<td><span class="arithmatex">\(1.383\)</span></td>
+<td><span class="arithmatex">\(-1.852\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\N(1.5,\ 0.25)\)</span></td>
+<td><span class="arithmatex">\(-0.891\)</span></td>
+<td><span class="arithmatex">\(-1.443\)</span></td>
+<td><span class="arithmatex">\(-2.334\)</span></td>
+<td><span class="arithmatex">\(0.482\)</span></td>
+<td><span class="arithmatex">\(-1.852\)</span></td>
+</tr>
+<tr>
+<td>the true posterior, <span class="arithmatex">\(\N(0.915,\ 0.390)\)</span></td>
+<td><span class="arithmatex">\(-1.268\)</span></td>
+<td><span class="arithmatex">\(-0.584\)</span></td>
+<td><span class="arithmatex">\(-1.852\)</span></td>
+<td><span class="arithmatex">\(0\)</span></td>
+<td><span class="arithmatex">\(-1.852\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The last column is always <span class="arithmatex">\(\log p(x) = -1.852\)</span>, as the identity promises.</p>
+<h2 id="8-the-elbo-as-the-training-loss">8. The ELBO as the training loss<a class="headerlink" href="#8-the-elbo-as-the-training-loss" title="Permanent link">&para;</a></h2>
+<p>Now the argument closes. Section 3 asked us to maximise <span class="arithmatex">\(\E_{\text{data}}[\log p_\theta(x)]\)</span>. Section 6 bounds <span class="arithmatex">\(\log p_\theta(x)\)</span> from below for every data point, so it bounds the average too:</p>
+<div class="arithmatex">\[
+\E_{x \sim \text{data}}\big[ \log p_\theta(x) \big] \;\ge\; \E_{x \sim \text{data}}\big[ \text{ELBO}(q_x, \theta) \big].
+\]</div>
+<div class="admonition abstract">
+<p class="admonition-title">The training objective</p>
+<p>Maximise the average ELBO over the data, with respect to the model's parameters <span class="arithmatex">\(\theta\)</span> and the proxies <span class="arithmatex">\(q\)</span> together. In code: minimise <span class="arithmatex">\(-\text{ELBO}\)</span>.</p>
+</div>
+<p>Substitute <span class="arithmatex">\(p_\theta(x, z) = p(z)\, p_\theta(x \mid z)\)</span> and regroup:</p>
+<div class="arithmatex">\[
+\text{ELBO} = \underbrace{\E_q\big[ \log p_\theta(x \mid z) \big]}_{\text{reconstruction}} \;-\; \underbrace{\KL\big( q(z) \,\|\, p(z) \big)}_{\text{penalty for leaving the prior}} .
+\]</div>
+<p><strong>Reconstruction</strong> is large when the latents proposed by <span class="arithmatex">\(q\)</span> decode to something close to <span class="arithmatex">\(x\)</span>; on its own it would shrink <span class="arithmatex">\(q\)</span> to a spike. <strong>The penalty</strong> is zero when <span class="arithmatex">\(q\)</span> is the prior; on its own it would make <span class="arithmatex">\(q\)</span> ignore <span class="arithmatex">\(x\)</span>. In the table, the prior has no penalty but poor reconstruction, the narrow guess reconstructs well but pays a heavy penalty, and the true posterior is the best compromise.</p>
+<p><strong>Where squared error comes from.</strong> With a Gaussian decoder, <span class="arithmatex">\(\log p(x \mid z) = -\frac{(x - wz)^2}{2s^2} + \text{const}\)</span>. The reconstruction term is minus a squared error. Maximum likelihood with a Gaussian output <em>is</em> least squares, and nobody had to choose it as a loss.</p>
+<details class="question">
+<summary>What happens if we drop the KL term?</summary>
+<p>Then we have an ordinary autoencoder. Reconstruction becomes excellent, but each data point's latents end up in narrow, scattered spikes. A latent drawn from the prior lands between them, where the decoder was never trained, and decodes to garbage. The KL term keeps the region the encoder uses and the region the prior samples from the same.</p>
+</details>
+<details class="question">
+<summary>Should the two terms be weighted against each other?</summary>
+<p>In the ELBO both have weight one, and that is what makes the sum a lower bound. In practice a weight <span class="arithmatex">\(\beta\)</span> on the KL is common: <span class="arithmatex">\(\beta &gt; 1\)</span> holds <span class="arithmatex">\(q\)</span> closer to the prior at the cost of reconstruction. That model is the <span class="arithmatex">\(\beta\)</span>-VAE. It no longer bounds the likelihood, but it is often useful.</p>
+</details>
+<details class="question">
+<summary>From a physicist: this looks like a free energy. Is it?</summary>
+<p>Yes. With an energy <span class="arithmatex">\(E(z) = -\log p_\theta(x, z)\)</span>, <span class="arithmatex">\(-\text{ELBO} = \E_q[E] - H(q)\)</span>: average energy minus entropy, the variational free energy of the trial distribution <span class="arithmatex">\(q\)</span>. The true posterior is the Boltzmann distribution with partition function <span class="arithmatex">\(p_\theta(x)\)</span>, and <span class="arithmatex">\(\log p(x) \ge \text{ELBO}\)</span> is the Gibbs–Bogoliubov inequality.</p>
+</details>
+<h2 id="9-where-this-goes-next">9. Where this goes next<a class="headerlink" href="#9-where-this-goes-next" title="Permanent link">&para;</a></h2>
+<p>Three facts carry forward.</p>
+<ol>
+<li>For any <span class="arithmatex">\(q\)</span>, <span class="arithmatex">\(\log p_\theta(x) = \text{ELBO} + \KL\big(q \,\|\, p_\theta(z \mid x)\big)\)</span>.</li>
+<li>The ELBO splits into reconstruction and a KL to the prior; KLs between Gaussians are closed-form, and with equal variances they are squared distances between means.</li>
+<li>A Gaussian sample can be written as mean plus scale times standard noise, <span class="arithmatex">\(z = \mu + \sigma \varepsilon\)</span>.</li>
+</ol>
+<p>Three changes turn this into DDPM:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>VAE</th>
+<th>DDPM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>latents</td>
+<td>one, <span class="arithmatex">\(z\)</span>, usually smaller than <span class="arithmatex">\(x\)</span></td>
+<td><span class="arithmatex">\(T\)</span> of them, <span class="arithmatex">\(x_1, \ldots, x_T\)</span>, each the size of the data</td>
+</tr>
+<tr>
+<td>proxy <span class="arithmatex">\(q\)</span></td>
+<td>a learned network, the encoder</td>
+<td>fixed: add a little Gaussian noise at each step</td>
+</tr>
+<tr>
+<td>decoder</td>
+<td>one network, one step</td>
+<td>one network applied <span class="arithmatex">\(T\)</span> times, each step removing a little noise</td>
+</tr>
+</tbody>
+</table>
+<p>With a fixed proxy there is nothing to learn on that side, and with a chain of latents the single KL becomes a sum of KLs, one per step.</p>
+<h2 id="code">Code<a class="headerlink" href="#code" title="Permanent link">&para;</a></h2>
+<p>The numbers in the table come from this script. It computes the exact log-likelihood and posterior of the example, the ELBO in closed form and by sampling, and checks the identity.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="sd">"""Study step 1: a latent-variable model small enough to check the ELBO against the exact answer.</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="sd">    latent     z ~ N(0, 1)</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="sd">    decoder    x | z ~ N(w z, s^2)</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="sd">so that        x ~ N(0, w^2 + s^2)                      (the marginal likelihood, exact)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="sd">and            z | x ~ N(w x / (w^2+s^2), s^2 / (w^2+s^2))   (the true posterior, exact)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="sd">For any Gaussian guess q(z) = N(m, v) the ELBO has a closed form, and</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="sd">    log p(x) = ELBO(q) + KL(q || true posterior)        holds exactly.</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="sd">"""</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">w</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.5</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="k">def</span><span class="w"> </span><span class="nf">log_normal</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="k">return</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">var</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">var</span><span class="p">)</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="k">def</span><span class="w"> </span><span class="nf">exact</span><span class="p">():</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="n">vx</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="n">w</span> <span class="o">+</span> <span class="n">s</span> <span class="o">*</span> <span class="n">s</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="k">return</span> <span class="n">log_normal</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">vx</span><span class="p">),</span> <span class="n">w</span> <span class="o">*</span> <span class="n">x</span> <span class="o">/</span> <span class="n">vx</span><span class="p">,</span> <span class="n">s</span> <span class="o">*</span> <span class="n">s</span> <span class="o">/</span> <span class="n">vx</span>          <span class="c1"># log p(x), posterior mean, posterior variance</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="k">def</span><span class="w"> </span><span class="nf">elbo_closed_form</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="n">reconstruction</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">w</span> <span class="o">*</span> <span class="n">m</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">w</span> <span class="o">*</span> <span class="n">w</span> <span class="o">*</span> <span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="n">s</span><span class="p">)</span>   <span class="c1"># E_q[log p(x|z)]</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="n">kl_to_prior</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">v</span> <span class="o">+</span> <span class="n">m</span> <span class="o">*</span> <span class="n">m</span> <span class="o">-</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>                                                  <span class="c1"># KL(q || N(0,1))</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    <span class="k">return</span> <span class="n">reconstruction</span> <span class="o">-</span> <span class="n">kl_to_prior</span><span class="p">,</span> <span class="n">reconstruction</span><span class="p">,</span> <span class="n">kl_to_prior</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="k">def</span><span class="w"> </span><span class="nf">elbo_monte_carlo</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">400_000</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>    <span class="n">z</span> <span class="o">=</span> <span class="n">m</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>       <span class="c1"># z ~ q</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">log_normal</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">+</span> <span class="n">log_normal</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span> <span class="o">*</span> <span class="n">z</span><span class="p">,</span> <span class="n">s</span> <span class="o">*</span> <span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="n">log_normal</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>   <span class="c1"># E_q[log p(x,z) - log q(z)]</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="k">def</span><span class="w"> </span><span class="nf">kl_gauss</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">m2</span><span class="p">,</span> <span class="n">v2</span><span class="p">):</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">v2</span> <span class="o">/</span> <span class="n">v1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">v1</span> <span class="o">+</span> <span class="p">(</span><span class="n">m1</span> <span class="o">-</span> <span class="n">m2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">v2</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="k">def</span><span class="w"> </span><span class="nf">prior_sampling_estimate</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="p">):</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>                        <span class="c1"># z ~ prior</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">log_normal</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span> <span class="o">*</span> <span class="n">z</span><span class="p">,</span> <span class="n">s</span> <span class="o">*</span> <span class="n">s</span><span class="p">))))</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>    <span class="n">logpx</span><span class="p">,</span> <span class="n">pm</span><span class="p">,</span> <span class="n">pv</span> <span class="o">=</span> <span class="n">exact</span><span class="p">()</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"exact:  log p(x) = </span><span class="si">{</span><span class="n">logpx</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">    true posterior = N(</span><span class="si">{</span><span class="n">pm</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">pv</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">"q = prior N(0,1)"</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="s2">"q = N(1.5, 0.25)"</span><span class="p">:</span> <span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">),</span> <span class="s2">"q = true posterior"</span><span class="p">:</span> <span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">pv</span><span class="p">)}</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>        <span class="n">e</span><span class="p">,</span> <span class="n">rec</span><span class="p">,</span> <span class="n">klp</span> <span class="o">=</span> <span class="n">elbo_closed_form</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>        <span class="n">gap</span> <span class="o">=</span> <span class="n">kl_gauss</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">pm</span><span class="p">,</span> <span class="n">pv</span><span class="p">)</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">20s</span><span class="si">}</span><span class="s2"> ELBO = </span><span class="si">{</span><span class="n">e</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">  (reconstruction </span><span class="si">{</span><span class="n">rec</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, KL to prior </span><span class="si">{</span><span class="n">klp</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)   "</span>
+<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>              <span class="sa">f</span><span class="s2">"gap KL(q||posterior) = </span><span class="si">{</span><span class="n">gap</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">   ELBO + gap = </span><span class="si">{</span><span class="n">e</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">gap</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">   Monte Carlo ELBO = </span><span class="si">{</span><span class="n">elbo_monte_carlo</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"estimating log p(x) by sampling z from the prior, 5 runs of 20 samples:   "</span><span class="p">,</span>
+<a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>          <span class="s2">"  "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">prior_sampling_estimate</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)))</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"same with 20000 samples:                                                  "</span><span class="p">,</span>
+<a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>          <span class="s2">"  "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">prior_sampling_estimate</span><span class="p">(</span><span class="mi">20000</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>exact:  log p(x) = -1.8523    true posterior = N(0.9146, 0.3902)
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>q = prior N(0,1)     ELBO = -3.2349  (reconstruction -3.2349, KL to prior 0.0000)   gap KL(q||posterior) = 1.3826   ELBO + gap = -1.8523   Monte Carlo ELBO = -3.2367
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>q = N(1.5, 0.25)     ELBO = -2.3343  (reconstruction -0.8911, KL to prior 1.4431)   gap KL(q||posterior) = 0.4820   ELBO + gap = -1.8523   Monte Carlo ELBO = -2.3339
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>q = true posterior   ELBO = -1.8523  (reconstruction -1.2684, KL to prior 0.5839)   gap KL(q||posterior) = 0.0000   ELBO + gap = -1.8523   Monte Carlo ELBO = -1.8523
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../probability/03-expectation-variance-covariance/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 3. Expectation, variance, covariance">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                3. Expectation, variance, covariance
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      <a href="https://eliassf73.github.io/elias-firisa-website/">Elias Firisa</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://eliassf73.github.io/elias-firisa-website/" target="_blank" rel="noopener" title="Website" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M351.9 280H161c2.9 64.5 17.2 123.9 37.5 167.4 11.4 24.5 23.7 41.8 35.1 52.4 11.2 10.5 18.9 12.2 22.9 12.2s11.7-1.7 22.9-12.2c11.4-10.6 23.7-28 35.1-52.4 20.3-43.5 34.6-102.9 37.5-167.4zm-191-48h190.9c-2.8-64.5-17.1-123.9-37.4-167.4-11.4-24.4-23.7-41.8-35.1-52.4C268.1 1.7 260.4 0 256.4 0s-11.7 1.7-22.9 12.2c-11.4 10.6-23.7 28-35.1 52.4-20.3 43.5-34.6 102.9-37.5 167.4m-48 0c3.5-85.6 25.6-165.1 57.9-217.3C78.7 47.3 10.9 131.2 1.5 232zM1.5 280c9.4 100.8 77.2 184.7 169.3 217.3-32.3-52.2-54.4-131.7-57.9-217.3zm398.4 0c-3.5 85.6-25.6 165.1-57.9 217.3 92.1-32.7 159.9-116.5 169.3-217.3zm111.4-48C501.9 131.2 434.1 47.3 342 14.7c32.3 52.2 54.4 131.7 57.9 217.3z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://github.com/EliasSf73" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="../../javascripts/widgets.js?v=1791958149"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

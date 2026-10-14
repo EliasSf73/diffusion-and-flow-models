@@ -1,58 +1,142 @@
+/* Computer Modern, the LaTeX typeface, so prose and MathJax equations match.
+   Self-hosted from cm-web-fonts (docs/assets/fonts). */
+@font-face { font-family: "CMU Serif"; src: url("../assets/fonts/cmunrm.woff") format("woff"); font-weight: normal; font-style: normal; font-display: swap; }
+@font-face { font-family: "CMU Serif"; src: url("../assets/fonts/cmunbx.woff") format("woff"); font-weight: bold; font-style: normal; font-display: swap; }
+@font-face { font-family: "CMU Serif"; src: url("../assets/fonts/cmunti.woff") format("woff"); font-weight: normal; font-style: italic; font-display: swap; }
+@font-face { font-family: "CMU Serif"; src: url("../assets/fonts/cmunbi.woff") format("woff"); font-weight: bold; font-style: italic; font-display: swap; }
+
 :root {
-  --md-primary-fg-color: #1f2a44;
-  --md-accent-fg-color: #c2410c;
-  --md-text-font: "Literata", Georgia, serif;
-  --heading-font: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --md-text-font: "CMU Serif", "Latin Modern Roman", Georgia, serif;
+  --md-code-font: "JetBrains Mono", Menlo, monospace;
+  --heading-font: "CMU Serif", "Latin Modern Roman", Georgia, serif;
+  --ink-button: #1f2a44;
 }
 
-/* reading column: keep lines at a comfortable length */
-.md-content__inner { max-width: 46rem; }
-.md-typeset { font-size: 0.86rem; line-height: 1.75; }
-.md-typeset p, .md-typeset li { text-align: justify; hyphens: auto; -webkit-hyphens: auto; text-justify: inter-word; }
-.md-typeset .admonition p, .md-typeset details p { text-align: left; }
+/* light: paper and ink */
+[data-md-color-scheme="default"] {
+  --md-default-bg-color: #fbf8f1;
+  --md-default-fg-color: rgba(24, 24, 27, 0.92);
+  --md-default-fg-color--light: rgba(24, 24, 27, 0.62);
+  --md-default-fg-color--lighter: rgba(24, 24, 27, 0.32);
+  --md-default-fg-color--lightest: rgba(24, 24, 27, 0.10);
+  --md-primary-fg-color: #fbf8f1;
+  --md-primary-fg-color--dark: #fbf8f1;
+  --md-primary-bg-color: #18181b;
+  --md-primary-bg-color--light: rgba(24, 24, 27, 0.6);
+  --md-accent-fg-color: #9a3412;
+  --md-typeset-a-color: #8a2c0d;
+  --md-code-bg-color: #f3efe6;
+  --md-footer-bg-color: #f3efe6;
+  --md-footer-bg-color--dark: #ece7dc;
+  --md-footer-fg-color: #18181b;
+  --md-footer-fg-color--light: rgba(24, 24, 27, 0.62);
+  --md-footer-fg-color--lighter: rgba(24, 24, 27, 0.45);
+  --rule: rgba(24, 24, 27, 0.78);
+  --box-bg: rgba(120, 100, 60, 0.05);
+}
 
-/* headings: a sans face against the serif body */
+/* dark: same type, warm charcoal */
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color: #17181b;
+  --md-primary-fg-color: #17181b;
+  --md-primary-bg-color: #ecebe6;
+  --md-accent-fg-color: #f0a868;
+  --md-typeset-a-color: #f0a868;
+  --ink-button: #3b4a6b;
+  --rule: rgba(236, 235, 230, 0.7);
+  --box-bg: rgba(255, 255, 255, 0.035);
+}
+
+/* header: ink on paper, no coloured bar */
+.md-header { box-shadow: none; border-bottom: 1px solid var(--md-default-fg-color--lightest); }
+.md-header__title { font-family: var(--heading-font); font-size: 1rem; }
+.md-search__form { background-color: var(--md-default-fg-color--lightest); }
+.md-search__input { color: var(--md-default-fg-color); }
+.md-search__input::placeholder, .md-search__icon { color: var(--md-default-fg-color--light); }
+
+/* reading column */
+.md-content__inner { max-width: 44rem; }
+.md-typeset { font-size: 0.95rem; line-height: 1.62; }
+.md-typeset p, .md-typeset li { text-align: justify; hyphens: auto; -webkit-hyphens: auto; text-justify: inter-word; }
+.md-typeset .admonition p, .md-typeset details p, .md-typeset .widget-caption { text-align: left; }
+.md-typeset em { font-style: italic; }
+
+/* headings, as in a LaTeX article */
 .md-typeset h1, .md-typeset h2, .md-typeset h3, .md-typeset h4 {
   font-family: var(--heading-font);
-  letter-spacing: -0.01em;
   color: var(--md-default-fg-color);
+  letter-spacing: 0;
 }
-.md-typeset h1 { font-weight: 700; font-size: 2rem; margin-bottom: 1.2rem; }
-.md-typeset h2 { font-weight: 600; font-size: 1.35rem; margin-top: 2.4rem; padding-bottom: 0.2rem; border-bottom: 1px solid var(--md-default-fg-color--lightest); }
-.md-typeset h3 { font-weight: 600; font-size: 1.05rem; margin-top: 1.8rem; }
-.md-header__title, .md-nav__title, .md-nav__link, .md-footer { font-family: var(--heading-font); }
-.md-nav { font-size: 0.72rem; }
+.md-typeset h1 { font-weight: normal; font-size: 2.1rem; text-align: center; line-height: 1.2; margin: 0.6rem 0 1.6rem; }
+.md-typeset h2 { font-weight: bold; font-size: 1.32rem; margin-top: 2.4rem; border: none; }
+.md-typeset h3 { font-weight: bold; font-size: 1.08rem; margin-top: 1.8rem; }
+.md-nav, .md-footer, .md-tabs { font-family: var(--heading-font); }
+.md-nav { font-size: 0.74rem; }
 
-/* tables, code, math */
-.md-typeset table:not([class]) { font-size: 0.78rem; }
-.md-typeset code { font-size: 0.8em; }
-.md-typeset mjx-container[display="true"] { margin: 1.1em 0 !important; }
-
-/* admonitions */
-.md-typeset .admonition, .md-typeset details { font-size: 0.8rem; }
-.md-typeset .admonition.rigor, .md-typeset details.rigor { border-color: #c2410c; }
-.md-typeset .rigor > .admonition-title, .md-typeset .rigor > summary { background-color: rgba(194, 65, 12, 0.1); }
-.md-typeset .rigor > .admonition-title::before, .md-typeset .rigor > summary::before {
-  background-color: #c2410c;
-  -webkit-mask-image: var(--md-admonition-icon--abstract);
-  mask-image: var(--md-admonition-icon--abstract);
+/* tables: booktabs */
+.md-typeset table:not([class]) {
+  font-size: 0.85rem; border: none; border-radius: 0; box-shadow: none; background: transparent;
+  border-top: 1.4px solid var(--rule); border-bottom: 1.4px solid var(--rule);
 }
+.md-typeset table:not([class]) th { background: transparent; font-weight: bold; border-bottom: 0.8px solid var(--rule); }
+.md-typeset table:not([class]) td { border-top: none; }
+.md-typeset table:not([class]) tr:hover { background: transparent; box-shadow: none; }
+
+/* code and math */
+.md-typeset code { font-size: 0.78em; }
+.md-typeset mjx-container[display="true"] { margin: 1em 0 !important; }
+
+/* boxes: theorem-style for definitions and results ("abstract"), quieter for the rest */
+.md-typeset .admonition, .md-typeset details {
+  font-size: 0.9rem; border: none; border-radius: 0; box-shadow: none;
+  background: var(--box-bg); border-left: 2px solid var(--md-default-fg-color--lighter);
+  padding: 0.1rem 0.9rem 0.2rem;
+}
+.md-typeset .admonition-title, .md-typeset summary {
+  background: transparent !important; font-weight: bold; padding-left: 0 !important; margin: 0.5rem 0 0 0;
+  border: none; font-family: var(--heading-font); font-size: 0.9rem;
+}
+.md-typeset .admonition-title::before { display: none; }
+.md-typeset .abstract > .admonition-title::after { content: "."; }
+.md-typeset .abstract { border-left-color: var(--md-default-fg-color--light); }
+.md-typeset details > summary { padding-right: 1.8rem !important; cursor: pointer; }
+.md-typeset details > summary::before { display: none; }
+.md-typeset details > summary::after { color: var(--md-default-fg-color--light); }
+.md-typeset .question > summary, .md-typeset .question > .admonition-title { font-style: italic; }
+.md-typeset .question { border-left-color: var(--md-accent-fg-color); }
+
+/* local-only: rigor ledger */
+.md-typeset .admonition.rigor, .md-typeset details.rigor { border-left-color: #c2410c; }
 
 /* status badges (local site only) */
-.status { display: inline-block; padding: 0 .5em; border-radius: .25em; font-size: .7rem; font-weight: 600; font-family: var(--heading-font); }
+.status { display: inline-block; padding: 0 .5em; border-radius: .25em; font-size: .7rem; font-weight: bold; font-family: var(--heading-font); }
 .status-draft { background: #fde68a; color: #78350f; }
 .status-review { background: #bfdbfe; color: #1e3a8a; }
 .status-done { background: #bbf7d0; color: #14532d; }
 .status-todo { background: #e5e7eb; color: #374151; }
 
+/* short animations (manim clips) */
+.md-typeset video.clip { display: block; width: 100%; border-radius: 4px; margin: 1.2em 0 0.4em; background: #fff; }
 
 /* interactive illustrations (docs/javascripts/widgets.js) */
 .widget { margin: 1.2em 0 1.4em; }
-.widget .wcanvas { display: block; width: 100%; max-width: 100%; height: auto !important; background: #fff; border-radius: 6px; touch-action: none; }
-.widget .wbar { display: flex; flex-wrap: wrap; gap: 8px 14px; justify-content: center; align-items: center; margin-top: 0.5em; font-family: var(--heading-font); font-size: 0.72rem; color: var(--md-default-fg-color); }
-.widget .wbar button { font: 600 0.72rem var(--heading-font); color: #fff; background: var(--md-primary-fg-color); border: 0; border-radius: 6px; padding: 0.35em 0.8em; cursor: pointer; }
+.widget .wcanvas { display: block; width: 100%; max-width: 100%; height: auto !important; background: #fff; border-radius: 4px; touch-action: none; }
+.widget .wbar { display: flex; flex-wrap: wrap; gap: 8px 14px; justify-content: center; align-items: center; margin-top: 0.5em; font-family: var(--heading-font); font-size: 0.8rem; color: var(--md-default-fg-color); }
+.widget .wbar button { font: bold 0.78rem var(--heading-font); color: #fff; background: var(--ink-button); border: 0; border-radius: 4px; padding: 0.35em 0.8em; cursor: pointer; }
 .widget .wbar button:hover { background: var(--md-accent-fg-color); }
 .widget .wbar label { display: inline-flex; align-items: center; gap: 6px; }
 .widget .wbar input[type=range] { width: 130px; accent-color: var(--md-accent-fg-color); }
-.widget .wbar .wval { min-width: 3em; font-weight: 600; color: var(--md-accent-fg-color); }
-.widget-caption { font-size: 0.78rem; color: var(--md-default-fg-color--light); text-align: left; margin-top: 0.4em; }
+.widget .wbar .wval { min-width: 3em; font-weight: bold; color: var(--md-accent-fg-color); }
+.widget-caption { font-size: 0.85rem; color: var(--md-default-fg-color--light); margin-top: 0.4em; }
+
+/* neutralise Material's per-type box colours (blue notes, green questions, ...) */
+.md-typeset :is(.admonition, details):is(.note, .abstract, .info, .tip, .example, .question, .warning, .quote) {
+  border-color: transparent; border-left: 2px solid var(--md-default-fg-color--lighter);
+}
+.md-typeset :is(.admonition, details).abstract { border-left-color: var(--md-default-fg-color--light); }
+.md-typeset :is(.admonition, details).question { border-left-color: var(--md-accent-fg-color); }
+.md-typeset :is(.admonition, details) > summary::after { background-color: var(--md-default-fg-color--light) !important; }
+.md-typeset :is(.admonition, details) > :is(.admonition-title, summary) { color: var(--md-default-fg-color); }
+.md-typeset .abstract > .admonition-title::after { content: "."; color: inherit; background: none; -webkit-mask: none; mask: none; position: static; width: auto; height: auto; }
+.md-typeset .clip-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }
+@media (max-width: 700px) { .md-typeset .clip-pair { grid-template-columns: 1fr; } }
