@@ -697,6 +697,9 @@
 
 
 <h1 id="diffusion-and-flow-models-from-scratch">Diffusion and Flow Models, from Scratch<a class="headerlink" href="#diffusion-and-flow-models-from-scratch" title="Permanent link">&para;</a></h1>
+<div class="flow-hero"></div>
+<p class="widget-caption arithmatex fh-caption">Every dot starts as a Gaussian sample and ends on the data. With the <em>ODE</em>, each dot follows one smooth path, and running it backwards returns every dot to where it began. With the <em>SDE</em>, each dot wanders randomly, yet the cloud as a whole passes through exactly the same distributions at every \(t\). Colour marks where each dot started: the ODE keeps neighbours together, the SDE shuffles them. Both are driven by quantities computed exactly here, a velocity field and a score; learning them from data is what these notes build up to.</p>
+
 <h2 id="about-these-notes">About these notes<a class="headerlink" href="#about-these-notes" title="Permanent link">&para;</a></h2>
 <p>I am writing these notes from the material I compiled while trying to understand diffusion and flow models: papers, textbooks, blog posts, lecture videos, and many conversations with large language models. They are first of all for me, as a self-contained reference I can come back to, and they are written so that anyone else can follow along.</p>
 <p>A few things I try to do along the way.</p>
@@ -841,6 +844,8 @@
         <script src="javascripts/mathjax.js"></script>
       
         <script src="javascripts/widgets.js?v=1791958149"></script>
+      
+        <script src="javascripts/flowhero.js?v=1791961143"></script>
       
         <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       

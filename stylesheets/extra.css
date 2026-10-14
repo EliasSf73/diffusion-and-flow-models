@@ -140,3 +140,16 @@
 .md-typeset .abstract > .admonition-title::after { content: "."; color: inherit; background: none; -webkit-mask: none; mask: none; position: static; width: auto; height: auto; }
 .md-typeset .clip-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }
 @media (max-width: 700px) { .md-typeset .clip-pair { grid-template-columns: 1fr; } }
+
+/* home-page animation (docs/javascripts/flowhero.js) */
+.flow-hero { max-width: 34rem; margin: 0.4rem auto 0; }
+.flow-hero .fh-plate { position: relative; border: 1px solid var(--md-default-fg-color--lightest); border-radius: 6px; overflow: hidden; }
+.flow-hero canvas { display: block; width: 100%; aspect-ratio: 1 / 1; }
+.flow-hero .fh-top { position: absolute; inset: 0 0 auto 0; display: flex; justify-content: space-between; padding: 0.5rem 0.75rem; font-size: 0.72rem; color: var(--md-default-fg-color--light); pointer-events: none; }
+.flow-hero .fh-top b { font-weight: normal; font-variant-numeric: tabular-nums; }
+.flow-hero .fh-bar { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; margin-top: 0.6rem; }
+.flow-hero .fh-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.35rem; }
+.flow-hero button { font: 0.74rem var(--heading-font); color: var(--md-default-fg-color--light); background: transparent; border: 1px solid var(--md-default-fg-color--lighter); border-radius: 999px; padding: 0.2em 0.85em; cursor: pointer; }
+.flow-hero button:hover { color: var(--md-default-fg-color); border-color: var(--md-default-fg-color--light); }
+.flow-hero button.on { color: var(--md-default-bg-color); background: var(--md-default-fg-color); border-color: var(--md-default-fg-color); }
+.md-typeset .fh-caption { max-width: 34rem; margin: 0.6rem auto 1.6rem; text-align: center; hyphens: none; -webkit-hyphens: none; }
