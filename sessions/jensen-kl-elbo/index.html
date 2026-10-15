@@ -920,7 +920,7 @@
 <li>A hidden variable gets around that, but its likelihood is an integral we cannot compute (section 5).</li>
 <li>The ELBO is a lower bound on that likelihood which we <em>can</em> compute (sections 6 and 7), and it becomes the training loss (section 8).</li>
 </ol>
-<p>The same bound, applied to a chain of hidden variables, is how DDPM is trained. That is the next session.</p>
+<p>The same bound, applied to a chain of hidden variables, is how DDPM is trained. That comes on a later page.</p>
 <h2 id="1-jensens-inequality">1. Jensen's inequality<a class="headerlink" href="#1-jensens-inequality" title="Permanent link">&para;</a></h2>
 <p>Jensen's inequality compares two orders of doing things: average first and then apply a curved function, or apply the function first and then average.</p>
 <video class="clip" controls muted playsinline preload="none" poster="../../assets/clips/jensen-short.jpg"><source src="../../assets/clips/jensen-short.mp4" type="video/mp4"></video>
@@ -1320,10 +1320,6 @@ p_\theta(z \mid x) = \frac{p(z)\, p_\theta(x \mid z)}{p_\theta(x)} .
 <details class="question">
 <summary>Should the two terms be weighted against each other?</summary>
 <p>In the ELBO both have weight one, and that is what makes the sum a lower bound. In practice a weight <span class="arithmatex">\(\beta\)</span> on the KL is common: <span class="arithmatex">\(\beta &gt; 1\)</span> holds <span class="arithmatex">\(q\)</span> closer to the prior at the cost of reconstruction. That model is the <span class="arithmatex">\(\beta\)</span>-VAE. It no longer bounds the likelihood, but it is often useful.</p>
-</details>
-<details class="question">
-<summary>From a physicist: this looks like a free energy. Is it?</summary>
-<p>Yes. With an energy <span class="arithmatex">\(E(z) = -\log p_\theta(x, z)\)</span>, <span class="arithmatex">\(-\text{ELBO} = \E_q[E] - H(q)\)</span>: average energy minus entropy, the variational free energy of the trial distribution <span class="arithmatex">\(q\)</span>. The true posterior is the Boltzmann distribution with partition function <span class="arithmatex">\(p_\theta(x)\)</span>, and <span class="arithmatex">\(\log p(x) \ge \text{ELBO}\)</span> is the Gibbs–Bogoliubov inequality.</p>
 </details>
 <h2 id="9-where-this-goes-next">9. Where this goes next<a class="headerlink" href="#9-where-this-goes-next" title="Permanent link">&para;</a></h2>
 <p>Three facts carry forward.</p>
