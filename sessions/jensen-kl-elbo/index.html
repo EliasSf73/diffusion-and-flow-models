@@ -1072,8 +1072,10 @@ f(u) \;\le\; f(\mu) + f'(\mu)\,(u - \mu) \qquad \text{for every } u .
 </div>
 </div>
 <details class="question">
-<summary>Which way does the inequality go? I always forget.</summary>
-<p>Picture it rather than memorise it. Draw the concave <span class="arithmatex">\(\log\)</span> curve, put two dots on it, and mark the midpoint of the chord between them. The chord lies under the curve, so the average of the <span class="arithmatex">\(f\)</span>'s is below <span class="arithmatex">\(f\)</span> of the average. If that fails, use the numbers: <span class="arithmatex">\(\log 2.5 = 0.92\)</span> beats <span class="arithmatex">\(\tfrac12(\log 1 + \log 4) = 0.69\)</span>.</p>
+<summary>Which way does the inequality go?</summary>
+<p>A convex function, like <span class="arithmatex">\(u^2\)</span>, is shaped like a bowl. A chord across a bowl hangs above the bottom, so the average of the values is the larger side: <span class="arithmatex">\(\E[f(U)] \ge f(\E[U])\)</span>. For <span class="arithmatex">\(u^2\)</span> this is the statement that the variance <span class="arithmatex">\(\E[U^2] - (\E[U])^2\)</span> is never negative, which is easy to recall.</p>
+<p>A concave function, like <span class="arithmatex">\(\log\)</span>, is shaped like a dome. The chord sits under it, so the inequality flips: <span class="arithmatex">\(f(\E[U]) \ge \E[f(U)]\)</span>.</p>
+<p>A quick check with numbers for <span class="arithmatex">\(\log\)</span>, using <span class="arithmatex">\(1\)</span> and <span class="arithmatex">\(4\)</span> with equal weights: the log of the average is <span class="arithmatex">\(\log 2.5 = 0.92\)</span>, and the average of the logs is <span class="arithmatex">\(\tfrac12(\log 1 + \log 4) = 0.69\)</span>. The log of the average is larger, as the dome says.</p>
 </details>
 <h3 id="14-where-a-log-meets-an-expectation">1.4 Where a log meets an expectation<a class="headerlink" href="#14-where-a-log-meets-an-expectation" title="Permanent link">&para;</a></h3>
 <p>Machine learning has two habits. It takes <strong>logarithms</strong>, because the probability of many independent data points is a product of small numbers and the log turns it into a sum. And it takes <strong>expectations</strong> over whatever it does not know: the data point, the hidden variable, the noise. So expressions with both a <span class="arithmatex">\(\log\)</span> and an <span class="arithmatex">\(\E\)</span> are everywhere, and the two do not commute. Since <span class="arithmatex">\(\log\)</span> is concave, Jensen says which is bigger:</p>
