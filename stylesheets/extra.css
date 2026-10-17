@@ -114,6 +114,7 @@
 .status-review { background: #bfdbfe; color: #1e3a8a; }
 .status-done { background: #bbf7d0; color: #14532d; }
 .status-todo { background: #e5e7eb; color: #374151; }
+.status-local { background: #fecaca; color: #7f1d1d; }
 
 /* short animations (manim clips) */
 .md-typeset video.clip { display: block; width: 100%; border-radius: 4px; margin: 1.2em 0 0.4em; background: #fff; }

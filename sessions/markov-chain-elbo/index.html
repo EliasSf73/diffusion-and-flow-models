@@ -1,0 +1,1146 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Lecture notes and derivations for a tutorial series on diffusion and flow models.">
+      
+      
+        <meta name="author" content="Elias Firisa">
+      
+      
+        <link rel="canonical" href="https://eliassf73.github.io/diffusion-and-flow-models/sessions/markov-chain-elbo/">
+      
+      
+        <link rel="prev" href="../jensen-kl-elbo/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>From one hidden variable to a chain - Diffusion and Flow Models, from Scratch</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#from-one-hidden-variable-to-a-chain" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Diffusion and Flow Models, from Scratch" class="md-header__button md-logo" aria-label="Diffusion and Flow Models, from Scratch" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Diffusion and Flow Models, from Scratch
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              From one hidden variable to a chain
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Diffusion and Flow Models, from Scratch" class="md-nav__button md-logo" aria-label="Diffusion and Flow Models, from Scratch" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Diffusion and Flow Models, from Scratch
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-what-is-a-generative-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0. What is a generative model?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Notes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    I. Probability foundations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    I. Probability foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probability/01-random-variables-and-distributions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Random variables and distributions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probability/02-joint-marginal-and-conditional-distributions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Joint, marginal and conditional distributions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../probability/03-expectation-variance-covariance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Expectation, variance, covariance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sessions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sessions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jensen-kl-elbo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    From Jensen's inequality to the ELBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    From one hidden variable to a chain
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    From one hidden variable to a chain
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0-where-we-are" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0. Where we are
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-one-hidden-variable-means-one-jump" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. One hidden variable means one jump
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-a-chain-of-hidden-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. A chain of hidden variables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-the-markov-assumption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. The Markov assumption
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. The Markov assumption">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-what-it-says" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 What it says
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-the-two-chains-of-ddpm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 The two chains of DDPM
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-the-elbo-for-one-hidden-variable-and-for-a-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. The ELBO, for one hidden variable and for a chain
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. The ELBO, for one hidden variable and for a chain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-put-in-the-two-products" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Put in the two products
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-turn-the-noising-step-around" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Turn the noising step around
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-the-result-next-to-the-one-variable-elbo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 The result, next to the one-variable ELBO
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-what-comes-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. What comes next
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="from-one-hidden-variable-to-a-chain">From one hidden variable to a chain<a class="headerlink" href="#from-one-hidden-variable-to-a-chain" title="Permanent link">&para;</a></h1>
+<p><em>Sessions.</em> This page continues <a href="../jensen-kl-elbo/">From Jensen's inequality to the ELBO</a>. It asks what goes wrong with a single hidden variable, replaces it with a chain of them, introduces the one assumption that keeps the chain manageable, and then puts the ELBO for one hidden variable next to the ELBO for the chain.</p>
+<h2 id="0-where-we-are">0. Where we are<a class="headerlink" href="#0-where-we-are" title="Permanent link">&para;</a></h2>
+<p>The previous page ended with three formulas. The goal is maximum likelihood: make <span class="arithmatex">\(\E_{\text{data}}[\log p_\theta(x)]\)</span> large. With a hidden variable <span class="arithmatex">\(z\)</span> and any proxy <span class="arithmatex">\(q(z)\)</span> for its posterior, the likelihood splits into a part we can compute and a gap:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\log p_\theta(x) &amp;= \underbrace{\E_q\!\left[ \log \frac{p_\theta(x, z)}{q(z)} \right]}_{\text{ELBO}} + \KL\big( q(z) \,\|\, p_\theta(z \mid x) \big) \\[4pt]
+&amp;\ge \text{ELBO}.
+\end{aligned}
+\]</div>
+<p>Writing <span class="arithmatex">\(p_\theta(x, z) = p(z)\, p_\theta(x \mid z)\)</span>, the ELBO has two terms, and the training loss is its negative, averaged over the data:</p>
+<div class="arithmatex">\[
+\text{ELBO} = \underbrace{\E_q\big[ \log p_\theta(x \mid z) \big]}_{\text{reconstruction}} - \underbrace{\KL\big( q(z) \,\|\, p(z) \big)}_{\text{stay near the prior}} .
+\]</div>
+<p>Everything below reuses these, with <span class="arithmatex">\(z\)</span> replaced by something bigger.</p>
+<h2 id="1-one-hidden-variable-means-one-jump">1. One hidden variable means one jump<a class="headerlink" href="#1-one-hidden-variable-means-one-jump" title="Permanent link">&para;</a></h2>
+<p>With one hidden variable, generating is a single jump: draw <span class="arithmatex">\(z\)</span> from <span class="arithmatex">\(\N(0, I)\)</span>, pass it through the decoder once, and the sample is done. The decoder's output is a Gaussian, <span class="arithmatex">\(p_\theta(x \mid z) = \N\big(x;\ \mu_\theta(z),\ \sigma^2 I\big)\)</span>: one guess <span class="arithmatex">\(\mu_\theta(z)\)</span>, with a little noise around it.</p>
+<p><strong>What goes wrong?</strong> Ask what the decoder <em>should</em> output for a given <span class="arithmatex">\(z\)</span>. If many different data points are plausible for that <span class="arithmatex">\(z\)</span>, the right answer is a distribution spread over all of them, possibly in several separate places. A Gaussian has one centre. The best single centre is the average of the plausible points, and the average of several data points is usually not a data point at all. For images, the average of several plausible images is a blur.</p>
+<p>The clip shows this on the spiral, first for one big jump and then for one small step.</p>
+<video class="clip" controls muted playsinline preload="none" poster="../../assets/clips/one-jump.jpg"><source src="../../assets/clips/one-jump.mp4" type="video/mp4"></video>
+<p class="widget-caption arithmatex">Training pairs each data point with a noisy version of itself. After a lot of noise, points from all over the spiral land in the same place, so a single noisy point could have come from almost anywhere. The best single Gaussian has to stretch over the whole spiral, and its samples fall between the arms. After a little noise, each point stays near where it was, the possible sources form one small patch, and a small Gaussian fits them.</p>
+
+<p>So a big jump asks a Gaussian to describe something that is not Gaussian, while a small step does not. The same problem hits the proxy <span class="arithmatex">\(q(z)\)</span>: the true posterior after one big jump is complicated, so a Gaussian proxy leaves a large gap in the bound.</p>
+<p><strong>The fix.</strong> Take many small jumps instead of one big one.</p>
+<h2 id="2-a-chain-of-hidden-variables">2. A chain of hidden variables<a class="headerlink" href="#2-a-chain-of-hidden-variables" title="Permanent link">&para;</a></h2>
+<p>Replace the single <span class="arithmatex">\(z\)</span> by a sequence of hidden variables. We name them so that the data is at one end and the noise at the other:</p>
+<div class="arithmatex">\[
+x_T \;\to\; x_{T-1} \;\to\; \cdots \;\to\; x_1 \;\to\; x_0 .
+\]</div>
+<p><span class="arithmatex">\(x_T\)</span> is pure noise, <span class="arithmatex">\(x_0\)</span> is the data, and generating walks from left to right, one small step at a time. We write <span class="arithmatex">\(x_{1:T}\)</span> for all the hidden variables <span class="arithmatex">\((x_1, \ldots, x_T)\)</span>, and <span class="arithmatex">\(x_{0:T}\)</span> for everything.</p>
+<p><strong>How do we write down the joint distribution?</strong> The chain rule of note 2 works for any number of variables: produce them one at a time, each given everything produced so far.</p>
+<div class="arithmatex">\[
+\begin{aligned}
+p(x_{0:T}) = p(x_T)\; &amp; p(x_{T-1} \mid x_T)\; p(x_{T-2} \mid x_{T-1}, x_T) \\
+&amp; \cdots\; p(x_0 \mid x_1, x_2, \ldots, x_T).
+\end{aligned}
+\]</div>
+<p>This is always true, and it is a problem. Each step may depend on <em>all</em> the steps before it. The last factor takes <span class="arithmatex">\(T\)</span> inputs, and with <span class="arithmatex">\(T = 1000\)</span> that is a thousand images. A model of this form is huge, and the ELBO for it has no structure to exploit. The same goes for the proxy <span class="arithmatex">\(q(x_{1:T} \mid x_0)\)</span>.</p>
+<h2 id="3-the-markov-assumption">3. The Markov assumption<a class="headerlink" href="#3-the-markov-assumption" title="Permanent link">&para;</a></h2>
+<h3 id="31-what-it-says">3.1 What it says<a class="headerlink" href="#31-what-it-says" title="Permanent link">&para;</a></h3>
+<p><strong>The idea in words.</strong> To decide the next state, only the current state matters, not the path that led to it.</p>
+<p><em>An everyday example.</em> In a board game, where your piece goes next depends on the square it is on now and on the die. It does not depend on which squares it visited earlier. Knowing the whole history tells you nothing more than knowing the current square.</p>
+<p><em>An example in the chain.</em> Take a slightly noisy image and add a little more noise. The result depends on the image you have now. How that image was made, from which clean picture and through which earlier noise, does not matter any more.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Definition (Markov chain)</p>
+<p>A sequence of random variables is a <strong>Markov chain</strong> if each one, given the one just before it, does not depend on any earlier ones:</p>
+<div class="arithmatex">\[
+p(x_{t-1} \mid x_t, x_{t+1}, \ldots, x_T) = p(x_{t-1} \mid x_t).
+\]</div>
+</div>
+<p>Put this into the chain rule of section 2 and every factor loses all its inputs but one:</p>
+<div class="arithmatex">\[
+p(x_{0:T}) = p(x_T) \prod_{t=1}^{T} p(x_{t-1} \mid x_t).
+\]</div>
+<p>One starting distribution and <span class="arithmatex">\(T\)</span> one-step transitions. That is the whole model.</p>
+<video class="clip" controls muted playsinline preload="none" poster="../../assets/clips/markov-arrows.jpg"><source src="../../assets/clips/markov-arrows.mp4" type="video/mp4"></video>
+<p class="widget-caption arithmatex">Without the assumption, every variable may depend on all the ones before it, and the number of arrows grows with the square of the chain's length. The Markov assumption keeps only the arrows between neighbours: each step looks at one state, the current one.</p>
+
+<details class="question">
+<summary>Is the Markov assumption a claim about the data?</summary>
+<p>No. It is a choice about how the model and the proxy are built. For the noising chain of the next section it is exactly true by construction: each step adds fresh noise to the current state only. For the generating chain it is a design decision, the same kind as choosing a Gaussian decoder, and the training objective tells us how well it works.</p>
+</details>
+<h3 id="32-the-two-chains-of-ddpm">3.2 The two chains of DDPM<a class="headerlink" href="#32-the-two-chains-of-ddpm" title="Permanent link">&para;</a></h3>
+<p>DDPM uses two Markov chains, one in each direction.</p>
+<p><strong>The proxy: a fixed noising chain.</strong> In the previous page, the proxy <span class="arithmatex">\(q\)</span> was ours to choose and learn. DDPM fixes it in advance to the simplest chain that destroys information gradually: shrink a little, add a little Gaussian noise, repeat. With numbers <span class="arithmatex">\(\beta_1, \ldots, \beta_T\)</span> between <span class="arithmatex">\(0\)</span> and <span class="arithmatex">\(1\)</span>, the <strong>noise schedule</strong>,</p>
+<div class="arithmatex">\[
+\begin{aligned}
+q(x_t \mid x_{t-1}) &amp;= \N\!\big(x_t;\ \sqrt{1 - \beta_t}\; x_{t-1},\ \beta_t I\big), \\[4pt]
+q(x_{1:T} \mid x_0) &amp;= \prod_{t=1}^{T} q(x_t \mid x_{t-1}).
+\end{aligned}
+\]</div>
+<p>It has no weights. Shrinking by <span class="arithmatex">\(\sqrt{1 - \beta_t}\)</span> while adding noise of variance <span class="arithmatex">\(\beta_t\)</span> keeps the overall size of the cloud steady, and after enough steps the chain arrives at <span class="arithmatex">\(\N(0, I)\)</span> whatever the data was.</p>
+<div class="widget" data-widget="chain"></div>
+<p class="widget-caption arithmatex">The noising chain, step by step. Each step shrinks the current points a little and adds fresh Gaussian noise; the spiral dissolves into a standard Gaussian.</p>
+
+<p><strong>The model: a learned denoising chain.</strong> It runs the other way, from noise to data, with one Gaussian step at a time:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+p(x_T) &amp;= \N(0, I), \\[4pt]
+p_\theta(x_{t-1} \mid x_t) &amp;= \N\!\big(x_{t-1};\ \mu_\theta(x_t, t),\ \sigma_t^2 I\big), \\[4pt]
+p_\theta(x_{0:T}) &amp;= p(x_T) \prod_{t=1}^{T} p_\theta(x_{t-1} \mid x_t).
+\end{aligned}
+\]</div>
+<p>One network <span class="arithmatex">\(\mu_\theta\)</span> serves every step; it is told which step it is on. Section 1 is the reason a Gaussian step is a reasonable choice here: each step is small.</p>
+<p><img alt="The forward and reverse chains" src="../../assets/s2-chain.png" /></p>
+<h2 id="4-the-elbo-for-one-hidden-variable-and-for-a-chain">4. The ELBO, for one hidden variable and for a chain<a class="headerlink" href="#4-the-elbo-for-one-hidden-variable-and-for-a-chain" title="Permanent link">&para;</a></h2>
+<p>The bound of section 0 holds for <em>any</em> hidden variable and <em>any</em> proxy. Nothing new has to be proved: replace <span class="arithmatex">\(z\)</span> by the whole chain <span class="arithmatex">\(x_{1:T}\)</span>, and <span class="arithmatex">\(q(z)\)</span> by the noising chain.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>one hidden variable</th>
+<th>a chain of hidden variables</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hidden variable</td>
+<td><span class="arithmatex">\(z\)</span></td>
+<td><span class="arithmatex">\(x_{1:T}\)</span></td>
+</tr>
+<tr>
+<td>model</td>
+<td><span class="arithmatex">\(p(z)\, p_\theta(x \mid z)\)</span></td>
+<td><span class="arithmatex">\(p(x_T) \prod_t p_\theta(x_{t-1} \mid x_t)\)</span></td>
+</tr>
+<tr>
+<td>proxy</td>
+<td><span class="arithmatex">\(q(z)\)</span>, learned</td>
+<td><span class="arithmatex">\(\prod_t q(x_t \mid x_{t-1})\)</span>, fixed</td>
+</tr>
+<tr>
+<td>the bound</td>
+<td><span class="arithmatex">\(\log p_\theta(x) \ge \E_q\!\left[\log \dfrac{p_\theta(x, z)}{q(z)}\right]\)</span></td>
+<td><span class="arithmatex">\(\log p_\theta(x_0) \ge \E_q\!\left[\log \dfrac{p_\theta(x_{0:T})}{q(x_{1:T} \mid x_0)}\right]\)</span></td>
+</tr>
+</tbody>
+</table>
+<video class="clip" controls muted playsinline preload="none" poster="../../assets/clips/elbo-chain.jpg"><source src="../../assets/clips/elbo-chain.mp4" type="video/mp4"></video>
+<p class="widget-caption arithmatex">The single-variable ELBO on the left, and the same bound with \(z\) replaced by the whole chain on the right. The reconstruction term and the prior term each have a counterpart, and the chain adds one new term for every small step.</p>
+
+<h3 id="41-put-in-the-two-products">4.1 Put in the two products<a class="headerlink" href="#41-put-in-the-two-products" title="Permanent link">&para;</a></h3>
+<p>Both the model and the proxy are Markov chains, so the log of each is a sum, and pairing terms with the same <span class="arithmatex">\(t\)</span> gives</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{ELBO} = \E_q\Big[ &amp; \log p(x_T) \\
+&amp; + \sum_{t=1}^{T} \log \frac{p_\theta(x_{t-1} \mid x_t)}{q(x_t \mid x_{t-1})} \Big].
+\end{aligned}
+\]</div>
+<p><strong>Each term is a ratio of <span class="arithmatex">\(p\)</span> and <span class="arithmatex">\(q\)</span>. Is it a KL divergence?</strong> Not yet. The top is a distribution over <span class="arithmatex">\(x_{t-1}\)</span>, the bottom is a distribution over <span class="arithmatex">\(x_t\)</span>: they describe different variables, pointing in opposite directions along the chain. A KL compares two distributions over the same variable. To get one, the noising step on the bottom has to be turned around.</p>
+<h3 id="42-turn-the-noising-step-around">4.2 Turn the noising step around<a class="headerlink" href="#42-turn-the-noising-step-around" title="Permanent link">&para;</a></h3>
+<p><strong>Can we just reverse <span class="arithmatex">\(q\)</span>?</strong> By Bayes' rule, <span class="arithmatex">\(q(x_{t-1} \mid x_t) = q(x_t \mid x_{t-1})\, q(x_{t-1}) / q(x_t)\)</span>, and <span class="arithmatex">\(q(x_{t-1})\)</span>, <span class="arithmatex">\(q(x_t)\)</span> are distributions of noisy <em>data</em>: they contain the unknown data distribution. So no.</p>
+<p><strong>What if we also know where the chain started?</strong> During training we do: <span class="arithmatex">\(x_0\)</span> is the training example. Two facts.</p>
+<ul>
+<li>By the Markov property, adding <span class="arithmatex">\(x_0\)</span> to the condition of a forward step changes nothing: <span class="arithmatex">\(q(x_t \mid x_{t-1}) = q(x_t \mid x_{t-1}, x_0)\)</span>.</li>
+<li>The chain rule, with <span class="arithmatex">\(x_0\)</span> carried along, can produce the pair <span class="arithmatex">\((x_{t-1}, x_t)\)</span> in either order: <span class="arithmatex">\(q(x_{t-1} \mid x_0)\, q(x_t \mid x_{t-1}, x_0) = q(x_t \mid x_0)\, q(x_{t-1} \mid x_t, x_0)\)</span>.</li>
+</ul>
+<p>Together, for <span class="arithmatex">\(t \ge 2\)</span>:</p>
+<div class="admonition abstract">
+<p class="admonition-title">The rewrite</p>
+<div class="arithmatex">\[
+q(x_t \mid x_{t-1}) = \frac{q(x_{t-1} \mid x_t, x_0)\; q(x_t \mid x_0)}{q(x_{t-1} \mid x_0)} .
+\]</div>
+</div>
+<p>The first factor is what we wanted: a backward step, a distribution over <span class="arithmatex">\(x_{t-1}\)</span>. In words, "given the noisy point and the clean example it came from, where was the chain one step earlier?" The other two factors cancel in the next step.</p>
+<details class="note">
+<summary>Substituting, and the telescoping sum</summary>
+<p>Split off the <span class="arithmatex">\(t = 1\)</span> term and put the rewrite into the others. The extra factors form the sum</p>
+<div class="arithmatex">\[
+\sum_{t=2}^{T} \log \frac{q(x_{t-1} \mid x_0)}{q(x_t \mid x_0)} = \log \frac{q(x_1 \mid x_0)}{q(x_T \mid x_0)},
+\]</div>
+<p>because the bottom of each fraction is the top of the next (write out <span class="arithmatex">\(T = 3\)</span> to see it). The <span class="arithmatex">\(q(x_1 \mid x_0)\)</span> left over cancels against the <span class="arithmatex">\(t = 1\)</span> term, and what remains is</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{ELBO} = \E_q\Big[ &amp; \log \frac{p(x_T)}{q(x_T \mid x_0)} + \sum_{t=2}^{T} \log \frac{p_\theta(x_{t-1} \mid x_t)}{q(x_{t-1} \mid x_t, x_0)} \\
+&amp; + \log p_\theta(x_0 \mid x_1) \Big].
+\end{aligned}
+\]</div>
+<p>Now every ratio compares two distributions over the same variable, and averaging each over the distribution on its bottom gives minus a KL.</p>
+</details>
+<h3 id="43-the-result-next-to-the-one-variable-elbo">4.3 The result, next to the one-variable ELBO<a class="headerlink" href="#43-the-result-next-to-the-one-variable-elbo" title="Permanent link">&para;</a></h3>
+<div class="admonition abstract">
+<p class="admonition-title">Result (the DDPM objective)</p>
+<p>For one data point <span class="arithmatex">\(x_0\)</span>, <span class="arithmatex">\(\log p_\theta(x_0) \ge \text{ELBO} = -L_T - \sum_{t=2}^{T} L_{t-1} - L_0\)</span>, with</p>
+<div class="arithmatex">\[
+\begin{aligned}
+L_T &amp;= \KL\big( q(x_T \mid x_0) \,\|\, p(x_T) \big), \\[4pt]
+L_{t-1} &amp;= \E_{q(x_t \mid x_0)}\Big[ \KL\big( q(x_{t-1} \mid x_t, x_0) \\
+&amp;\hspace{6em} \,\|\, p_\theta(x_{t-1} \mid x_t) \big) \Big], \\[4pt]
+L_0 &amp;= -\,\E_{q(x_1 \mid x_0)}\big[ \log p_\theta(x_0 \mid x_1) \big].
+\end{aligned}
+\]</div>
+</div>
+<table>
+<thead>
+<tr>
+<th>one hidden variable</th>
+<th>a chain</th>
+<th>what it asks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>reconstruction <span class="arithmatex">\(\E_q[\log p_\theta(x \mid z)]\)</span></td>
+<td><span class="arithmatex">\(-L_0\)</span></td>
+<td>from the least noisy point, recover the data</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(-\KL(q(z) \,\|\, p(z))\)</span></td>
+<td><span class="arithmatex">\(-L_T\)</span></td>
+<td>after all the noising, be where the prior is</td>
+</tr>
+<tr>
+<td>none</td>
+<td><span class="arithmatex">\(-L_{t-1}\)</span>, one for each <span class="arithmatex">\(t = 2, \ldots, T\)</span></td>
+<td>undo one small noising step correctly</td>
+</tr>
+</tbody>
+</table>
+<p>Three things to notice.</p>
+<ul>
+<li><strong><span class="arithmatex">\(L_T\)</span> has no <span class="arithmatex">\(\theta\)</span> in it.</strong> The noising chain and the prior are both fixed, and the chain ends at <span class="arithmatex">\(\N(0, I)\)</span> anyway. The term a VAE has to fight for comes for free.</li>
+<li><strong>The new terms are the heart of DDPM.</strong> Each <span class="arithmatex">\(L_{t-1}\)</span> compares the model's backward step with the true backward step of the noising chain, given the clean example. Section 1 promised that a small step is nearly Gaussian; here the target <span class="arithmatex">\(q(x_{t-1} \mid x_t, x_0)\)</span> turns out to be <em>exactly</em> Gaussian, which the next page shows.</li>
+<li><strong>Every term involves one step.</strong> The objective is a sum of separate one-step problems, so training can pick one step at random for each example instead of running the whole chain.</li>
+</ul>
+<h2 id="5-what-comes-next">5. What comes next<a class="headerlink" href="#5-what-comes-next" title="Permanent link">&para;</a></h2>
+<p>Two Gaussian facts finish the job: the noisy point <span class="arithmatex">\(x_t\)</span> can be produced from <span class="arithmatex">\(x_0\)</span> in one jump, and the backward target <span class="arithmatex">\(q(x_{t-1} \mid x_t, x_0)\)</span> is a Gaussian with an explicit mean. Then each <span class="arithmatex">\(L_{t-1}\)</span> becomes a squared distance between two means (the same-variance KL of the previous page), and the whole objective becomes "predict the noise".</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../jensen-kl-elbo/" class="md-footer__link md-footer__link--prev" aria-label="Previous: From Jensen&#39;s inequality to the ELBO">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                From Jensen's inequality to the ELBO
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      <a href="https://eliassf73.github.io/elias-firisa-website/">Elias Firisa</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://eliassf73.github.io/elias-firisa-website/" target="_blank" rel="noopener" title="Website" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M351.9 280H161c2.9 64.5 17.2 123.9 37.5 167.4 11.4 24.5 23.7 41.8 35.1 52.4 11.2 10.5 18.9 12.2 22.9 12.2s11.7-1.7 22.9-12.2c11.4-10.6 23.7-28 35.1-52.4 20.3-43.5 34.6-102.9 37.5-167.4zm-191-48h190.9c-2.8-64.5-17.1-123.9-37.4-167.4-11.4-24.4-23.7-41.8-35.1-52.4C268.1 1.7 260.4 0 256.4 0s-11.7 1.7-22.9 12.2c-11.4 10.6-23.7 28-35.1 52.4-20.3 43.5-34.6 102.9-37.5 167.4m-48 0c3.5-85.6 25.6-165.1 57.9-217.3C78.7 47.3 10.9 131.2 1.5 232zM1.5 280c9.4 100.8 77.2 184.7 169.3 217.3-32.3-52.2-54.4-131.7-57.9-217.3zm398.4 0c-3.5 85.6-25.6 165.1-57.9 217.3 92.1-32.7 159.9-116.5 169.3-217.3zm111.4-48C501.9 131.2 434.1 47.3 342 14.7c32.3 52.2 54.4 131.7 57.9 217.3z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://github.com/EliasSf73" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="../../javascripts/widgets.js?v=1791958149"></script>
+      
+        <script src="../../javascripts/flowhero.js?v=1791961143"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
