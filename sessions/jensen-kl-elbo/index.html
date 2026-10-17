@@ -954,7 +954,7 @@
 </ol>
 <p>The same bound, applied to a chain of hidden variables, is how DDPM is trained. That comes on a later page.</p>
 <h2 id="1-jensens-inequality">1. Jensen's inequality<a class="headerlink" href="#1-jensens-inequality" title="Permanent link">&para;</a></h2>
-<p>Jensen's inequality compares two orders of doing things: average first and then apply a curved function, or apply the function first and then average.</p>
+<p>In many derivations we end up comparing two quantities: a curved function applied to an average, and the average of that function. Jensen's inequality tells us which of the two is larger.</p>
 <video class="clip" controls muted playsinline preload="none" poster="../../assets/clips/jensen-short.jpg"><source src="../../assets/clips/jensen-short.mp4" type="video/mp4"></video>
 <p class="widget-caption arithmatex">A chord joins two points on the graph of \(\log\). As a weighted average slides between them, the graph stays above the chord. With probabilities as the weights, the same picture says \(\log \E[U] \ge \E[\log U]\): the log of an average is at least the average of the logs.</p>
 
@@ -1036,7 +1036,7 @@ f \text{ concave:}\quad f\big(\E[U]\big) \;\ge\; \E\big[f(U)\big], \qquad\qquad 
 <p>If <span class="arithmatex">\(f\)</span> is strictly curved, equality holds only when <span class="arithmatex">\(U\)</span> is constant.</p>
 </div>
 <p>For a straight line the two sides are equal: that is the rule <span class="arithmatex">\(\E[aU + b] = a\E[U] + b\)</span> of note 3. The numbers of section 1.2 were two cases of Jensen, with <span class="arithmatex">\(U\)</span> equal to <span class="arithmatex">\(1\)</span> or <span class="arithmatex">\(4\)</span>, and to <span class="arithmatex">\(0\)</span> or <span class="arithmatex">\(2\)</span>, with probability <span class="arithmatex">\(\tfrac12\)</span> each.</p>
-<p><strong>See it.</strong> Each ▲ handle under the plot is one equally likely value of <span class="arithmatex">\(U\)</span>. The navy dots are the values <span class="arithmatex">\(f(u_i)\)</span>. Their average, the orange diamond, sits at horizontal position <span class="arithmatex">\(\E[U]\)</span> and height <span class="arithmatex">\(\E[f(U)]\)</span>. The ring on the graph directly above it is at height <span class="arithmatex">\(f(\E[U])\)</span>. The teal segment between them is the <strong>Jensen gap</strong>.</p>
+<p>In the illustration below, each ▲ handle under the plot is one equally likely value of <span class="arithmatex">\(U\)</span>. The navy dots are the values <span class="arithmatex">\(f(u_i)\)</span>. Their average, the orange diamond, sits at horizontal position <span class="arithmatex">\(\E[U]\)</span> and height <span class="arithmatex">\(\E[f(U)]\)</span>. The ring on the graph directly above it is at height <span class="arithmatex">\(f(\E[U])\)</span>. The teal segment between them is the <strong>Jensen gap</strong>.</p>
 <div class="widget" data-widget="jensen"></div>
 <p class="widget-caption arithmatex">Drag the handles. With \(f = \log u\) the diamond is always below the ring; with \(u^2\) or \(e^u\), always above. Pull the points apart and the gap grows; bring them together and it shrinks to zero. Then press <em>show the tangent line</em>, which is the proof below.</p>
 
@@ -1056,7 +1056,7 @@ f(u) \;\le\; f(\mu) + f'(\mu)\,(u - \mu) \qquad \text{for every } u .
 \]</div>
 <p>The tangent lies above a concave graph by Taylor's theorem: <span class="arithmatex">\(f(u) = f(\mu) + f'(\mu)(u - \mu) + \tfrac12 f''(\xi)(u - \mu)^2\)</span> for some <span class="arithmatex">\(\xi\)</span> between <span class="arithmatex">\(\mu\)</span> and <span class="arithmatex">\(u\)</span>, and the last term is <span class="arithmatex">\(\le 0\)</span> when <span class="arithmatex">\(f'' \le 0\)</span>.</p>
 </details>
-<p><strong>Two quick uses.</strong></p>
+<p>Two familiar inequalities follow directly from Jensen's inequality.</p>
 <ul>
 <li><em>Variance is never negative.</em> For the convex <span class="arithmatex">\(u^2\)</span>, Jensen gives <span class="arithmatex">\(\E[U^2] \ge (\E[U])^2\)</span>. The difference of the two sides is exactly <span class="arithmatex">\(\mathrm{Var}(U)\)</span> (note 3). So the Jensen gap for <span class="arithmatex">\(u^2\)</span> <em>is</em> the variance.</li>
 <li><em>The arithmetic mean is never below the geometric mean.</em> For positive <span class="arithmatex">\(a\)</span> and <span class="arithmatex">\(b\)</span> with probability <span class="arithmatex">\(\tfrac12\)</span> each, Jensen for <span class="arithmatex">\(\log\)</span> gives <span class="arithmatex">\(\log \tfrac{a + b}{2} \ge \tfrac12(\log a + \log b) = \log \sqrt{ab}\)</span>, so <span class="arithmatex">\(\tfrac{a + b}{2} \ge \sqrt{ab}\)</span>. For <span class="arithmatex">\(1\)</span> and <span class="arithmatex">\(4\)</span>: <span class="arithmatex">\(2.5 \ge 2\)</span>.</li>
@@ -1078,14 +1078,14 @@ f(u) \;\le\; f(\mu) + f'(\mu)\,(u - \mu) \qquad \text{for every } u .
 <p>A quick check with numbers for <span class="arithmatex">\(\log\)</span>, using <span class="arithmatex">\(1\)</span> and <span class="arithmatex">\(4\)</span> with equal weights: the log of the average is <span class="arithmatex">\(\log 2.5 = 0.92\)</span>, and the average of the logs is <span class="arithmatex">\(\tfrac12(\log 1 + \log 4) = 0.69\)</span>. The log of the average is larger, as the dome says.</p>
 </details>
 <h3 id="14-where-a-log-meets-an-expectation">1.4 Where a log meets an expectation<a class="headerlink" href="#14-where-a-log-meets-an-expectation" title="Permanent link">&para;</a></h3>
-<p>Machine learning has two habits. It takes <strong>logarithms</strong>, because the probability of many independent data points is a product of small numbers and the log turns it into a sum. And it takes <strong>expectations</strong> over whatever it does not know: the data point, the hidden variable, the noise. So expressions with both a <span class="arithmatex">\(\log\)</span> and an <span class="arithmatex">\(\E\)</span> are everywhere, and the two do not commute. Since <span class="arithmatex">\(\log\)</span> is concave, Jensen says which is bigger:</p>
+<p>In machine learning we often work with the logarithm of a probability. The probability of a dataset is a product over many data points, and taking the log turns that product into a sum, which is much easier to handle. We also often take expectations, because some quantities are unknown or random, such as the data point, a hidden variable or the noise, and we average over them. As a result, expressions that contain both a <span class="arithmatex">\(\log\)</span> and an <span class="arithmatex">\(\E\)</span> come up all the time, and the order matters: the log of an average is not the same as the average of the logs. Since <span class="arithmatex">\(\log\)</span> is concave, Jensen's inequality tells us which one is larger:</p>
 <div class="arithmatex">\[
 \log \E[U] \;\ge\; \E[\log U] .
 \]</div>
-<p>This line is used twice on this page: to prove that the KL divergence is never negative (section 2), and to bound a log-likelihood we cannot compute (section 6).</p>
+<p>We will use this inequality twice on this page: to prove that the KL divergence is never negative (section 2), and to bound a log-likelihood we cannot compute (section 6).</p>
 <h2 id="2-kl-divergence">2. KL divergence<a class="headerlink" href="#2-kl-divergence" title="Permanent link">&para;</a></h2>
-<p>We need a single number that says how far apart two distributions <span class="arithmatex">\(q\)</span> and <span class="arithmatex">\(p\)</span> are. For now they are just two distributions.</p>
-<p><strong>The idea.</strong> At any point <span class="arithmatex">\(z\)</span>, compare how probable the two distributions think it is. The log of the ratio <span class="arithmatex">\(q(z)/p(z)\)</span> is positive where <span class="arithmatex">\(q\)</span> thinks <span class="arithmatex">\(z\)</span> more likely than <span class="arithmatex">\(p\)</span> does, negative where less, zero where they agree. Average that log-ratio, drawing <span class="arithmatex">\(z\)</span> from <span class="arithmatex">\(q\)</span>.</p>
+<p>Often we need to compare two distributions: a model with the data, for example, or an approximation with the distribution it is meant to approximate. The KL divergence is a way to measure how different two distributions <span class="arithmatex">\(q\)</span> and <span class="arithmatex">\(p\)</span> are.</p>
+<p>To build it, take a single point <span class="arithmatex">\(z\)</span> and compare how probable it is under each distribution. The log of the ratio <span class="arithmatex">\(q(z)/p(z)\)</span> is positive where <span class="arithmatex">\(q\)</span> gives <span class="arithmatex">\(z\)</span> more probability than <span class="arithmatex">\(p\)</span> does, negative where it gives less, and zero where the two agree. The KL divergence is the average of this log-ratio, with <span class="arithmatex">\(z\)</span> drawn from <span class="arithmatex">\(q\)</span>.</p>
 <div class="admonition abstract">
 <p class="admonition-title">Definition (Kullback–Leibler divergence)</p>
 <div class="arithmatex">\[
@@ -1116,7 +1116,7 @@ f(u) \;\le\; f(\mu) + f'(\mu)\,(u - \mu) \qquad \text{for every } u .
 <video class="clip" controls muted playsinline preload="none" poster="../../assets/clips/proof-kl-nonnegative.jpg"><source src="../../assets/clips/proof-kl-nonnegative.mp4" type="video/mp4"></video>
 <p class="widget-caption arithmatex">The same proof, one line at a time.</p>
 
-<p>Since the KL is not symmetric, it is not a distance in the geometric sense. A good reading is: <strong>how badly does <span class="arithmatex">\(p\)</span> explain samples that actually come from <span class="arithmatex">\(q\)</span>?</strong></p>
+<p>Since the KL is not symmetric, it is not a distance in the geometric sense. A useful way to read <span class="arithmatex">\(\KL(q \,\|\, p)\)</span> is as a measure of <strong>how badly <span class="arithmatex">\(p\)</span> explains samples that come from <span class="arithmatex">\(q\)</span></strong>.</p>
 <video class="clip" controls muted playsinline preload="none" poster="../../assets/clips/kl-short.jpg"><source src="../../assets/clips/kl-short.mp4" type="video/mp4"></video>
 <p class="widget-caption arithmatex">Samples come from \(q\) and stay fixed. The model \(p\) moves until it explains them, and the KL falls to zero. This is the first row of the table below: fitting a model to data, with the data in the first slot.</p>
 
@@ -1128,9 +1128,9 @@ f(u) \;\le\; f(\mu) + f'(\mu)\,(u - \mu) \qquad \text{for every } u .
 <div class="arithmatex">\[
 \KL\big( \N(m_1, v) \,\|\, \N(m_2, v) \big) = \frac{(m_1 - m_2)^2}{2 v} .
 \]</div>
-<p>This second formula is the step that will turn the DDPM objective into the mean-squared-error loss everyone trains with.</p>
+<p>This second formula is what later turns the DDPM objective into the mean-squared-error loss used in practice.</p>
 <h3 id="which-side-do-we-adjust">Which side do we adjust?<a class="headerlink" href="#which-side-do-we-adjust" title="Permanent link">&para;</a></h3>
-<p>The definition fixes two roles and nothing else. The samples come from the first slot. The second slot is scored on how well it explains them. Which of the two is <em>ours</em> depends on the situation, and this page has both.</p>
+<p>In the definition, the samples come from the distribution in the first slot, and the distribution in the second slot is scored on how well it explains them. Which of the two we adjust depends on the problem, and this page has both cases.</p>
 <table>
 <thead>
 <tr>
@@ -1155,7 +1155,7 @@ f(u) \;\le\; f(\mu) + f'(\mu)\,(u - \mu) \qquad \text{for every } u .
 </tr>
 </tbody>
 </table>
-<p>The first row is the common and intuitive one: the samples are given, and the model moves until it explains them. In the second row the thing we adjust sits in the first slot, for a practical reason: we can only average over a distribution we can draw samples from. One rule covers both: <strong>the first slot holds the distribution we can draw samples from, and we adjust whichever one is ours to adjust.</strong></p>
+<p>The first row is the common and intuitive one: the samples are given, and the model moves until it explains them. In the second row the thing we adjust sits in the first slot, for a practical reason: we can only average over a distribution we can draw samples from. In both cases, the first slot holds the distribution we can draw samples from, and we adjust whichever of the two is ours.</p>
 <h3 id="seeing-the-kl">Seeing the KL<a class="headerlink" href="#seeing-the-kl" title="Permanent link">&para;</a></h3>
 <p>The illustration shows the second row: the navy curve is a target <span class="arithmatex">\(p\)</span>, the orange curve is a Gaussian <span class="arithmatex">\(q\)</span> that we adjust. The lower panel plots <span class="arithmatex">\(q(z) \log \tfrac{q(z)}{p(z)}\)</span>; its total area is <span class="arithmatex">\(\KL(q \,\|\, p)\)</span>.</p>
 <div class="widget" data-widget="kl"></div>
@@ -1171,7 +1171,7 @@ f(u) \;\le\; f(\mu) + f'(\mu)\,(u - \mu) \qquad \text{for every } u .
 <p class="widget-caption arithmatex">The goal is to make \(\log p_\theta(x)\) large, but a network cannot give that density directly. A hidden variable turns it into an integral we cannot compute, and a proxy \(q\) turns the integral into a bound we can: the ELBO, whose gap to the true value is a KL divergence. Its negative is the training loss.</p>
 
 <p>We have samples from an unknown distribution <span class="arithmatex">\(p_{\text{data}}(x)\)</span>. We want a distribution <span class="arithmatex">\(p_\theta(x)\)</span> with adjustable parameters <span class="arithmatex">\(\theta\)</span> that we can bring close to <span class="arithmatex">\(p_{\text{data}}\)</span>, and a way to draw new samples from it.</p>
-<p>"Close" now has a meaning: make <span class="arithmatex">\(\KL(p_{\text{data}} \,\|\, p_\theta)\)</span> small. The data sits in the first slot because the data is what we can draw samples from. The formula contains <span class="arithmatex">\(p_{\text{data}}\)</span>, which we do not know. Write it out and see how much of it we need:</p>
+<p>With the KL divergence we can say what "close" means: we want <span class="arithmatex">\(\KL(p_{\text{data}} \,\|\, p_\theta)\)</span> to be small. The data sits in the first slot because the data is what we can draw samples from. The formula contains <span class="arithmatex">\(p_{\text{data}}\)</span>, which we do not know. Writing it out shows how much of it we actually need:</p>
 <div class="arithmatex">\[
 \KL(p_{\text{data}} \,\|\, p_\theta)
 = \underbrace{\E_{\text{data}}\big[ \log p_{\text{data}}(x) \big]}_{\text{unknown, but contains no } \theta}
@@ -1186,14 +1186,14 @@ f(u) \;\le\; f(\mu) + f'(\mu)\,(u - \mu) \qquad \text{for every } u .
 \]</div>
 <p>large, where <span class="arithmatex">\(x_1, \ldots, x_N\)</span> are the training examples.</p>
 </div>
-<p>The log of the probability came out of the KL; nobody chose it. The price is that the first term stays unknown, so we can tell which of two models is closer to the data but not how far the best one still is. And the goal now rests on one ability: <strong>computing <span class="arithmatex">\(\log p_\theta(x)\)</span> for a data point.</strong></p>
+<p>Note that the logarithm was not our choice; it came out of the KL. One limitation is that the first term stays unknown, so we can tell which of two models is closer to the data, but not how far the better one still is. What we need from the model, then, is a way to compute <span class="arithmatex">\(\log p_\theta(x)\)</span> for a data point.</p>
 <h2 id="4-can-a-network-output-the-density-directly">4. Can a network output the density directly?<a class="headerlink" href="#4-can-a-network-output-the-density-directly" title="Permanent link">&para;</a></h2>
-<p>Flexible functions are what neural networks are for, so the direct idea is to let a network <span class="arithmatex">\(f_\theta\)</span> take <span class="arithmatex">\(x\)</span> and return a density. A density must be non-negative, which <span class="arithmatex">\(e^{f_\theta(x)}\)</span> arranges, and it must integrate to one, which needs a division:</p>
+<p>Neural networks are flexible functions, so a natural first idea is to let a network <span class="arithmatex">\(f_\theta\)</span> take <span class="arithmatex">\(x\)</span> and return a density. A density must be non-negative, which <span class="arithmatex">\(e^{f_\theta(x)}\)</span> arranges, and it must integrate to one, which needs a division:</p>
 <div class="arithmatex">\[
 p_\theta(x) = \frac{e^{f_\theta(x)}}{Z_\theta}, \qquad Z_\theta = \int e^{f_\theta(x)}\, \d x .
 \]</div>
 <p><span class="arithmatex">\(Z_\theta\)</span> is an integral over all of data space, a million dimensions for a small image, of a function defined by a network. It has no formula, cannot be computed on a grid, and changes every time <span class="arithmatex">\(\theta\)</span> changes. Without it we cannot evaluate <span class="arithmatex">\(p_\theta(x)\)</span>, which is exactly the ability section 3 asked for.</p>
-<p>Two ways around <span class="arithmatex">\(Z_\theta\)</span> come back later in the series. Differentiate: <span class="arithmatex">\(\nabla_x \log p_\theta(x) = \nabla_x f_\theta(x)\)</span> does not contain <span class="arithmatex">\(Z_\theta\)</span>, and that gradient is the <strong>score</strong> of Part V. Or split <span class="arithmatex">\(x\)</span> into coordinates and model one at a time, each a one-dimensional distribution that is easy to normalise, which is how language models work. This page takes a third way: do not write <span class="arithmatex">\(p_\theta(x)\)</span> down at all.</p>
+<p>Two ways around <span class="arithmatex">\(Z_\theta\)</span> come back later in the series. Differentiate: <span class="arithmatex">\(\nabla_x \log p_\theta(x) = \nabla_x f_\theta(x)\)</span> does not contain <span class="arithmatex">\(Z_\theta\)</span>, and that gradient is the <strong>score</strong> of Part V. Or split <span class="arithmatex">\(x\)</span> into coordinates and model one at a time, each a one-dimensional distribution that is easy to normalise, which is how language models work. On this page we take a third route and do not write <span class="arithmatex">\(p_\theta(x)\)</span> down directly.</p>
 <details class="note">
 <summary>Two simpler attempts: a formula, and a table</summary>
 <p><img alt="Three attempts at modelling the spiral" src="../../assets/s1-attempts.png" /></p>
@@ -1203,14 +1203,14 @@ p_\theta(x) = \frac{e^{f_\theta(x)}}{Z_\theta}, \qquad Z_\theta = \int e^{f_\the
 </details>
 <h2 id="5-a-way-around-a-hidden-variable">5. A way around: a hidden variable<a class="headerlink" href="#5-a-way-around-a-hidden-variable" title="Permanent link">&para;</a></h2>
 <h3 id="51-describe-how-a-sample-is-made">5.1 Describe how a sample is made<a class="headerlink" href="#51-describe-how-a-sample-is-made" title="Permanent link">&para;</a></h3>
-<p>Instead of writing the distribution down, describe <strong>how a sample is produced</strong>.</p>
-<p><em>The smallest example.</em> A friend has two coins in a pocket, one fair and one that shows heads <span class="arithmatex">\(90\%\)</span> of the time. Each round the friend picks one without showing you, flips it, and tells you only the result. Which coin was used is a <strong>hidden variable</strong>: it shaped the result, and it is never in the data.</p>
+<p>Instead of writing the distribution down, we can describe <strong>how a sample is produced</strong>.</p>
+<p><em>A small example.</em> A friend has two coins in a pocket, one fair and one that shows heads <span class="arithmatex">\(90\%\)</span> of the time. Each round the friend picks one without showing you, flips it, and tells you only the result. Which coin was used is a <strong>hidden variable</strong>: it shaped the result, and it is never in the data.</p>
 <p>A <strong>latent-variable model</strong> is the same idea with a continuous hidden variable and a network:</p>
 <ul>
 <li>a <strong>prior</strong> <span class="arithmatex">\(p(z)\)</span> over the latent <span class="arithmatex">\(z\)</span>, almost always <span class="arithmatex">\(\N(0, I)\)</span>;</li>
 <li>a <strong>decoder</strong> <span class="arithmatex">\(p_\theta(x \mid z)\)</span>, a distribution over data given a latent, with a network inside.</li>
 </ul>
-<p>To generate, draw <span class="arithmatex">\(z\)</span> from the prior and then <span class="arithmatex">\(x\)</span> from the decoder. The joint is <span class="arithmatex">\(p_\theta(x, z) = p(z)\, p_\theta(x \mid z)\)</span>, and we only ever observe <span class="arithmatex">\(x\)</span>. The model is flexible and easy to sample from. But it never wrote <span class="arithmatex">\(p_\theta(x)\)</span> down.</p>
+<p>To generate, draw <span class="arithmatex">\(z\)</span> from the prior and then <span class="arithmatex">\(x\)</span> from the decoder. The joint is <span class="arithmatex">\(p_\theta(x, z) = p(z)\, p_\theta(x \mid z)\)</span>, and we only ever observe <span class="arithmatex">\(x\)</span>. The model is flexible and easy to sample from, but <span class="arithmatex">\(p_\theta(x)\)</span> itself does not appear anywhere in this description.</p>
 <p><em>The example for this page.</em> One latent number and one data number:</p>
 <div class="arithmatex">\[
 z \sim \N(0, 1), \qquad x \mid z \sim \N(w z,\; s^2), \qquad w = 1,\ s = 0.8 .
@@ -1229,7 +1229,7 @@ p_\theta(x) = \int p(z)\, p_\theta(x \mid z)\, \d z .
 <div class="arithmatex">\[
 \log p(x) = -\tfrac12 \log(2\pi \cdot 1.64) - \frac{1.5^2}{2 \cdot 1.64} = -1.852 .
 \]</div>
-<p>Keep that number; it is the truth everything below is compared with. For a network decoder with a latent of many dimensions, the integral has no closed form and cannot be done on a grid.</p>
+<p>Everything below is compared with this number. For a network decoder with a latent of many dimensions, the integral has no closed form and cannot be done on a grid.</p>
 <details class="question">
 <summary>Why not estimate the integral by sampling z from the prior?</summary>
 <p>In one dimension it works: averaging <span class="arithmatex">\(p(x \mid z)\)</span> over 20 000 prior samples gives <span class="arithmatex">\(\log p(x)\)</span> between <span class="arithmatex">\(-1.84\)</span> and <span class="arithmatex">\(-1.87\)</span>. But in many dimensions only a tiny region of latent space produces anything like a given <span class="arithmatex">\(x\)</span>, and a latent drawn from the prior almost never lands there. The fix is to sample <span class="arithmatex">\(z\)</span> from a distribution that <em>knows about <span class="arithmatex">\(x\)</span></em>, which is the posterior of the next section.</p>
@@ -1282,7 +1282,7 @@ p_\theta(z \mid x) = \frac{p(z)\, p_\theta(x \mid z)}{p_\theta(x)} .
 <p>Quicker, but it only says the bound holds. The derivation above also says what the gap <em>is</em>.</p>
 </details>
 <h3 id="how-do-we-know-the-proxy-is-good">How do we know the proxy is good?<a class="headerlink" href="#how-do-we-know-the-proxy-is-good" title="Permanent link">&para;</a></h3>
-<p>We cannot compare <span class="arithmatex">\(q\)</span> with the true posterior directly, because we do not have the true posterior. The identity does it for us. Its left side does not depend on <span class="arithmatex">\(q\)</span>, so whenever a change to <span class="arithmatex">\(q\)</span> raises the ELBO, the KL from <span class="arithmatex">\(q\)</span> to the true posterior drops by exactly the same amount. We minimise a distance we cannot compute by maximising a quantity we can.</p>
+<p>We cannot compare <span class="arithmatex">\(q\)</span> with the true posterior directly, because we do not have the true posterior. The identity helps here. Its left side does not depend on <span class="arithmatex">\(q\)</span>, so whenever a change to <span class="arithmatex">\(q\)</span> raises the ELBO, the KL from <span class="arithmatex">\(q\)</span> to the true posterior drops by exactly the same amount. In other words, maximising the ELBO over <span class="arithmatex">\(q\)</span> minimises that KL, even though the KL itself cannot be computed.</p>
 <p>This is the same move as in section 3. There the unknown was the data distribution, and the KL to it fell as an average over data rose. Here the unknown is the posterior, and the KL to it falls as the ELBO rises. In both cases an unknown constant is left over, so we can rank proxies but not read off how far the best one still is.</p>
 <details class="question">
 <summary>Does the gap ever actually close?</summary>
@@ -1333,7 +1333,7 @@ p_\theta(z \mid x) = \frac{p(z)\, p_\theta(x \mid z)}{p_\theta(x)} .
 </table>
 <p>The last column is always <span class="arithmatex">\(\log p(x) = -1.852\)</span>, as the identity promises.</p>
 <h2 id="8-the-elbo-as-the-training-loss">8. The ELBO as the training loss<a class="headerlink" href="#8-the-elbo-as-the-training-loss" title="Permanent link">&para;</a></h2>
-<p>Now the argument closes. Section 3 asked us to maximise <span class="arithmatex">\(\E_{\text{data}}[\log p_\theta(x)]\)</span>. Section 6 bounds <span class="arithmatex">\(\log p_\theta(x)\)</span> from below for every data point, so it bounds the average too:</p>
+<p>Section 3 asked us to maximise <span class="arithmatex">\(\E_{\text{data}}[\log p_\theta(x)]\)</span>. Section 6 bounds <span class="arithmatex">\(\log p_\theta(x)\)</span> from below for every data point, so it bounds the average too:</p>
 <div class="arithmatex">\[
 \E_{x \sim \text{data}}\big[ \log p_\theta(x) \big] \;\ge\; \E_{x \sim \text{data}}\big[ \text{ELBO}(q_x, \theta) \big].
 \]</div>
@@ -1346,7 +1346,7 @@ p_\theta(z \mid x) = \frac{p(z)\, p_\theta(x \mid z)}{p_\theta(x)} .
 \text{ELBO} = \underbrace{\E_q\big[ \log p_\theta(x \mid z) \big]}_{\text{reconstruction}} \;-\; \underbrace{\KL\big( q(z) \,\|\, p(z) \big)}_{\text{penalty for leaving the prior}} .
 \]</div>
 <p><strong>Reconstruction</strong> is large when the latents proposed by <span class="arithmatex">\(q\)</span> decode to something close to <span class="arithmatex">\(x\)</span>; on its own it would shrink <span class="arithmatex">\(q\)</span> to a spike. <strong>The penalty</strong> is zero when <span class="arithmatex">\(q\)</span> is the prior; on its own it would make <span class="arithmatex">\(q\)</span> ignore <span class="arithmatex">\(x\)</span>. In the table, the prior has no penalty but poor reconstruction, the narrow guess reconstructs well but pays a heavy penalty, and the true posterior is the best compromise.</p>
-<p><strong>Where squared error comes from.</strong> With a Gaussian decoder, <span class="arithmatex">\(\log p(x \mid z) = -\frac{(x - wz)^2}{2s^2} + \text{const}\)</span>. The reconstruction term is minus a squared error. Maximum likelihood with a Gaussian output <em>is</em> least squares, and nobody had to choose it as a loss.</p>
+<p><strong>Where squared error comes from.</strong> With a Gaussian decoder, <span class="arithmatex">\(\log p(x \mid z) = -\frac{(x - wz)^2}{2s^2} + \text{const}\)</span>. The reconstruction term is minus a squared error. Maximum likelihood with a Gaussian output is the same as least squares; the squared error was not chosen by hand.</p>
 <details class="question">
 <summary>What happens if we drop the KL term?</summary>
 <p>Then we have an ordinary autoencoder. Reconstruction becomes excellent, but each data point's latents end up in narrow, scattered spikes. A latent drawn from the prior lands between them, where the decoder was never trained, and decodes to garbage. The KL term keeps the region the encoder uses and the region the prior samples from the same.</p>

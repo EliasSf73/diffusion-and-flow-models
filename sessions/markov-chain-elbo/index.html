@@ -831,16 +831,16 @@
 <div class="arithmatex">\[
 \text{ELBO} = \underbrace{\E_q\big[ \log p_\theta(x \mid z) \big]}_{\text{reconstruction}} - \underbrace{\KL\big( q(z) \,\|\, p(z) \big)}_{\text{stay near the prior}} .
 \]</div>
-<p>Everything below reuses these, with <span class="arithmatex">\(z\)</span> replaced by something bigger.</p>
+<p>The rest of this page reuses these formulas, with <span class="arithmatex">\(z\)</span> replaced by a chain of hidden variables.</p>
 <h2 id="1-one-hidden-variable-means-one-jump">1. One hidden variable means one jump<a class="headerlink" href="#1-one-hidden-variable-means-one-jump" title="Permanent link">&para;</a></h2>
 <p>With one hidden variable, generating is a single jump: draw <span class="arithmatex">\(z\)</span> from <span class="arithmatex">\(\N(0, I)\)</span>, pass it through the decoder once, and the sample is done. The decoder's output is a Gaussian, <span class="arithmatex">\(p_\theta(x \mid z) = \N\big(x;\ \mu_\theta(z),\ \sigma^2 I\big)\)</span>: one guess <span class="arithmatex">\(\mu_\theta(z)\)</span>, with a little noise around it.</p>
-<p><strong>What goes wrong?</strong> Ask what the decoder <em>should</em> output for a given <span class="arithmatex">\(z\)</span>. If many different data points are plausible for that <span class="arithmatex">\(z\)</span>, the right answer is a distribution spread over all of them, possibly in several separate places. A Gaussian has one centre. The best single centre is the average of the plausible points, and the average of several data points is usually not a data point at all. For images, the average of several plausible images is a blur.</p>
+<p>The problem shows up when we ask what the decoder <em>should</em> output for a given <span class="arithmatex">\(z\)</span>. If many different data points are plausible for that <span class="arithmatex">\(z\)</span>, the right answer is a distribution spread over all of them, possibly in several separate places. A Gaussian has one centre. The best single centre is the average of the plausible points, and the average of several data points is usually not a data point at all. For images, the average of several plausible images is a blur.</p>
 <p>The clip shows this on the spiral, first for one big jump and then for one small step.</p>
 <video class="clip" controls muted playsinline preload="none" poster="../../assets/clips/one-jump.jpg"><source src="../../assets/clips/one-jump.mp4" type="video/mp4"></video>
 <p class="widget-caption arithmatex">Training pairs each data point with a noisy version of itself. After a lot of noise, points from all over the spiral land in the same place, so a single noisy point could have come from almost anywhere. The best single Gaussian has to stretch over the whole spiral, and its samples fall between the arms. After a little noise, each point stays near where it was, the possible sources form one small patch, and a small Gaussian fits them.</p>
 
 <p>So a big jump asks a Gaussian to describe something that is not Gaussian, while a small step does not. The same problem hits the proxy <span class="arithmatex">\(q(z)\)</span>: the true posterior after one big jump is complicated, so a Gaussian proxy leaves a large gap in the bound.</p>
-<p><strong>The fix.</strong> Take many small jumps instead of one big one.</p>
+<p>This suggests replacing the one big jump with many small ones.</p>
 <h2 id="2-a-chain-of-hidden-variables">2. A chain of hidden variables<a class="headerlink" href="#2-a-chain-of-hidden-variables" title="Permanent link">&para;</a></h2>
 <p>Replace the single <span class="arithmatex">\(z\)</span> by a sequence of hidden variables. We name them so that the data is at one end and the noise at the other:</p>
 <div class="arithmatex">\[
@@ -857,8 +857,8 @@ p(x_{0:T}) = p(x_T)\; &amp; p(x_{T-1} \mid x_T)\; p(x_{T-2} \mid x_{T-1}, x_T) \
 <p>This is always true, and it is a problem. Each step may depend on <em>all</em> the steps before it. The last factor takes <span class="arithmatex">\(T\)</span> inputs, and with <span class="arithmatex">\(T = 1000\)</span> that is a thousand images. A model of this form is huge, and the ELBO for it has no structure to exploit. The same goes for the proxy <span class="arithmatex">\(q(x_{1:T} \mid x_0)\)</span>.</p>
 <h2 id="3-the-markov-assumption">3. The Markov assumption<a class="headerlink" href="#3-the-markov-assumption" title="Permanent link">&para;</a></h2>
 <h3 id="31-what-it-says">3.1 What it says<a class="headerlink" href="#31-what-it-says" title="Permanent link">&para;</a></h3>
-<p><strong>The idea in words.</strong> To decide the next state, only the current state matters, not the path that led to it.</p>
-<p><em>An everyday example.</em> In a board game, where your piece goes next depends on the square it is on now and on the die. It does not depend on which squares it visited earlier. Knowing the whole history tells you nothing more than knowing the current square.</p>
+<p>In words, the assumption is that the next state depends only on the current state, not on the path that led to it.</p>
+<p><em>For example</em>, in a board game, where your piece goes next depends on the square it is on now and on the die. It does not depend on which squares it visited earlier. Knowing the whole history tells you nothing more than knowing the current square.</p>
 <p><em>An example in the chain.</em> Take a slightly noisy image and add a little more noise. The result depends on the image you have now. How that image was made, from which clean picture and through which earlier noise, does not matter any more.</p>
 <div class="admonition abstract">
 <p class="admonition-title">Definition (Markov chain)</p>
@@ -871,7 +871,7 @@ p(x_{t-1} \mid x_t, x_{t+1}, \ldots, x_T) = p(x_{t-1} \mid x_t).
 <div class="arithmatex">\[
 p(x_{0:T}) = p(x_T) \prod_{t=1}^{T} p(x_{t-1} \mid x_t).
 \]</div>
-<p>One starting distribution and <span class="arithmatex">\(T\)</span> one-step transitions. That is the whole model.</p>
+<p>So the model is fully described by one starting distribution and <span class="arithmatex">\(T\)</span> one-step transitions.</p>
 <video class="clip" controls muted playsinline preload="none" poster="../../assets/clips/markov-arrows.jpg"><source src="../../assets/clips/markov-arrows.mp4" type="video/mp4"></video>
 <p class="widget-caption arithmatex">Without the assumption, every variable may depend on all the ones before it, and the number of arrows grows with the square of the chain's length. The Markov assumption keeps only the arrows between neighbours: each step looks at one state, the current one.</p>
 
@@ -900,10 +900,10 @@ p_\theta(x_{t-1} \mid x_t) &amp;= \N\!\big(x_{t-1};\ \mu_\theta(x_t, t),\ \sigma
 p_\theta(x_{0:T}) &amp;= p(x_T) \prod_{t=1}^{T} p_\theta(x_{t-1} \mid x_t).
 \end{aligned}
 \]</div>
-<p>One network <span class="arithmatex">\(\mu_\theta\)</span> serves every step; it is told which step it is on. Section 1 is the reason a Gaussian step is a reasonable choice here: each step is small.</p>
+<p>One network <span class="arithmatex">\(\mu_\theta\)</span> serves every step; it is told which step it is on. A Gaussian is a reasonable choice for each step because, as section 1 showed, each step is small.</p>
 <p><img alt="The forward and reverse chains" src="../../assets/s2-chain.png" /></p>
 <h2 id="4-the-elbo-for-one-hidden-variable-and-for-a-chain">4. The ELBO, for one hidden variable and for a chain<a class="headerlink" href="#4-the-elbo-for-one-hidden-variable-and-for-a-chain" title="Permanent link">&para;</a></h2>
-<p>The bound of section 0 holds for <em>any</em> hidden variable and <em>any</em> proxy. Nothing new has to be proved: replace <span class="arithmatex">\(z\)</span> by the whole chain <span class="arithmatex">\(x_{1:T}\)</span>, and <span class="arithmatex">\(q(z)\)</span> by the noising chain.</p>
+<p>The bound of section 0 holds for <em>any</em> hidden variable and <em>any</em> proxy. So we do not need to prove anything new: we replace <span class="arithmatex">\(z\)</span> by the whole chain <span class="arithmatex">\(x_{1:T}\)</span>, and <span class="arithmatex">\(q(z)\)</span> by the noising chain.</p>
 <table>
 <thead>
 <tr>
@@ -1016,10 +1016,10 @@ L_0 &amp;= -\,\E_{q(x_1 \mid x_0)}\big[ \log p_\theta(x_0 \mid x_1) \big].
 </tr>
 </tbody>
 </table>
-<p>Three things to notice.</p>
+<p>A few points about this result.</p>
 <ul>
-<li><strong><span class="arithmatex">\(L_T\)</span> has no <span class="arithmatex">\(\theta\)</span> in it.</strong> The noising chain and the prior are both fixed, and the chain ends at <span class="arithmatex">\(\N(0, I)\)</span> anyway. The term a VAE has to fight for comes for free.</li>
-<li><strong>The new terms are the heart of DDPM.</strong> Each <span class="arithmatex">\(L_{t-1}\)</span> compares the model's backward step with the true backward step of the noising chain, given the clean example. Section 1 promised that a small step is nearly Gaussian; here the target <span class="arithmatex">\(q(x_{t-1} \mid x_t, x_0)\)</span> turns out to be <em>exactly</em> Gaussian, which the next page shows.</li>
+<li><strong><span class="arithmatex">\(L_T\)</span> has no <span class="arithmatex">\(\theta\)</span> in it.</strong> The noising chain and the prior are both fixed, and the chain ends at <span class="arithmatex">\(\N(0, I)\)</span> regardless of the data, so this term needs no training. In a VAE, the corresponding term has to be learned.</li>
+<li><strong>The new terms are where the learning happens.</strong> Each <span class="arithmatex">\(L_{t-1}\)</span> compares the model's backward step with the true backward step of the noising chain, given the clean example. Section 1 promised that a small step is nearly Gaussian; here the target <span class="arithmatex">\(q(x_{t-1} \mid x_t, x_0)\)</span> turns out to be <em>exactly</em> Gaussian, which the next page shows.</li>
 <li><strong>Every term involves one step.</strong> The objective is a sum of separate one-step problems, so training can pick one step at random for each example instead of running the whole chain.</li>
 </ul>
 <h2 id="5-what-comes-next">5. What comes next<a class="headerlink" href="#5-what-comes-next" title="Permanent link">&para;</a></h2>
