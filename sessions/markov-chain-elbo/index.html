@@ -663,13 +663,74 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1-one-hidden-variable-means-one-jump" class="md-nav__link">
+  <a href="#1-why-one-big-jump-is-a-problem" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. One hidden variable means one jump
+        1. Why one big jump is a problem
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="1. Why one big jump is a problem">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-why-the-decoder-outputs-a-distribution-and-why-a-gaussian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Why the decoder outputs a distribution, and why a Gaussian
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-what-should-the-decoder-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 What should the decoder output?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-a-worked-example-with-two-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 A worked example with two values
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-why-a-little-noise-always-gives-a-nearly-gaussian-answer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Why a little noise always gives a nearly Gaussian answer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-what-the-number-of-steps-has-to-do-with-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 What the number of steps has to do with it
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -736,10 +797,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#41-put-in-the-two-products" class="md-nav__link">
+  <a href="#41-write-out-the-two-chains" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.1 Put in the two products
+        4.1 Write out the two chains
       
     </span>
   </a>
@@ -747,10 +808,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#42-turn-the-noising-step-around" class="md-nav__link">
+  <a href="#42-take-the-log" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.2 Turn the noising step around
+        4.2 Take the log
       
     </span>
   </a>
@@ -758,10 +819,65 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#43-the-result-next-to-the-one-variable-elbo" class="md-nav__link">
+  <a href="#43-set-the-first-step-aside" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.3 The result, next to the one-variable ELBO
+        4.3 Set the first step aside
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-turn-the-noising-step-around" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Turn the noising step around
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-substitute-and-cancel-the-extra-factors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Substitute, and cancel the extra factors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-collect-the-pieces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Collect the pieces
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#47-each-ratio-becomes-a-kl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7 Each ratio becomes a KL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#48-the-result-next-to-the-one-variable-elbo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.8 The result, next to the one-variable ELBO
       
     </span>
   </a>
@@ -774,10 +890,93 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-what-comes-next" class="md-nav__link">
+  <a href="#5-from-the-objective-to-a-loss-we-can-compute" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. What comes next
+        5. From the objective to a loss we can compute
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. From the objective to a loss we can compute">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-jumping-straight-to-any-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Jumping straight to any step
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-one-step-back-knowing-the-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 One step back, knowing the start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-each-kl-becomes-a-squared-distance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Each KL becomes a squared distance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-predict-the-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Predict the noise
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-the-simple-loss-and-what-the-network-learns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 The simple loss, and what the network learns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#56-training-and-generating" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6 Training and generating
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-the-whole-path-in-one-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. The whole path, in one view
       
     </span>
   </a>
@@ -818,7 +1017,7 @@
 
 
 <h1 id="from-one-hidden-variable-to-a-chain">From one hidden variable to a chain<a class="headerlink" href="#from-one-hidden-variable-to-a-chain" title="Permanent link">&para;</a></h1>
-<p><em>Sessions.</em> This page continues <a href="../jensen-kl-elbo/">From Jensen's inequality to the ELBO</a>. It asks what goes wrong with a single hidden variable, replaces it with a chain of them, introduces the one assumption that keeps the chain manageable, and then puts the ELBO for one hidden variable next to the ELBO for the chain.</p>
+<p><em>Sessions.</em> This page continues <a href="../jensen-kl-elbo/">From Jensen's inequality to the ELBO</a>. It asks what goes wrong with a single hidden variable, replaces it with a chain of them, introduces the one assumption that keeps the chain manageable, puts the ELBO for one hidden variable next to the ELBO for the chain, and follows the result all the way to the loss that DDPM is trained with.</p>
 <h2 id="0-where-we-are">0. Where we are<a class="headerlink" href="#0-where-we-are" title="Permanent link">&para;</a></h2>
 <p>The previous page ended with three formulas. The goal is maximum likelihood: make <span class="arithmatex">\(\E_{\text{data}}[\log p_\theta(x)]\)</span> large. With a hidden variable <span class="arithmatex">\(z\)</span> and any proxy <span class="arithmatex">\(q(z)\)</span> for its posterior, the likelihood splits into a part we can compute and a gap:</p>
 <div class="arithmatex">\[
@@ -832,15 +1031,73 @@
 \text{ELBO} = \underbrace{\E_q\big[ \log p_\theta(x \mid z) \big]}_{\text{reconstruction}} - \underbrace{\KL\big( q(z) \,\|\, p(z) \big)}_{\text{stay near the prior}} .
 \]</div>
 <p>The rest of this page reuses these formulas, with <span class="arithmatex">\(z\)</span> replaced by a chain of hidden variables.</p>
-<h2 id="1-one-hidden-variable-means-one-jump">1. One hidden variable means one jump<a class="headerlink" href="#1-one-hidden-variable-means-one-jump" title="Permanent link">&para;</a></h2>
-<p>With one hidden variable, generating is a single jump: draw <span class="arithmatex">\(z\)</span> from <span class="arithmatex">\(\N(0, I)\)</span>, pass it through the decoder once, and the sample is done. The decoder's output is a Gaussian, <span class="arithmatex">\(p_\theta(x \mid z) = \N\big(x;\ \mu_\theta(z),\ \sigma^2 I\big)\)</span>: one guess <span class="arithmatex">\(\mu_\theta(z)\)</span>, with a little noise around it.</p>
-<p>The problem shows up when we ask what the decoder <em>should</em> output for a given <span class="arithmatex">\(z\)</span>. If many different data points are plausible for that <span class="arithmatex">\(z\)</span>, the right answer is a distribution spread over all of them, possibly in several separate places. A Gaussian has one centre. The best single centre is the average of the plausible points, and the average of several data points is usually not a data point at all. For images, the average of several plausible images is a blur.</p>
-<p>The clip shows this on the spiral, first for one big jump and then for one small step.</p>
-<video class="clip" controls muted playsinline preload="none" poster="../../assets/clips/one-jump.jpg"><source src="../../assets/clips/one-jump.mp4" type="video/mp4"></video>
-<p class="widget-caption arithmatex">Training pairs each data point with a noisy version of itself. After a lot of noise, points from all over the spiral land in the same place, so a single noisy point could have come from almost anywhere. The best single Gaussian has to stretch over the whole spiral, and its samples fall between the arms. After a little noise, each point stays near where it was, the possible sources form one small patch, and a small Gaussian fits them.</p>
+<h2 id="1-why-one-big-jump-is-a-problem">1. Why one big jump is a problem<a class="headerlink" href="#1-why-one-big-jump-is-a-problem" title="Permanent link">&para;</a></h2>
+<p>With one hidden variable, generating a sample is a single jump: draw <span class="arithmatex">\(z\)</span> from <span class="arithmatex">\(\N(0, I)\)</span>, pass it through the decoder once, and read off <span class="arithmatex">\(x\)</span>. To see what goes wrong, we first need to be clear about what the decoder outputs, and why.</p>
+<h3 id="11-why-the-decoder-outputs-a-distribution-and-why-a-gaussian">1.1 Why the decoder outputs a distribution, and why a Gaussian<a class="headerlink" href="#11-why-the-decoder-outputs-a-distribution-and-why-a-gaussian" title="Permanent link">&para;</a></h3>
+<p>A neural network outputs numbers. A decoder that simply returned one point <span class="arithmatex">\(x = g_\theta(z)\)</span> for each <span class="arithmatex">\(z\)</span> would not be enough, for a reason we have already met. The ELBO contains the reconstruction term <span class="arithmatex">\(\E_q[\log p_\theta(x \mid z)]\)</span>, so we need a number for how likely a data point <span class="arithmatex">\(x\)</span> is given <span class="arithmatex">\(z\)</span>. If the decoder could only produce the single point <span class="arithmatex">\(g_\theta(z)\)</span>, every other <span class="arithmatex">\(x\)</span> would have probability zero, its log would be <span class="arithmatex">\(-\infty\)</span>, and there would be nothing to train.</p>
+<p>So the decoder has to describe a whole distribution over <span class="arithmatex">\(x\)</span> for each <span class="arithmatex">\(z\)</span>. Since a network can only output numbers, the usual approach is to fix a family of distributions that is described by a few numbers, and let the network output those numbers. The family has to allow two things:</p>
+<ul>
+<li><strong>evaluating</strong> <span class="arithmatex">\(\log p_\theta(x \mid z)\)</span> for a given <span class="arithmatex">\(x\)</span>, which training needs, and</li>
+<li><strong>sampling</strong> from it, which generation needs.</li>
+</ul>
+<p>The Gaussian is the simplest family that does both. The network outputs only the centre <span class="arithmatex">\(\mu_\theta(z)\)</span>, the spread <span class="arithmatex">\(\sigma\)</span> is fixed, and</p>
+<div class="arithmatex">\[
+\log p_\theta(x \mid z) = -\frac{\norm{x - \mu_\theta(z)}^2}{2\sigma^2} + \text{const}, \qquad \text{sample} = \mu_\theta(z) + \sigma\,\varepsilon .
+\]</div>
+<p>The log-density is a squared error, which is easy to compute and to differentiate, and a sample costs one line. That is why the decoder's output is a Gaussian. It is a choice made for convenience, and the rest of this section is about what that choice costs.</p>
+<details class="question">
+<summary>Could we use a more flexible family instead?</summary>
+<p>Yes. A mixture of several Gaussians, or a model that generates the coordinates of <span class="arithmatex">\(x\)</span> one at a time, can describe far more shapes. Both are used in practice, but they are harder to train and slower to sample from, especially for images with millions of coordinates. Diffusion models take a different route: they keep a simple Gaussian for each step and change the problem so that a Gaussian is good enough. The rest of this section explains how.</p>
+</details>
+<h3 id="12-what-should-the-decoder-output">1.2 What should the decoder output?<a class="headerlink" href="#12-what-should-the-decoder-output" title="Permanent link">&para;</a></h3>
+<p>A Gaussian is one fixed shape with one centre. Whether that is good enough depends on what the decoder should ideally output.</p>
+<p>To make this concrete, think of the hidden variable as a noisy version of the data, which is exactly what it will be in DDPM:</p>
+<div class="arithmatex">\[
+y = x + \sigma\, \varepsilon, \qquad \varepsilon \sim \N(0, 1).
+\]</div>
+<p>Generating means going back from <span class="arithmatex">\(y\)</span> to <span class="arithmatex">\(x\)</span>. The ideal decoder would output the true distribution of <span class="arithmatex">\(x\)</span> given <span class="arithmatex">\(y\)</span>. By Bayes' rule (note 2),</p>
+<div class="arithmatex">\[
+p(x \mid y) \;\propto\; \underbrace{p(x)}_{\text{how common } x \text{ is}} \;\times\; \underbrace{\N(y;\ x,\ \sigma^2)}_{\text{how likely the noise is to carry } x \text{ to } y} .
+\]</div>
+<p>As a function of <span class="arithmatex">\(x\)</span>, the second factor is a bump of width <span class="arithmatex">\(\sigma\)</span> centred at <span class="arithmatex">\(y\)</span>. So the ideal answer is the data distribution multiplied by a bump around the noisy point. The question is whether this product looks like a Gaussian.</p>
+<h3 id="13-a-worked-example-with-two-values">1.3 A worked example with two values<a class="headerlink" href="#13-a-worked-example-with-two-values" title="Permanent link">&para;</a></h3>
+<p>Let the data take only two values, <span class="arithmatex">\(-1\)</span> and <span class="arithmatex">\(+1\)</span>, each with probability <span class="arithmatex">\(\tfrac12\)</span>. Then <span class="arithmatex">\(p(x \mid y)\)</span> puts all its probability on these two values, and Bayes' rule gives</p>
+<div class="arithmatex">\[
+P(x = +1 \mid y) = \frac{\N(y;\, 1,\, \sigma^2)}{\N(y;\, 1,\, \sigma^2) + \N(y;\, -1,\, \sigma^2)} = \frac{1}{1 + e^{-2y/\sigma^2}} .
+\]</div>
+<p><strong>A lot of noise.</strong> Take <span class="arithmatex">\(\sigma = 1\)</span> and observe <span class="arithmatex">\(y = 0.3\)</span>. Then <span class="arithmatex">\(P(x = +1 \mid y) = 1/(1 + e^{-0.6}) = 0.65\)</span> and <span class="arithmatex">\(P(x = -1 \mid y) = 0.35\)</span>. Both values are still quite possible: the answer is two separate possibilities. The best a single Gaussian can do is to match the mean and the variance of this answer:</p>
+<div class="arithmatex">\[
+\text{mean} = 0.65 - 0.35 = 0.29, \qquad \text{variance} = 1 - 0.29^2 = 0.92 .
+\]</div>
+<p>So the Gaussian is centred at <span class="arithmatex">\(0.29\)</span>, where the data never is, and it is wide enough to cover both values. Its samples land anywhere between <span class="arithmatex">\(-2\)</span> and <span class="arithmatex">\(2\)</span>, mostly in places that are not data.</p>
+<p><strong>A little noise.</strong> Now take <span class="arithmatex">\(\sigma = 0.2\)</span> and observe <span class="arithmatex">\(y = 0.9\)</span>, a point that is a little noise away from <span class="arithmatex">\(+1\)</span>. Then <span class="arithmatex">\(P(x = +1 \mid y) = 1/(1 + e^{-45})\)</span>, which is <span class="arithmatex">\(1\)</span> to many decimal places. Only one value is possible, and a narrow Gaussian centred near <span class="arithmatex">\(+1\)</span> describes the answer well.</p>
+<p>So the same Gaussian decoder is a poor answer after a lot of noise and a good one after a little.</p>
+<h3 id="14-why-a-little-noise-always-gives-a-nearly-gaussian-answer">1.4 Why a little noise always gives a nearly Gaussian answer<a class="headerlink" href="#14-why-a-little-noise-always-gives-a-nearly-gaussian-answer" title="Permanent link">&para;</a></h3>
+<p>The example had only two values, but the same thing happens for any smooth data distribution. When <span class="arithmatex">\(\sigma\)</span> is small, the bump <span class="arithmatex">\(\N(y;\, x,\, \sigma^2)\)</span> is narrow. Over that narrow range of <span class="arithmatex">\(x\)</span>, a smooth curve <span class="arithmatex">\(p(x)\)</span> hardly changes, so multiplying the bump by <span class="arithmatex">\(p(x)\)</span> changes its shape very little. The product is still nearly the bump, which is a Gaussian. When <span class="arithmatex">\(\sigma\)</span> is large, the bump is wide, it covers the whole data distribution, and the product inherits all of its structure, for example two separate peaks.</p>
+<details class="note">
+<summary>The same argument with a formula</summary>
+<p>Over a narrow range around <span class="arithmatex">\(y\)</span>, approximate <span class="arithmatex">\(\log p(x)\)</span> by its tangent line: <span class="arithmatex">\(\log p(x) \approx \log p(y) + s\,(x - y)\)</span>, where <span class="arithmatex">\(s\)</span> is the slope of <span class="arithmatex">\(\log p\)</span> at <span class="arithmatex">\(y\)</span>. Then</p>
+<div class="arithmatex">\[
+p(x \mid y) \;\propto\; \exp\!\Big( -\frac{(x - y)^2}{2\sigma^2} + s\,(x - y) \Big)
+= \text{const} \times \exp\!\Big( -\frac{(x - y - \sigma^2 s)^2}{2\sigma^2} \Big),
+\]</div>
+<p>after completing the square. This is exactly a Gaussian, with mean <span class="arithmatex">\(y + \sigma^2 s\)</span> and variance <span class="arithmatex">\(\sigma^2\)</span>. The approximation ignores the curvature of <span class="arithmatex">\(\log p\)</span> over the width of the bump, and that error shrinks as <span class="arithmatex">\(\sigma\)</span> shrinks. The slope of <span class="arithmatex">\(\log p\)</span>, here <span class="arithmatex">\(s\)</span>, will come back later as the score.</p>
+</details>
+<video class="clip" controls muted playsinline preload="none" poster="../../assets/clips/bump-times-data.jpg"><source src="../../assets/clips/bump-times-data.mp4" type="video/mp4"></video>
+<p class="widget-caption arithmatex">Top: the data distribution and the noise bump around the noisy point \(y\). Bottom: their product, the true answer \(p(x \mid y)\), together with the best single Gaussian. With a lot of noise the bump is wide, the answer has two peaks, and the Gaussian sits between them. As the noise shrinks, the bump narrows, the answer becomes a single peak, and the Gaussian matches it.</p>
 
-<p>So a big jump asks a Gaussian to describe something that is not Gaussian, while a small step does not. The same problem hits the proxy <span class="arithmatex">\(q(z)\)</span>: the true posterior after one big jump is complicated, so a Gaussian proxy leaves a large gap in the bound.</p>
-<p>This suggests replacing the one big jump with many small ones.</p>
+<h3 id="15-what-the-number-of-steps-has-to-do-with-it">1.5 What the number of steps has to do with it<a class="headerlink" href="#15-what-the-number-of-steps-has-to-do-with-it" title="Permanent link">&para;</a></h3>
+<p>Turning data into pure noise takes a fixed total amount of noise. If we add it all at once, the reverse step has to undo a large <span class="arithmatex">\(\sigma\)</span>, and section 1.3 shows what a Gaussian decoder does then. If we split the same total into <span class="arithmatex">\(T\)</span> small steps, each step adds only a little noise, so each reverse step has a narrow bump and, by section 1.4, a nearly Gaussian answer.</p>
+<p>So the number of steps controls the width of the bump in each step, and that width decides whether a Gaussian is good enough. As a reference point, the original DDPM uses <span class="arithmatex">\(T = 1000\)</span> steps, and each step adds noise with a standard deviation between about <span class="arithmatex">\(0.01\)</span> and <span class="arithmatex">\(0.14\)</span>, on data whose values range over an interval of length <span class="arithmatex">\(2\)</span>.</p>
+<p>The same picture on the spiral, first for one big jump and then for one small step:</p>
+<video class="clip" controls muted playsinline preload="none" poster="../../assets/clips/one-jump.jpg"><source src="../../assets/clips/one-jump.mp4" type="video/mp4"></video>
+<p class="widget-caption arithmatex">After a lot of noise, points from all over the spiral land in the same place, so a single noisy point could have come from almost anywhere. The best single Gaussian has to stretch over the whole spiral, and its samples fall between the arms. After a little noise, the possible sources form one small patch, and a small Gaussian fits them.</p>
+
+<details class="question">
+<summary>Does this apply to a VAE too, where z is not a noisy copy of x?</summary>
+<p>Yes, in a different form. If <span class="arithmatex">\(z\)</span> does not pin down <span class="arithmatex">\(x\)</span>, the true <span class="arithmatex">\(p(x \mid z)\)</span> is spread out or has several peaks, and a Gaussian decoder places its centre at their average. This is why samples from a plain VAE tend to be blurry. A VAE tries to fix this by learning an encoder that makes <span class="arithmatex">\(z\)</span> informative about <span class="arithmatex">\(x\)</span>. DDPM instead keeps the hidden variables as plain noisy copies of the data and makes each step small.</p>
+</details>
+<p>This is the reason for replacing the one big jump with many small ones.</p>
 <h2 id="2-a-chain-of-hidden-variables">2. A chain of hidden variables<a class="headerlink" href="#2-a-chain-of-hidden-variables" title="Permanent link">&para;</a></h2>
 <p>Replace the single <span class="arithmatex">\(z\)</span> by a sequence of hidden variables. We name them so that the data is at one end and the noise at the other:</p>
 <div class="arithmatex">\[
@@ -881,17 +1138,28 @@ p(x_{0:T}) = p(x_T) \prod_{t=1}^{T} p(x_{t-1} \mid x_t).
 </details>
 <h3 id="32-the-two-chains-of-ddpm">3.2 The two chains of DDPM<a class="headerlink" href="#32-the-two-chains-of-ddpm" title="Permanent link">&para;</a></h3>
 <p>DDPM uses two Markov chains, one in each direction.</p>
-<p><strong>The proxy: a fixed noising chain.</strong> In the previous page, the proxy <span class="arithmatex">\(q\)</span> was ours to choose and learn. DDPM fixes it in advance to the simplest chain that destroys information gradually: shrink a little, add a little Gaussian noise, repeat. With numbers <span class="arithmatex">\(\beta_1, \ldots, \beta_T\)</span> between <span class="arithmatex">\(0\)</span> and <span class="arithmatex">\(1\)</span>, the <strong>noise schedule</strong>,</p>
+<p><strong>The proxy: a fixed noising chain.</strong> In the previous page, the proxy <span class="arithmatex">\(q\)</span> was ours to choose and learn. DDPM fixes it in advance to the simplest chain that destroys information gradually: shrink a little, add a little Gaussian noise, repeat. With numbers <span class="arithmatex">\(\beta_1, \ldots, \beta_T\)</span> between <span class="arithmatex">\(0\)</span> and <span class="arithmatex">\(1\)</span>, the <strong>noise schedule</strong>, one step is</p>
 <div class="arithmatex">\[
-\begin{aligned}
-q(x_t \mid x_{t-1}) &amp;= \N\!\big(x_t;\ \sqrt{1 - \beta_t}\; x_{t-1},\ \beta_t I\big), \\[4pt]
-q(x_{1:T} \mid x_0) &amp;= \prod_{t=1}^{T} q(x_t \mid x_{t-1}).
-\end{aligned}
+q(x_t \mid x_{t-1}) = \N\!\big(x_t;\ \sqrt{1 - \beta_t}\; x_{t-1},\ \beta_t I\big).
 \]</div>
-<p>It has no weights. Shrinking by <span class="arithmatex">\(\sqrt{1 - \beta_t}\)</span> while adding noise of variance <span class="arithmatex">\(\beta_t\)</span> keeps the overall size of the cloud steady, and after enough steps the chain arrives at <span class="arithmatex">\(\N(0, I)\)</span> whatever the data was.</p>
+<p><strong>Why is the proxy now written with <span class="arithmatex">\(x_0\)</span> after the bar?</strong> In the previous page the proxy was written <span class="arithmatex">\(q(z)\)</span>, but it was always the proxy for one particular data point: it stood in for the posterior <span class="arithmatex">\(p_\theta(z \mid x)\)</span> of that <span class="arithmatex">\(x\)</span>, and a different data point would need a different <span class="arithmatex">\(q\)</span>. We left the dependence out of the notation to keep it short. Here the dependence is impossible to leave out, because the noising chain <em>starts</em> from the data point: <span class="arithmatex">\(x_1\)</span> is a noisy copy of <span class="arithmatex">\(x_0\)</span>, <span class="arithmatex">\(x_2\)</span> a noisy copy of <span class="arithmatex">\(x_1\)</span>, and so on. So we write it with the data point after the bar, <span class="arithmatex">\(q(x_{1:T} \mid x_0)\)</span>. It plays the same role as before: a proxy for the model's posterior <span class="arithmatex">\(p_\theta(x_{1:T} \mid x_0)\)</span>.</p>
+<p><strong>Why is it a product?</strong> The chain rule of note 2 writes the joint of <span class="arithmatex">\(x_1, \ldots, x_T\)</span> given <span class="arithmatex">\(x_0\)</span> one variable at a time, each given everything before it. With <span class="arithmatex">\(T = 3\)</span>:</p>
+<div class="arithmatex">\[
+q(x_1, x_2, x_3 \mid x_0) = q(x_1 \mid x_0)\; q(x_2 \mid x_1, x_0)\; q(x_3 \mid x_2, x_1, x_0).
+\]</div>
+<p>The noising chain is Markov, so each step depends only on the state just before it, and the extra conditions can be dropped: <span class="arithmatex">\(q(x_2 \mid x_1, x_0) = q(x_2 \mid x_1)\)</span> and <span class="arithmatex">\(q(x_3 \mid x_2, x_1, x_0) = q(x_3 \mid x_2)\)</span>. For general <span class="arithmatex">\(T\)</span>,</p>
+<div class="arithmatex">\[
+q(x_{1:T} \mid x_0) = \prod_{t=1}^{T} q(x_t \mid x_{t-1}).
+\]</div>
+<p>It has no weights: the numbers <span class="arithmatex">\(\beta_t\)</span> are chosen before training, and nothing in <span class="arithmatex">\(q\)</span> is learned.</p>
+<p>Why shrink by <span class="arithmatex">\(\sqrt{1 - \beta_t}\)</span> rather than just add noise? Suppose <span class="arithmatex">\(x_{t-1}\)</span> has variance <span class="arithmatex">\(1\)</span>. Scaling it by <span class="arithmatex">\(\sqrt{1 - \beta_t}\)</span> multiplies its variance by <span class="arithmatex">\(1 - \beta_t\)</span>, and the fresh noise, being independent, adds its own variance <span class="arithmatex">\(\beta_t\)</span> on top, so <span class="arithmatex">\(x_t\)</span> has variance <span class="arithmatex">\((1 - \beta_t) + \beta_t = 1\)</span> again. The cloud therefore keeps its overall size at every step, while its shape is slowly replaced by noise. If we only added noise, the variance would grow by <span class="arithmatex">\(\beta_t\)</span> at every step and the cloud would spread out without limit. With the shrinking, after enough steps the chain arrives at <span class="arithmatex">\(\N(0, I)\)</span> whatever the data was, which is exactly the distribution we will start from when generating. (Data is usually scaled to have values of about this size before training, which is what makes "variance 1" the natural reference.)</p>
 <div class="widget" data-widget="chain"></div>
 <p class="widget-caption arithmatex">The noising chain, step by step. Each step shrinks the current points a little and adds fresh Gaussian noise; the spiral dissolves into a standard Gaussian.</p>
 
+<details class="question">
+<summary>So is the forward process just a way of preparing training data?</summary>
+<p>In practice, yes, and it is a good way to think about it. The forward process has nothing to learn; its only job during training is to turn each clean example <span class="arithmatex">\(x_0\)</span> into noisy versions <span class="arithmatex">\(x_t\)</span> at different steps, and the network is then trained on those pairs to undo one step of noise. What makes this more than data augmentation is that the forward process is also half of the model's definition: it is the proxy <span class="arithmatex">\(q\)</span> in the bound, so the loss we derive below depends on its exact form. And it turns out that we never even have to run it one step at a time: a noisy version at any step <span class="arithmatex">\(t\)</span> can be produced from <span class="arithmatex">\(x_0\)</span> in a single jump, which is the first result of section 5.</p>
+</details>
 <p><strong>The model: a learned denoising chain.</strong> It runs the other way, from noise to data, with one Gaussian step at a time:</p>
 <div class="arithmatex">\[
 \begin{aligned}
@@ -903,7 +1171,12 @@ p_\theta(x_{0:T}) &amp;= p(x_T) \prod_{t=1}^{T} p_\theta(x_{t-1} \mid x_t).
 <p>One network <span class="arithmatex">\(\mu_\theta\)</span> serves every step; it is told which step it is on. A Gaussian is a reasonable choice for each step because, as section 1 showed, each step is small.</p>
 <p><img alt="The forward and reverse chains" src="../../assets/s2-chain.png" /></p>
 <h2 id="4-the-elbo-for-one-hidden-variable-and-for-a-chain">4. The ELBO, for one hidden variable and for a chain<a class="headerlink" href="#4-the-elbo-for-one-hidden-variable-and-for-a-chain" title="Permanent link">&para;</a></h2>
-<p>The bound of section 0 holds for <em>any</em> hidden variable and <em>any</em> proxy. So we do not need to prove anything new: we replace <span class="arithmatex">\(z\)</span> by the whole chain <span class="arithmatex">\(x_{1:T}\)</span>, and <span class="arithmatex">\(q(z)\)</span> by the noising chain.</p>
+<p>The bound of section 0 holds for <em>any</em> hidden variable and <em>any</em> proxy, so we do not need to prove anything new. We only substitute, and it helps to say exactly what goes where.</p>
+<ul>
+<li>The data point <span class="arithmatex">\(x\)</span> is now called <span class="arithmatex">\(x_0\)</span>, because it is the start of the chain.</li>
+<li>The hidden variable <span class="arithmatex">\(z\)</span> becomes the whole chain <span class="arithmatex">\(x_{1:T}\)</span>, so the joint <span class="arithmatex">\(p_\theta(x, z)\)</span> becomes <span class="arithmatex">\(p_\theta(x_0, x_{1:T})\)</span>, written <span class="arithmatex">\(p_\theta(x_{0:T})\)</span>.</li>
+<li>The proxy <span class="arithmatex">\(q(z)\)</span>, which was always a proxy for one data point, becomes the noising chain started from that data point, <span class="arithmatex">\(q(x_{1:T} \mid x_0)\)</span> (section 3.2).</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -924,9 +1197,14 @@ p_\theta(x_{0:T}) &amp;= p(x_T) \prod_{t=1}^{T} p_\theta(x_{t-1} \mid x_t).
 <td><span class="arithmatex">\(p(x_T) \prod_t p_\theta(x_{t-1} \mid x_t)\)</span></td>
 </tr>
 <tr>
-<td>proxy</td>
+<td>proxy, for one data point</td>
 <td><span class="arithmatex">\(q(z)\)</span>, learned</td>
-<td><span class="arithmatex">\(\prod_t q(x_t \mid x_{t-1})\)</span>, fixed</td>
+<td><span class="arithmatex">\(q(x_{1:T} \mid x_0) = \prod_t q(x_t \mid x_{t-1})\)</span>, fixed</td>
+</tr>
+<tr>
+<td>what the proxy stands in for</td>
+<td><span class="arithmatex">\(p_\theta(z \mid x)\)</span></td>
+<td><span class="arithmatex">\(p_\theta(x_{1:T} \mid x_0)\)</span></td>
 </tr>
 <tr>
 <td>the bound</td>
@@ -938,46 +1216,119 @@ p_\theta(x_{0:T}) &amp;= p(x_T) \prod_{t=1}^{T} p_\theta(x_{t-1} \mid x_t).
 <video class="clip" controls muted playsinline preload="none" poster="../../assets/clips/elbo-chain.jpg"><source src="../../assets/clips/elbo-chain.mp4" type="video/mp4"></video>
 <p class="widget-caption arithmatex">The single-variable ELBO on the left, and the same bound with \(z\) replaced by the whole chain on the right. The reconstruction term and the prior term each have a counterpart, and the chain adds one new term for every small step.</p>
 
-<h3 id="41-put-in-the-two-products">4.1 Put in the two products<a class="headerlink" href="#41-put-in-the-two-products" title="Permanent link">&para;</a></h3>
-<p>Both the model and the proxy are Markov chains, so the log of each is a sum, and pairing terms with the same <span class="arithmatex">\(t\)</span> gives</p>
+<h3 id="41-write-out-the-two-chains">4.1 Write out the two chains<a class="headerlink" href="#41-write-out-the-two-chains" title="Permanent link">&para;</a></h3>
+<p>The bound contains the ratio of two joint distributions: the model's distribution of the whole chain, and the proxy's. Both are Markov chains, so both can be written as products. It helps to write them out for a short chain first, with <span class="arithmatex">\(T = 3\)</span>:</p>
 <div class="arithmatex">\[
 \begin{aligned}
-\text{ELBO} = \E_q\Big[ &amp; \log p(x_T) \\
-&amp; + \sum_{t=1}^{T} \log \frac{p_\theta(x_{t-1} \mid x_t)}{q(x_t \mid x_{t-1})} \Big].
+p_\theta(x_{0:3}) &amp;= p(x_3)\;\, p_\theta(x_2 \mid x_3)\; p_\theta(x_1 \mid x_2)\; p_\theta(x_0 \mid x_1), \\[4pt]
+q(x_{1:3} \mid x_0) &amp;= \phantom{p(x_3)\;\,} q(x_1 \mid x_0)\;\; q(x_2 \mid x_1)\;\; q(x_3 \mid x_2).
 \end{aligned}
 \]</div>
-<p><strong>Each term is a ratio of <span class="arithmatex">\(p\)</span> and <span class="arithmatex">\(q\)</span>. Is it a KL divergence?</strong> Not yet. The top is a distribution over <span class="arithmatex">\(x_{t-1}\)</span>, the bottom is a distribution over <span class="arithmatex">\(x_t\)</span>: they describe different variables, pointing in opposite directions along the chain. A KL compares two distributions over the same variable. To get one, the noising step on the bottom has to be turned around.</p>
-<h3 id="42-turn-the-noising-step-around">4.2 Turn the noising step around<a class="headerlink" href="#42-turn-the-noising-step-around" title="Permanent link">&para;</a></h3>
-<p><strong>Can we just reverse <span class="arithmatex">\(q\)</span>?</strong> By Bayes' rule, <span class="arithmatex">\(q(x_{t-1} \mid x_t) = q(x_t \mid x_{t-1})\, q(x_{t-1}) / q(x_t)\)</span>, and <span class="arithmatex">\(q(x_{t-1})\)</span>, <span class="arithmatex">\(q(x_t)\)</span> are distributions of noisy <em>data</em>: they contain the unknown data distribution. So no.</p>
-<p><strong>What if we also know where the chain started?</strong> During training we do: <span class="arithmatex">\(x_0\)</span> is the training example. Two facts.</p>
+<p><strong>Why does <span class="arithmatex">\(p(x_T)\)</span> stand apart from the other factors?</strong> The two chains do not have the same number of factors, and the reason is where each one starts.</p>
 <ul>
-<li>By the Markov property, adding <span class="arithmatex">\(x_0\)</span> to the condition of a forward step changes nothing: <span class="arithmatex">\(q(x_t \mid x_{t-1}) = q(x_t \mid x_{t-1}, x_0)\)</span>.</li>
-<li>The chain rule, with <span class="arithmatex">\(x_0\)</span> carried along, can produce the pair <span class="arithmatex">\((x_{t-1}, x_t)\)</span> in either order: <span class="arithmatex">\(q(x_{t-1} \mid x_0)\, q(x_t \mid x_{t-1}, x_0) = q(x_t \mid x_0)\, q(x_{t-1} \mid x_t, x_0)\)</span>.</li>
+<li>The model generates. It starts at <span class="arithmatex">\(x_T\)</span>, which has nothing before it, so its distribution is not a transition from an earlier state: it is the starting distribution, the prior <span class="arithmatex">\(p(x_T) = \N(0, I)\)</span>. Every other variable is produced from the one after it, which gives <span class="arithmatex">\(T\)</span> transitions. In total there are <span class="arithmatex">\(T + 1\)</span> factors.</li>
+<li>The proxy describes noising a <em>given</em> data point <span class="arithmatex">\(x_0\)</span>. The data point is not drawn by <span class="arithmatex">\(q\)</span>; it is the condition, written after the bar in <span class="arithmatex">\(q(x_{1:T} \mid x_0)\)</span>. So <span class="arithmatex">\(q\)</span> has no starting factor, only the <span class="arithmatex">\(T\)</span> transitions.</li>
 </ul>
-<p>Together, for <span class="arithmatex">\(t \ge 2\)</span>:</p>
+<p>Each transition of one chain has a partner in the other: the model's step from <span class="arithmatex">\(x_t\)</span> to <span class="arithmatex">\(x_{t-1}\)</span> and the proxy's step from <span class="arithmatex">\(x_{t-1}\)</span> to <span class="arithmatex">\(x_t\)</span> connect the same two variables. Pairing them up uses all <span class="arithmatex">\(T\)</span> factors of <span class="arithmatex">\(q\)</span> and <span class="arithmatex">\(T\)</span> of the <span class="arithmatex">\(T + 1\)</span> factors of <span class="arithmatex">\(p_\theta\)</span>. The one left over is <span class="arithmatex">\(p(x_T)\)</span>. For general <span class="arithmatex">\(T\)</span>:</p>
+<div class="arithmatex">\[
+\frac{p_\theta(x_{0:T})}{q(x_{1:T} \mid x_0)}
+= p(x_T) \prod_{t=1}^{T} \frac{p_\theta(x_{t-1} \mid x_t)}{q(x_t \mid x_{t-1})} .
+\]</div>
+<h3 id="42-take-the-log">4.2 Take the log<a class="headerlink" href="#42-take-the-log" title="Permanent link">&para;</a></h3>
+<p>The log of a product is the sum of the logs, so</p>
+<div class="arithmatex">\[
+\text{ELBO} = \E_q\!\left[ \log \frac{p_\theta(x_{0:T})}{q(x_{1:T} \mid x_0)} \right]
+= \E_q\Big[ \log p(x_T) + \sum_{t=1}^{T} \log \frac{p_\theta(x_{t-1} \mid x_t)}{q(x_t \mid x_{t-1})} \Big].
+\]</div>
+<p>Here and below, <span class="arithmatex">\(\E_q\)</span> means that <span class="arithmatex">\(x_0\)</span> is a fixed training example and <span class="arithmatex">\(x_1, \ldots, x_T\)</span> are produced from it by the noising chain.</p>
+<p><strong>Each term is a ratio of <span class="arithmatex">\(p\)</span> and <span class="arithmatex">\(q\)</span>. Is it a KL divergence?</strong> Not yet. In the ratio for step <span class="arithmatex">\(t\)</span>, the top is a distribution over <span class="arithmatex">\(x_{t-1}\)</span> and the bottom is a distribution over <span class="arithmatex">\(x_t\)</span>. They describe different variables and point in opposite directions along the chain.</p>
+<p>A KL needs both distributions to be about the same variable, because of how it is built: at each value <span class="arithmatex">\(u\)</span> it compares how probable <span class="arithmatex">\(u\)</span> is under one distribution with how probable the same <span class="arithmatex">\(u\)</span> is under the other, and then averages. For two distributions over different variables there is no common value <span class="arithmatex">\(u\)</span> at which to compare them, so the comparison has no meaning. The noising step on the bottom therefore has to be turned around, so that it too becomes a distribution over <span class="arithmatex">\(x_{t-1}\)</span>.</p>
+<h3 id="43-set-the-first-step-aside">4.3 Set the first step aside<a class="headerlink" href="#43-set-the-first-step-aside" title="Permanent link">&para;</a></h3>
+<p>The rewrite in the next subsection uses <span class="arithmatex">\(q(x_{t-1} \mid x_0)\)</span>, the distribution of the earlier variable given the data point. For <span class="arithmatex">\(t = 1\)</span> the earlier variable is <span class="arithmatex">\(x_0\)</span> itself, and <span class="arithmatex">\(q(x_0 \mid x_0)\)</span> would be the distribution of a value we already know, which is no use. So we take the <span class="arithmatex">\(t = 1\)</span> term out of the sum and leave it as it is:</p>
+<div class="arithmatex">\[
+\text{ELBO} = \E_q\Big[ \log p(x_T) + \log \frac{p_\theta(x_0 \mid x_1)}{q(x_1 \mid x_0)} + \sum_{t=2}^{T} \log \frac{p_\theta(x_{t-1} \mid x_t)}{q(x_t \mid x_{t-1})} \Big].
+\]</div>
+<p>The <span class="arithmatex">\(t = 1\)</span> term involves the data point directly, and it will become the reconstruction term.</p>
+<h3 id="44-turn-the-noising-step-around">4.4 Turn the noising step around<a class="headerlink" href="#44-turn-the-noising-step-around" title="Permanent link">&para;</a></h3>
+<p><strong>Can we just reverse <span class="arithmatex">\(q\)</span>?</strong> By Bayes' rule, <span class="arithmatex">\(q(x_{t-1} \mid x_t) = q(x_t \mid x_{t-1})\, q(x_{t-1}) / q(x_t)\)</span>. But <span class="arithmatex">\(q(x_{t-1})\)</span> and <span class="arithmatex">\(q(x_t)\)</span> are distributions of noisy <em>data</em>, with the data point averaged out, so they contain the unknown data distribution. That does not help.</p>
+<p><strong>What if we also know where the chain started?</strong> During training we do: <span class="arithmatex">\(x_0\)</span> is the training example. Two facts make this work.</p>
+<p><em>First fact.</em> By the Markov property, adding <span class="arithmatex">\(x_0\)</span> to the condition of a forward step changes nothing. Given <span class="arithmatex">\(x_{t-1}\)</span>, the next state depends on nothing earlier:</p>
+<div class="arithmatex">\[
+q(x_t \mid x_{t-1}) = q(x_t \mid x_{t-1}, x_0).
+\]</div>
+<p><em>Second fact.</em> Given <span class="arithmatex">\(x_0\)</span>, the pair <span class="arithmatex">\((x_{t-1}, x_t)\)</span> can be produced in either order, and both orders give the same joint distribution (the chain rule of note 2, with <span class="arithmatex">\(x_0\)</span> carried along in every condition):</p>
+<div class="arithmatex">\[
+q(x_{t-1} \mid x_0)\; q(x_t \mid x_{t-1}, x_0) \;=\; q(x_{t-1}, x_t \mid x_0) \;=\; q(x_t \mid x_0)\; q(x_{t-1} \mid x_t, x_0) .
+\]</div>
+<p>Divide both ends by <span class="arithmatex">\(q(x_{t-1} \mid x_0)\)</span>, and use the first fact on the left. What comes out is simply Bayes' rule for the pair <span class="arithmatex">\((x_{t-1}, x_t)\)</span>, with <span class="arithmatex">\(x_0\)</span> written into every condition:</p>
 <div class="admonition abstract">
-<p class="admonition-title">The rewrite</p>
+<p class="admonition-title">The rewrite (for <span class="arithmatex">\(t \ge 2\)</span>)</p>
 <div class="arithmatex">\[
 q(x_t \mid x_{t-1}) = \frac{q(x_{t-1} \mid x_t, x_0)\; q(x_t \mid x_0)}{q(x_{t-1} \mid x_0)} .
 \]</div>
 </div>
-<p>The first factor is what we wanted: a backward step, a distribution over <span class="arithmatex">\(x_{t-1}\)</span>. In words, "given the noisy point and the clean example it came from, where was the chain one step earlier?" The other two factors cancel in the next step.</p>
-<details class="note">
-<summary>Substituting, and the telescoping sum</summary>
-<p>Split off the <span class="arithmatex">\(t = 1\)</span> term and put the rewrite into the others. The extra factors form the sum</p>
-<div class="arithmatex">\[
-\sum_{t=2}^{T} \log \frac{q(x_{t-1} \mid x_0)}{q(x_t \mid x_0)} = \log \frac{q(x_1 \mid x_0)}{q(x_T \mid x_0)},
-\]</div>
-<p>because the bottom of each fraction is the top of the next (write out <span class="arithmatex">\(T = 3\)</span> to see it). The <span class="arithmatex">\(q(x_1 \mid x_0)\)</span> left over cancels against the <span class="arithmatex">\(t = 1\)</span> term, and what remains is</p>
+<p>It is worth reading this carefully, because it is easy to see only the first factor and conclude that the forward step <em>equals</em> the backward step. It does not. The left side is a distribution over <span class="arithmatex">\(x_t\)</span>; the first factor on the right is a distribution over <span class="arithmatex">\(x_{t-1}\)</span>, and the equation only holds with the other two factors included.</p>
+<p>The first factor is what we wanted: a backward step, a distribution over <span class="arithmatex">\(x_{t-1}\)</span>. In words, it answers "given the noisy point <span class="arithmatex">\(x_t\)</span> and the clean example it came from, where was the chain one step earlier?" The other two factors are what we pay for turning the step around, and the next two subsections show that almost all of them cancel.</p>
+<h3 id="45-substitute-and-cancel-the-extra-factors">4.5 Substitute, and cancel the extra factors<a class="headerlink" href="#45-substitute-and-cancel-the-extra-factors" title="Permanent link">&para;</a></h3>
+<p>Put the rewrite into one term of the sum. The forward step is in the denominator, and dividing by a fraction is the same as multiplying by its reciprocal:</p>
 <div class="arithmatex">\[
 \begin{aligned}
-\text{ELBO} = \E_q\Big[ &amp; \log \frac{p(x_T)}{q(x_T \mid x_0)} + \sum_{t=2}^{T} \log \frac{p_\theta(x_{t-1} \mid x_t)}{q(x_{t-1} \mid x_t, x_0)} \\
-&amp; + \log p_\theta(x_0 \mid x_1) \Big].
+\log \frac{p_\theta(x_{t-1} \mid x_t)}{q(x_t \mid x_{t-1})}
+&amp;= \log \left( p_\theta(x_{t-1} \mid x_t) \cdot \frac{q(x_{t-1} \mid x_0)}{q(x_{t-1} \mid x_t, x_0)\; q(x_t \mid x_0)} \right) \\[4pt]
+&amp;= \log \frac{p_\theta(x_{t-1} \mid x_t)}{q(x_{t-1} \mid x_t, x_0)} \;+\; \log \frac{q(x_{t-1} \mid x_0)}{q(x_t \mid x_0)} .
 \end{aligned}
 \]</div>
-<p>Now every ratio compares two distributions over the same variable, and averaging each over the distribution on its bottom gives minus a KL.</p>
+<p>The first part compares two backward steps over the same variable <span class="arithmatex">\(x_{t-1}\)</span>, which is what we wanted. The second part is the leftover from the rewrite. Summed over <span class="arithmatex">\(t = 2, \ldots, T\)</span>, the leftovers cancel almost completely. With <span class="arithmatex">\(T = 3\)</span>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\sum_{t=2}^{3} \log \frac{q(x_{t-1} \mid x_0)}{q(x_t \mid x_0)}
+&amp;= \log \frac{q(x_1 \mid x_0)}{q(x_2 \mid x_0)} + \log \frac{q(x_2 \mid x_0)}{q(x_3 \mid x_0)} \\[4pt]
+&amp;= \log q(x_1 \mid x_0) - \log q(x_2 \mid x_0) + \log q(x_2 \mid x_0) - \log q(x_3 \mid x_0) \\[4pt]
+&amp;= \log q(x_1 \mid x_0) - \log q(x_3 \mid x_0).
+\end{aligned}
+\]</div>
+<p>Each term subtracts what the next one adds, so only the first and the last survive. A sum of this kind is called <strong>telescoping</strong>. For general <span class="arithmatex">\(T\)</span>:</p>
+<div class="arithmatex">\[
+\sum_{t=2}^{T} \log \frac{q(x_{t-1} \mid x_0)}{q(x_t \mid x_0)} = \log q(x_1 \mid x_0) - \log q(x_T \mid x_0).
+\]</div>
+<h3 id="46-collect-the-pieces">4.6 Collect the pieces<a class="headerlink" href="#46-collect-the-pieces" title="Permanent link">&para;</a></h3>
+<p>Put everything back into the ELBO of section 4.3. Writing every log of a ratio as a difference where that helps:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{ELBO} = \E_q\Big[\ &amp; \log p(x_T) &amp;&amp; \text{the starting factor} \\
+&amp; + \log p_\theta(x_0 \mid x_1) - \log q(x_1 \mid x_0) &amp;&amp; \text{the } t = 1 \text{ term} \\
+&amp; + \sum_{t=2}^{T} \log \frac{p_\theta(x_{t-1} \mid x_t)}{q(x_{t-1} \mid x_t, x_0)} &amp;&amp; \text{backward against backward} \\
+&amp; + \log q(x_1 \mid x_0) - \log q(x_T \mid x_0)\ \Big] &amp;&amp; \text{what the telescoping left}
+\end{aligned}
+\]</div>
+<p>In the second and fourth lines, <span class="arithmatex">\(\log q(x_1 \mid x_0)\)</span> appears once with a minus sign and once with a plus sign, so the two add up to zero.</p>
+<p>The first and fourth lines also contain <span class="arithmatex">\(\log p(x_T)\)</span> and <span class="arithmatex">\(-\log q(x_T \mid x_0)\)</span>. Both are about the same variable <span class="arithmatex">\(x_T\)</span>: <span class="arithmatex">\(p(x_T) = \N(0, I)\)</span> is where the model starts generating, and <span class="arithmatex">\(q(x_T \mid x_0)\)</span> is where the noising chain ends after <span class="arithmatex">\(T\)</span> steps from this data point. Using <span class="arithmatex">\(\log a - \log b = \log \frac{a}{b}\)</span>, we write them as one term:</p>
+<div class="arithmatex">\[
+\log p(x_T) - \log q(x_T \mid x_0) = \log \frac{p(x_T)}{q(x_T \mid x_0)} .
+\]</div>
+<p>This is a ratio of two distributions over the same variable, the form section 4.2 asked for, and in section 4.7 it becomes a KL divergence.</p>
+<p>What remains is</p>
+<div class="arithmatex">\[
+\text{ELBO} = \E_q\Big[ \log \frac{p(x_T)}{q(x_T \mid x_0)} + \sum_{t=2}^{T} \log \frac{p_\theta(x_{t-1} \mid x_t)}{q(x_{t-1} \mid x_t, x_0)} + \log p_\theta(x_0 \mid x_1) \Big].
+\]</div>
+<p>Now every ratio compares two distributions over the same variable. The prior <span class="arithmatex">\(p(x_T)\)</span>, which stood apart in section 4.1, is now paired with <span class="arithmatex">\(q(x_T \mid x_0)\)</span>, the distribution of <span class="arithmatex">\(x_T\)</span> at the end of the noising chain.</p>
+<details class="question">
+<summary>Why does the telescoping leave q(x_T | x_0) behind, and not something else?</summary>
+<p>The telescoping sum runs over <span class="arithmatex">\(t = 2, \ldots, T\)</span>, and each term is <span class="arithmatex">\(\log q(x_{t-1} \mid x_0) - \log q(x_t \mid x_0)\)</span>. Every <span class="arithmatex">\(-\log q(x_t \mid x_0)\)</span> is cancelled by the <span class="arithmatex">\(+\log q(x_t \mid x_0)\)</span> of the next term, except in the last term, <span class="arithmatex">\(t = T\)</span>, which has no next term. So <span class="arithmatex">\(-\log q(x_T \mid x_0)\)</span> is left over. In the same way the first term, <span class="arithmatex">\(t = 2\)</span>, has no term before it, so <span class="arithmatex">\(+\log q(x_1 \mid x_0)\)</span> is left over at the other end.</p>
 </details>
-<h3 id="43-the-result-next-to-the-one-variable-elbo">4.3 The result, next to the one-variable ELBO<a class="headerlink" href="#43-the-result-next-to-the-one-variable-elbo" title="Permanent link">&para;</a></h3>
+<h3 id="47-each-ratio-becomes-a-kl">4.7 Each ratio becomes a KL<a class="headerlink" href="#47-each-ratio-becomes-a-kl" title="Permanent link">&para;</a></h3>
+<p>The expectation <span class="arithmatex">\(\E_q\)</span> is over the whole chain <span class="arithmatex">\(x_1, \ldots, x_T\)</span>, but each term involves only one or two of the variables, so it only needs their distribution.</p>
+<p><strong>The first term</strong> involves only <span class="arithmatex">\(x_T\)</span>. Its distribution under the noising chain, given <span class="arithmatex">\(x_0\)</span>, is <span class="arithmatex">\(q(x_T \mid x_0)\)</span>, which is the bottom of the fraction. Averaging <span class="arithmatex">\(\log\)</span> of (top / bottom) over the bottom distribution is minus a KL divergence:</p>
+<div class="arithmatex">\[
+\E_q\Big[ \log \frac{p(x_T)}{q(x_T \mid x_0)} \Big] = -\,\KL\big( q(x_T \mid x_0) \,\|\, p(x_T) \big).
+\]</div>
+<p><strong>A middle term</strong> involves the pair <span class="arithmatex">\((x_{t-1}, x_t)\)</span>. Average it in two stages, as the tower rule of note 3 allows: first over <span class="arithmatex">\(x_{t-1}\)</span> with <span class="arithmatex">\(x_t\)</span> held fixed, then over <span class="arithmatex">\(x_t\)</span>. In the first stage <span class="arithmatex">\(x_{t-1}\)</span> is distributed as <span class="arithmatex">\(q(x_{t-1} \mid x_t, x_0)\)</span>, which is again the bottom of the fraction, so the inner average is minus a KL:</p>
+<div class="arithmatex">\[
+\E_q\Big[ \log \frac{p_\theta(x_{t-1} \mid x_t)}{q(x_{t-1} \mid x_t, x_0)} \Big]
+= -\,\E_{q(x_t \mid x_0)}\Big[ \KL\big( q(x_{t-1} \mid x_t, x_0) \,\|\, p_\theta(x_{t-1} \mid x_t) \big) \Big].
+\]</div>
+<p><strong>The last term</strong> involves <span class="arithmatex">\(x_1\)</span> and the data point. It is not a ratio, so it stays as an average of a log-probability, taken over <span class="arithmatex">\(q(x_1 \mid x_0)\)</span>.</p>
+<h3 id="48-the-result-next-to-the-one-variable-elbo">4.8 The result, next to the one-variable ELBO<a class="headerlink" href="#48-the-result-next-to-the-one-variable-elbo" title="Permanent link">&para;</a></h3>
 <div class="admonition abstract">
 <p class="admonition-title">Result (the DDPM objective)</p>
 <p>For one data point <span class="arithmatex">\(x_0\)</span>, <span class="arithmatex">\(\log p_\theta(x_0) \ge \text{ELBO} = -L_T - \sum_{t=2}^{T} L_{t-1} - L_0\)</span>, with</p>
@@ -1019,11 +1370,481 @@ L_0 &amp;= -\,\E_{q(x_1 \mid x_0)}\big[ \log p_\theta(x_0 \mid x_1) \big].
 <p>A few points about this result.</p>
 <ul>
 <li><strong><span class="arithmatex">\(L_T\)</span> has no <span class="arithmatex">\(\theta\)</span> in it.</strong> The noising chain and the prior are both fixed, and the chain ends at <span class="arithmatex">\(\N(0, I)\)</span> regardless of the data, so this term needs no training. In a VAE, the corresponding term has to be learned.</li>
-<li><strong>The new terms are where the learning happens.</strong> Each <span class="arithmatex">\(L_{t-1}\)</span> compares the model's backward step with the true backward step of the noising chain, given the clean example. Section 1 promised that a small step is nearly Gaussian; here the target <span class="arithmatex">\(q(x_{t-1} \mid x_t, x_0)\)</span> turns out to be <em>exactly</em> Gaussian, which the next page shows.</li>
+<li><strong>The new terms are where the learning happens.</strong> Each <span class="arithmatex">\(L_{t-1}\)</span> compares the model's backward step with the true backward step of the noising chain, given the clean example. Section 1 promised that a small step is nearly Gaussian; here the target <span class="arithmatex">\(q(x_{t-1} \mid x_t, x_0)\)</span> turns out to be <em>exactly</em> Gaussian, which section 5.2 shows.</li>
 <li><strong>Every term involves one step.</strong> The objective is a sum of separate one-step problems, so training can pick one step at random for each example instead of running the whole chain.</li>
 </ul>
-<h2 id="5-what-comes-next">5. What comes next<a class="headerlink" href="#5-what-comes-next" title="Permanent link">&para;</a></h2>
-<p>Two Gaussian facts finish the job: the noisy point <span class="arithmatex">\(x_t\)</span> can be produced from <span class="arithmatex">\(x_0\)</span> in one jump, and the backward target <span class="arithmatex">\(q(x_{t-1} \mid x_t, x_0)\)</span> is a Gaussian with an explicit mean. Then each <span class="arithmatex">\(L_{t-1}\)</span> becomes a squared distance between two means (the same-variance KL of the previous page), and the whole objective becomes "predict the noise".</p>
+<details class="question">
+<summary>How far is this bound from the true log-likelihood?</summary>
+<p>Exactly as far as it was for one hidden variable, with <span class="arithmatex">\(z\)</span> replaced by the chain. The ELBO identity says that the gap is the KL from the proxy to the model's own posterior:</p>
+<div class="arithmatex">\[
+\log p_\theta(x_0) - \text{ELBO} = \KL\big( q(x_{1:T} \mid x_0) \,\|\, p_\theta(x_{1:T} \mid x_0) \big).
+\]</div>
+<p>In words, the gap measures how differently the fixed noising chain and the model's own idea of "which noisy versions led to <span class="arithmatex">\(x_0\)</span>" describe the whole chain. It is zero exactly when the learned reverse chain undoes the noising chain perfectly. We cannot compute this KL, for the same reason as before: it contains the model's posterior, which contains the intractable integral. But we do know what it is, and that raising the ELBO can only bring the bound closer to the true value.</p>
+</details>
+<details class="question">
+<summary>If a library can train a diffusion model for us, why work through the ELBO at all?</summary>
+<p>Because the ELBO is where the training loss comes from. A diffusion library computes a particular loss, a weighted sum of squared errors between predicted and actual noise, and without the derivation that loss looks like an arbitrary choice. The ELBO shows why it has that form: each term compares one learned step with one exact backward step, and section 5 shows that each such comparison is a squared distance. Knowing this tells you what the model is actually being trained to do, which matters as soon as you want to change something, such as the number of steps, the noise schedule, or what the network predicts.</p>
+</details>
+<h2 id="5-from-the-objective-to-a-loss-we-can-compute">5. From the objective to a loss we can compute<a class="headerlink" href="#5-from-the-objective-to-a-loss-we-can-compute" title="Permanent link">&para;</a></h2>
+<p>The objective of section 4.8 is exact, but a computer cannot minimise it as it stands. Every term averages over noisy points <span class="arithmatex">\(x_t\)</span>, and every KL contains the backward step <span class="arithmatex">\(q(x_{t-1} \mid x_t, x_0)\)</span>, which we have not written down yet. This section answers the questions that stand between the objective and a working training loop, one at a time.</p>
+<ol>
+<li>Do we have to walk <span class="arithmatex">\(t\)</span> noising steps every time we need a noisy point <span class="arithmatex">\(x_t\)</span>? (Section 5.1.)</li>
+<li>What exactly is the backward step <span class="arithmatex">\(q(x_{t-1} \mid x_t, x_0)\)</span> inside each KL? (Section 5.2.)</li>
+<li>What does the KL between that step and the model's step become? (Section 5.3.)</li>
+<li>What should the network actually output? (Section 5.4.)</li>
+<li>What do training and generating look like in the end? (Sections 5.5 and 5.6.)</li>
+</ol>
+<h3 id="51-jumping-straight-to-any-step">5.1 Jumping straight to any step<a class="headerlink" href="#51-jumping-straight-to-any-step" title="Permanent link">&para;</a></h3>
+<p><strong>Notation.</strong> Two abbreviations appear in every DDPM paper:</p>
+<div class="arithmatex">\[
+\alpha_t = 1 - \beta_t, \qquad \bar\alpha_t = \alpha_1\, \alpha_2 \cdots \alpha_t .
+\]</div>
+<p><span class="arithmatex">\(\alpha_t\)</span> is the fraction of the signal's variance that survives step <span class="arithmatex">\(t\)</span>, and <span class="arithmatex">\(\bar\alpha_t\)</span>, read "alpha bar", is the fraction that survives all the steps up to <span class="arithmatex">\(t\)</span>. With this notation one noising step is</p>
+<div class="arithmatex">\[
+x_t = \sqrt{\alpha_t}\; x_{t-1} + \sqrt{1 - \alpha_t}\; \varepsilon_t, \qquad \varepsilon_t \sim \N(0, I).
+\]</div>
+<p><strong>The tool: adding independent Gaussians.</strong> If <span class="arithmatex">\(\varepsilon_1\)</span> and <span class="arithmatex">\(\varepsilon_2\)</span> are independent standard Gaussians, then</p>
+<div class="arithmatex">\[
+\sqrt{c_1}\; \varepsilon_1 + \sqrt{c_2}\; \varepsilon_2 \quad \text{has the same distribution as} \quad \sqrt{c_1 + c_2}\; \varepsilon, \qquad \varepsilon \sim \N(0, I).
+\]</div>
+<p>The variance of the sum is <span class="arithmatex">\(c_1 + c_2\)</span> by the rules of note 3, and the sum is again exactly Gaussian (a sum of independent Gaussians always is). In words, two separate doses of noise cannot be told apart from one dose whose variance is the sum. Since variances add like squared lengths, the standard deviations combine like the two sides of a right triangle and its long side.</p>
+<p><strong>Two steps by hand.</strong> Put the first step into the second:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+x_2 &amp;= \sqrt{\alpha_2}\; x_1 + \sqrt{1 - \alpha_2}\; \varepsilon_2 &amp;&amp; \text{the second step} \\[4pt]
+&amp;= \sqrt{\alpha_2}\, \big( \sqrt{\alpha_1}\; x_0 + \sqrt{1 - \alpha_1}\; \varepsilon_1 \big) + \sqrt{1 - \alpha_2}\; \varepsilon_2 &amp;&amp; \text{put in the first step} \\[4pt]
+&amp;= \sqrt{\alpha_1 \alpha_2}\; x_0 + \Big[ \sqrt{\alpha_2 (1 - \alpha_1)}\; \varepsilon_1 + \sqrt{1 - \alpha_2}\; \varepsilon_2 \Big] &amp;&amp; \text{multiply out.}
+\end{aligned}
+\]</div>
+<p>The bracket is two independent doses of noise, so it is one dose with variance</p>
+<div class="arithmatex">\[
+\alpha_2 (1 - \alpha_1) + (1 - \alpha_2) = 1 - \alpha_1 \alpha_2 ,
+\]</div>
+<p>and therefore <span class="arithmatex">\(x_2 = \sqrt{\bar\alpha_2}\; x_0 + \sqrt{1 - \bar\alpha_2}\; \varepsilon\)</span>. Two steps have the same form as one step, with <span class="arithmatex">\(\alpha\)</span> replaced by the product <span class="arithmatex">\(\alpha_1 \alpha_2\)</span>.</p>
+<p><strong>Any number of steps.</strong> The same calculation works at every step. If <span class="arithmatex">\(x_{t-1} = \sqrt{\bar\alpha_{t-1}}\; x_0 + \sqrt{1 - \bar\alpha_{t-1}}\; \varepsilon'\)</span>, one more step gives</p>
+<div class="arithmatex">\[
+x_t = \sqrt{\alpha_t \bar\alpha_{t-1}}\; x_0 + \Big[ \sqrt{\alpha_t (1 - \bar\alpha_{t-1})}\; \varepsilon' + \sqrt{1 - \alpha_t}\; \varepsilon_t \Big]
+= \sqrt{\bar\alpha_t}\; x_0 + \sqrt{1 - \bar\alpha_t}\; \varepsilon ,
+\]</div>
+<p>because <span class="arithmatex">\(\alpha_t \bar\alpha_{t-1} = \bar\alpha_t\)</span>, and the variance of the bracket is <span class="arithmatex">\(\alpha_t (1 - \bar\alpha_{t-1}) + 1 - \alpha_t = 1 - \bar\alpha_t\)</span>. The form holds for one step, and if it holds after <span class="arithmatex">\(t - 1\)</span> steps it holds after <span class="arithmatex">\(t\)</span>, so it holds for every <span class="arithmatex">\(t\)</span>.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Result 1 (jumping straight to any step)</p>
+<div class="arithmatex">\[
+q(x_t \mid x_0) = \N\!\big( x_t;\ \sqrt{\bar\alpha_t}\; x_0,\ (1 - \bar\alpha_t)\, I \big),
+\qquad\text{that is}\qquad
+x_t = \sqrt{\bar\alpha_t}\; x_0 + \sqrt{1 - \bar\alpha_t}\; \varepsilon .
+\]</div>
+</div>
+<p>So <span class="arithmatex">\(x_t\)</span> is the data point scaled down by <span class="arithmatex">\(\sqrt{\bar\alpha_t}\)</span>, plus noise of standard deviation <span class="arithmatex">\(\sqrt{1 - \bar\alpha_t}\)</span>. The squares of the two coefficients add up to one, so the pair <span class="arithmatex">\(\big(\sqrt{\bar\alpha_t},\ \sqrt{1 - \bar\alpha_t}\big)\)</span> lies on a quarter circle, moving from pure signal at <span class="arithmatex">\(t = 0\)</span> toward pure noise as <span class="arithmatex">\(\bar\alpha_t\)</span> falls.</p>
+<video class="clip" controls muted playsinline preload="none" poster="../../assets/clips/quarter-circle.jpg"><source src="../../assets/clips/quarter-circle.mp4" type="video/mp4"></video>
+<p class="widget-caption arithmatex">Independent noises combine like the sides of a right triangle: their variances add. The signal and noise coefficients of \(x_t\) therefore always lie on a quarter circle. As \(t\) runs through the DDPM schedule, the point slides from signal to noise, and the spiral dissolves into a standard Gaussian.</p>
+
+<p>With the schedule of the DDPM paper (<span class="arithmatex">\(T = 1000\)</span>, <span class="arithmatex">\(\beta_t\)</span> rising evenly from <span class="arithmatex">\(0.0001\)</span> to <span class="arithmatex">\(0.02\)</span>):</p>
+<table>
+<thead>
+<tr>
+<th>step <span class="arithmatex">\(t\)</span></th>
+<th>1</th>
+<th>250</th>
+<th>500</th>
+<th>750</th>
+<th>1000</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(\bar\alpha_t\)</span></td>
+<td>0.9999</td>
+<td>0.524</td>
+<td>0.079</td>
+<td>0.0034</td>
+<td>0.00004</td>
+</tr>
+<tr>
+<td>signal <span class="arithmatex">\(\sqrt{\bar\alpha_t}\)</span></td>
+<td>1.000</td>
+<td>0.724</td>
+<td>0.280</td>
+<td>0.058</td>
+<td>0.006</td>
+</tr>
+<tr>
+<td>noise <span class="arithmatex">\(\sqrt{1 - \bar\alpha_t}\)</span></td>
+<td>0.010</td>
+<td>0.690</td>
+<td>0.960</td>
+<td>0.998</td>
+<td>1.000</td>
+</tr>
+</tbody>
+</table>
+<div class="widget" data-widget="morph" data-mode="forward" data-h="360"></div>
+<p class="widget-caption arithmatex">Result 1 in action. Every point keeps one fixed draw of noise \(\varepsilon\), and the slider sets how much of the data and how much of that noise are mixed. No chain is walked.</p>
+
+<p>Two consequences follow straight away.</p>
+<ul>
+<li><strong>The term <span class="arithmatex">\(L_T\)</span> is negligible.</strong> At <span class="arithmatex">\(t = T\)</span>, <span class="arithmatex">\(q(x_T \mid x_0) = \N(0.006\, x_0,\ 0.99996\, I)\)</span>, which is <span class="arithmatex">\(\N(0, I)\)</span> to four decimals. For <span class="arithmatex">\(x_0 = 1.5\)</span> the KL to the prior is <span class="arithmatex">\(4.5 \times 10^{-5}\)</span> per coordinate, and it contains no <span class="arithmatex">\(\theta\)</span>.</li>
+<li><strong>Training never walks the chain.</strong> A noisy version of a training example at any step <span class="arithmatex">\(t\)</span> costs two numbers from the schedule and one draw of <span class="arithmatex">\(\varepsilon\)</span>. Step <span class="arithmatex">\(700\)</span> costs the same as step <span class="arithmatex">\(3\)</span>.</li>
+</ul>
+<details class="question">
+<summary>Is the ε in Result 1 the same as the ε's of the individual steps?</summary>
+<p>No. It is a single standard Gaussian that stands for the combined effect of all of them, a weighted sum of <span class="arithmatex">\(\varepsilon_1, \ldots, \varepsilon_t\)</span> rescaled to variance one. Since the objective only needs the distribution of <span class="arithmatex">\(x_t\)</span> given <span class="arithmatex">\(x_0\)</span>, we can draw this one <span class="arithmatex">\(\varepsilon\)</span> directly. It is also what the network will be asked to predict in section 5.4.</p>
+</details>
+<h3 id="52-one-step-back-knowing-the-start">5.2 One step back, knowing the start<a class="headerlink" href="#52-one-step-back-knowing-the-start" title="Permanent link">&para;</a></h3>
+<p>The KLs of the objective all contain <span class="arithmatex">\(q(x_{t-1} \mid x_t, x_0)\)</span>: given the noisy point <span class="arithmatex">\(x_t\)</span> and the data point <span class="arithmatex">\(x_0\)</span>, where was the chain one step earlier?</p>
+<p><strong>Setting it up.</strong> The rewrite of section 4.4, solved for the backward step, reads</p>
+<div class="arithmatex">\[
+q(x_{t-1} \mid x_t, x_0) = \frac{q(x_t \mid x_{t-1})\; q(x_{t-1} \mid x_0)}{q(x_t \mid x_0)} .
+\]</div>
+<p>We want this as a distribution over <span class="arithmatex">\(x_{t-1}\)</span>, with <span class="arithmatex">\(x_t\)</span> and <span class="arithmatex">\(x_0\)</span> held fixed. The denominator does not contain <span class="arithmatex">\(x_{t-1}\)</span>, so it is only a constant, and</p>
+<div class="arithmatex">\[
+q(x_{t-1} \mid x_t, x_0) \;\propto\; \underbrace{q(x_t \mid x_{t-1})}_{\text{what the next point says}} \;\times\; \underbrace{q(x_{t-1} \mid x_0)}_{\text{what the start says}} .
+\]</div>
+<p>This is the same picture as section 1: a bump around the noisy point, multiplied by what we know about where the clean point could be. The difference is that here we know the start <span class="arithmatex">\(x_0\)</span>, so the second factor is not the complicated data distribution but a Gaussian (Result 1 at step <span class="arithmatex">\(t - 1\)</span>). A product of two Gaussian bumps is again a Gaussian bump, exactly.</p>
+<p><strong>The tool: multiplying two bumps.</strong> As functions of a single unknown <span class="arithmatex">\(u\)</span>,</p>
+<div class="arithmatex">\[
+\exp\!\Big( -\frac{(u - m_1)^2}{2 v_1} \Big) \cdot \exp\!\Big( -\frac{(u - m_2)^2}{2 v_2} \Big) \;\propto\; \exp\!\Big( -\frac{(u - m)^2}{2 v} \Big),
+\]</div>
+<p>with</p>
+<div class="arithmatex">\[
+\frac{1}{v} = \frac{1}{v_1} + \frac{1}{v_2}, \qquad m = v \Big( \frac{m_1}{v_1} + \frac{m_2}{v_2} \Big).
+\]</div>
+<p>The number <span class="arithmatex">\(1/v\)</span> is called the <strong>precision</strong>; it is large when the bump is narrow. So the rule reads: the precisions add, and the new centre is the average of the two centres, each weighted by its precision. The combined bump is narrower than either, and it sits closer to the more precise of the two.</p>
+<details class="note">
+<summary>Proof</summary>
+<p>Add the exponents and collect powers of <span class="arithmatex">\(u\)</span>. Anything without <span class="arithmatex">\(u\)</span> is a constant factor and goes into the <span class="arithmatex">\(\propto\)</span>.</p>
+<div class="arithmatex">\[
+\begin{aligned}
+-\frac{(u - m_1)^2}{2 v_1} - \frac{(u - m_2)^2}{2 v_2}
+&amp;= -\frac12 \Big( \frac{1}{v_1} + \frac{1}{v_2} \Big) u^2 + \Big( \frac{m_1}{v_1} + \frac{m_2}{v_2} \Big) u + \text{const} \\[4pt]
+&amp;= -\frac{1}{2v} \big( u^2 - 2 m u \big) + \text{const}
+= -\frac{(u - m)^2}{2v} + \text{const},
+\end{aligned}
+\]</div>
+<p>using the definitions of <span class="arithmatex">\(v\)</span> and <span class="arithmatex">\(m\)</span>, and <span class="arithmatex">\(u^2 - 2mu = (u - m)^2 - m^2\)</span>.</p>
+</details>
+<p><strong>Each factor as a bump in <span class="arithmatex">\(u = x_{t-1}\)</span>.</strong></p>
+<p><em>What the start says.</em> By Result 1 at step <span class="arithmatex">\(t - 1\)</span>, this is a bump with</p>
+<div class="arithmatex">\[
+m_2 = \sqrt{\bar\alpha_{t-1}}\; x_0, \qquad v_2 = 1 - \bar\alpha_{t-1} .
+\]</div>
+<p><em>What the next point says.</em> The forward step is <span class="arithmatex">\(q(x_t \mid x_{t-1}) \propto \exp\!\big( -(x_t - \sqrt{\alpha_t}\, u)^2 / (2\beta_t) \big)\)</span>. It is written as a bump in <span class="arithmatex">\(x_t\)</span>; to read it as a bump in <span class="arithmatex">\(u\)</span>, take <span class="arithmatex">\(\sqrt{\alpha_t}\)</span> out of the square:</p>
+<div class="arithmatex">\[
+\frac{(x_t - \sqrt{\alpha_t}\, u)^2}{2\beta_t} = \frac{\big( u - x_t / \sqrt{\alpha_t} \big)^2}{2\, \beta_t / \alpha_t},
+\qquad\text{so}\qquad
+m_1 = \frac{x_t}{\sqrt{\alpha_t}}, \quad v_1 = \frac{\beta_t}{\alpha_t} .
+\]</div>
+<p>In words, the next point says that the previous one was at <span class="arithmatex">\(x_t\)</span> with the shrinking undone, give or take the noise that was added.</p>
+<p><strong>Combining them.</strong> The precisions add:</p>
+<div class="arithmatex">\[
+\frac{1}{v} = \frac{\alpha_t}{\beta_t} + \frac{1}{1 - \bar\alpha_{t-1}}
+= \frac{\alpha_t (1 - \bar\alpha_{t-1}) + \beta_t}{\beta_t (1 - \bar\alpha_{t-1})}
+= \frac{1 - \bar\alpha_t}{\beta_t (1 - \bar\alpha_{t-1})},
+\]</div>
+<p>using <span class="arithmatex">\(\alpha_t \bar\alpha_{t-1} = \bar\alpha_t\)</span> and <span class="arithmatex">\(\alpha_t + \beta_t = 1\)</span> in the numerator. The centre is the precision-weighted average, <span class="arithmatex">\(m = v \big( \tfrac{m_1}{v_1} + \tfrac{m_2}{v_2} \big)\)</span>, which works out to the formula below.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Result 2 (one step back, knowing the start)</p>
+<p>For <span class="arithmatex">\(t \ge 2\)</span>,</p>
+<div class="arithmatex">\[
+q(x_{t-1} \mid x_t, x_0) = \N\!\big( x_{t-1};\ \tilde\mu_t(x_t, x_0),\ \tilde\beta_t\, I \big),
+\]</div>
+<div class="arithmatex">\[
+\tilde\mu_t(x_t, x_0) = \frac{\sqrt{\alpha_t}\, (1 - \bar\alpha_{t-1})}{1 - \bar\alpha_t}\; x_t + \frac{\sqrt{\bar\alpha_{t-1}}\; \beta_t}{1 - \bar\alpha_t}\; x_0,
+\qquad
+\tilde\beta_t = \frac{1 - \bar\alpha_{t-1}}{1 - \bar\alpha_t}\; \beta_t .
+\]</div>
+</div>
+<p>How to read it:</p>
+<ul>
+<li><strong>It is exactly Gaussian.</strong> No approximation was made, so the target inside every KL has a formula.</li>
+<li><strong>The centre is a blend</strong> of where the chain is now, <span class="arithmatex">\(x_t\)</span>, and where it started, <span class="arithmatex">\(x_0\)</span>. Early in the chain the start is known precisely and dominates. Late in the chain the start says little, and the centre is mostly <span class="arithmatex">\(x_t\)</span> with the shrinking undone.</li>
+<li><strong>The variance <span class="arithmatex">\(\tilde\beta_t\)</span> is smaller than <span class="arithmatex">\(\beta_t\)</span></strong>, because knowing both the next point and the start leaves less uncertainty than one noising step added.</li>
+<li><strong>It contains no <span class="arithmatex">\(\theta\)</span>.</strong> It is a fixed target for training.</li>
+</ul>
+<video class="clip" controls muted playsinline preload="none" poster="../../assets/clips/two-evidence.jpg"><source src="../../assets/clips/two-evidence.mp4" type="video/mp4"></video>
+<p class="widget-caption arithmatex">The two pieces of information about \(x_{t-1}\): what the next point says (teal) and what the start says (dashed). Their product (orange) is again a Gaussian. Early in the chain the start is precise and the answer follows it; late in the chain the start is vague and the answer follows the next point.</p>
+
+<div class="widget" data-widget="posterior"></div>
+<p class="widget-caption arithmatex">A chain with \(T = 10\) steps. Slide \(t\) and move \(x_t\) and \(x_0\); the two weights of the blend are printed on the right.</p>
+
+<details class="question">
+<summary>What happens at t = 1?</summary>
+<p>With the convention <span class="arithmatex">\(\bar\alpha_0 = 1\)</span> (no steps, nothing lost), the formula gives <span class="arithmatex">\(\tilde\beta_1 = 0\)</span> and <span class="arithmatex">\(\tilde\mu_1 = x_0\)</span>: given <span class="arithmatex">\(x_0\)</span>, the value of <span class="arithmatex">\(x_0\)</span> is certain. That is why the <span class="arithmatex">\(t = 1\)</span> term was kept apart in section 4.3 instead of being written as a KL.</p>
+</details>
+<details class="question">
+<summary>If one step back is this easy, why do we need a network at all?</summary>
+<p>Because this step is given <span class="arithmatex">\(x_0\)</span>. When we generate, we do not know <span class="arithmatex">\(x_0\)</span>: that is what we are trying to produce. The step we need then is <span class="arithmatex">\(q(x_{t-1} \mid x_t)\)</span>, with the start unknown, which is Result 2 averaged over every data point that could have led to <span class="arithmatex">\(x_t\)</span>. That average involves the whole data distribution, so it has no formula. During training we do know which data point each noisy point came from, so the easy version is available as a target. Section 5.3 shows how training on the easy version teaches the network the hard one.</p>
+</details>
+<h3 id="53-each-kl-becomes-a-squared-distance">5.3 Each KL becomes a squared distance<a class="headerlink" href="#53-each-kl-becomes-a-squared-distance" title="Permanent link">&para;</a></h3>
+<p>The model's step is <span class="arithmatex">\(p_\theta(x_{t-1} \mid x_t) = \N\big(\mu_\theta(x_t, t),\ \sigma_t^2 I\big)\)</span>, and its variance <span class="arithmatex">\(\sigma_t^2\)</span> is ours to fix. Choose it equal to the target's, <span class="arithmatex">\(\sigma_t^2 = \tilde\beta_t\)</span>. Then both distributions in <span class="arithmatex">\(L_{t-1}\)</span> are Gaussians with the same variance, and <a href="../jensen-kl-elbo/">From Jensen's inequality to the ELBO</a> showed that in this case the KL is the squared distance between the centres, divided by twice the variance. For data with many coordinates, the coordinates are independent in both Gaussians and their KLs add, which turns the squared difference into a squared length:</p>
+<div class="arithmatex">\[
+\KL\big( q(x_{t-1} \mid x_t, x_0) \,\|\, p_\theta(x_{t-1} \mid x_t) \big) = \frac{1}{2 \sigma_t^2}\, \norm{ \tilde\mu_t(x_t, x_0) - \mu_\theta(x_t, t) }^2 .
+\]</div>
+<div class="admonition abstract">
+<p class="admonition-title">Result 3 (the objective as squared distances)</p>
+<div class="arithmatex">\[
+L_{t-1} = \E_{q(x_t \mid x_0)}\!\left[ \frac{1}{2\sigma_t^2}\, \norm{ \tilde\mu_t(x_t, x_0) - \mu_\theta(x_t, t) }^2 \right], \qquad t = 2, \ldots, T .
+\]</div>
+</div>
+<p>So each term of the objective is a regression problem: at step <span class="arithmatex">\(t\)</span>, make the network's output <span class="arithmatex">\(\mu_\theta(x_t, t)\)</span> close, in squared distance, to a target <span class="arithmatex">\(\tilde\mu_t(x_t, x_0)\)</span> that we can compute.</p>
+<p><strong>What does the network learn, if it never sees <span class="arithmatex">\(x_0\)</span>?</strong> The target depends on <span class="arithmatex">\(x_0\)</span>, but the network is given only the noisy point <span class="arithmatex">\(x_t\)</span> and the step number. Many data points could have produced the same <span class="arithmatex">\(x_t\)</span>, each with its own target, and the network cannot match them all. Note 3 tells us what happens in this situation: when a function of an observation is fitted by squared error to a target that also depends on something unobserved, the best function is the <strong>conditional mean</strong> of the target given the observation. Here that is</p>
+<div class="arithmatex">\[
+\mu_\theta^\star(x_t, t) = \E\big[ \tilde\mu_t(x_t, x_0) \;\big|\; x_t \big],
+\]</div>
+<p>the average of Result 2 over all the data points that could have led to <span class="arithmatex">\(x_t\)</span>. By the tower rule, this is the centre of <span class="arithmatex">\(q(x_{t-1} \mid x_t)\)</span>, the true backward step with the start unknown. So training against the easy target, which we can compute, makes the network learn the centre of the hard one, which we cannot.</p>
+<details class="question">
+<summary>What if the model's variance is chosen differently?</summary>
+<p>The KL between two Gaussians with different variances has two extra terms (the general formula in <a href="../jensen-kl-elbo/">From Jensen's inequality to the ELBO</a>), but neither of them contains <span class="arithmatex">\(\mu_\theta\)</span>. For training they are constants, and the part that matters is still the squared distance between the centres. The DDPM paper tries both <span class="arithmatex">\(\sigma_t^2 = \tilde\beta_t\)</span> and <span class="arithmatex">\(\sigma_t^2 = \beta_t\)</span> and finds little difference.</p>
+</details>
+<details class="question">
+<summary>What about the term L_0?</summary>
+<p>It is still there. Its exact form depends on how the data is encoded; the DDPM paper uses a discretised Gaussian for pixel values. In section 5.4 it turns out to behave like the <span class="arithmatex">\(t = 1\)</span> case of the same regression, and it is folded into the same loss.</p>
+</details>
+<h3 id="54-predict-the-noise">5.4 Predict the noise<a class="headerlink" href="#54-predict-the-noise" title="Permanent link">&para;</a></h3>
+<p>The network receives the noisy point <span class="arithmatex">\(x_t\)</span> and the step number <span class="arithmatex">\(t\)</span>, and section 5.3 asks it to produce <span class="arithmatex">\(\mu_\theta(x_t, t)\)</span> close to the target <span class="arithmatex">\(\tilde\mu_t\)</span>. Look at what that target is made of. It is a blend of <span class="arithmatex">\(x_t\)</span>, which the network is given, and <span class="arithmatex">\(x_0\)</span>, which it is not, so predicting <span class="arithmatex">\(\tilde\mu_t\)</span> amounts to predicting <span class="arithmatex">\(x_0\)</span>. And by Result 1, once <span class="arithmatex">\(x_t\)</span> is known, knowing <span class="arithmatex">\(x_0\)</span> is the same as knowing the noise <span class="arithmatex">\(\varepsilon\)</span> that was mixed into it. So there are three equivalent things the network could be asked for:</p>
+<table>
+<thead>
+<tr>
+<th>the network outputs</th>
+<th>the question it answers</th>
+<th>what is left to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(\mu_\theta\)</span></td>
+<td>where was the chain one step ago?</td>
+<td>nothing</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\hat x_0\)</span></td>
+<td>what clean point lies under this noise?</td>
+<td>blend it with <span class="arithmatex">\(x_t\)</span> using Result 2</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\varepsilon_\theta\)</span></td>
+<td>what noise was added to get here?</td>
+<td>remove it from <span class="arithmatex">\(x_t\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>All three carry the same information, and each can be converted into the others with a line of arithmetic. DDPM asks for the noise. To see what that does to the loss, we first write the target in terms of the noise.</p>
+<p><strong>The target, written with the noise.</strong> Solve Result 1 for the data point, <span class="arithmatex">\(x_0 = \big(x_t - \sqrt{1 - \bar\alpha_t}\; \varepsilon\big) / \sqrt{\bar\alpha_t}\)</span>, and put this into the second term of Result 2. The ratio <span class="arithmatex">\(\sqrt{\bar\alpha_{t-1}} / \sqrt{\bar\alpha_t}\)</span> simplifies to <span class="arithmatex">\(1 / \sqrt{\alpha_t}\)</span>, because <span class="arithmatex">\(\bar\alpha_t = \alpha_t \bar\alpha_{t-1}\)</span>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\frac{\sqrt{\bar\alpha_{t-1}}\; \beta_t}{1 - \bar\alpha_t}\; x_0
+&amp;= \frac{\sqrt{\bar\alpha_{t-1}}\; \beta_t}{1 - \bar\alpha_t} \cdot \frac{x_t - \sqrt{1 - \bar\alpha_t}\; \varepsilon}{\sqrt{\bar\alpha_t}}
+&amp;&amp; \text{substitute } x_0 \\[4pt]
+&amp;= \frac{\beta_t}{(1 - \bar\alpha_t)\sqrt{\alpha_t}}\; x_t \;-\; \frac{\beta_t}{\sqrt{1 - \bar\alpha_t}\, \sqrt{\alpha_t}}\; \varepsilon
+&amp;&amp; \tfrac{\sqrt{\bar\alpha_{t-1}}}{\sqrt{\bar\alpha_t}} = \tfrac{1}{\sqrt{\alpha_t}}
+\end{aligned}
+\]</div>
+<p>Now add the first term of Result 2 and collect everything that multiplies <span class="arithmatex">\(x_t\)</span>:</p>
+<div class="arithmatex">\[
+\frac{\sqrt{\alpha_t}\, (1 - \bar\alpha_{t-1})}{1 - \bar\alpha_t} + \frac{\beta_t}{(1 - \bar\alpha_t)\sqrt{\alpha_t}}
+= \frac{\alpha_t (1 - \bar\alpha_{t-1}) + \beta_t}{(1 - \bar\alpha_t)\sqrt{\alpha_t}}
+= \frac{1}{\sqrt{\alpha_t}} ,
+\]</div>
+<p>where the numerator simplifies to <span class="arithmatex">\(1 - \bar\alpha_t\)</span> exactly as it did in section 5.2. Everything collapses into a short formula:</p>
+<div class="admonition abstract">
+<p class="admonition-title">Result 4 (the target, written with the noise)</p>
+<div class="arithmatex">\[
+\tilde\mu_t = \frac{1}{\sqrt{\alpha_t}} \Big( x_t - \frac{\beta_t}{\sqrt{1 - \bar\alpha_t}}\; \varepsilon \Big).
+\]</div>
+</div>
+<p>To step back from <span class="arithmatex">\(x_t\)</span>, take away a small multiple of the noise that is in it, then divide by <span class="arithmatex">\(\sqrt{\alpha_t}\)</span> to undo the shrinking of the forward step.</p>
+<p><strong>Let the network supply the noise.</strong> Result 4 has exactly one ingredient the network does not have, which is <span class="arithmatex">\(\varepsilon\)</span>. So that becomes the network's job. Let <span class="arithmatex">\(\varepsilon_\theta(x_t, t)\)</span> be its output, and define the model's mean by the same formula with <span class="arithmatex">\(\varepsilon_\theta\)</span> in place of <span class="arithmatex">\(\varepsilon\)</span>:</p>
+<div class="arithmatex">\[
+\mu_\theta(x_t, t) = \frac{1}{\sqrt{\alpha_t}} \Big( x_t - \frac{\beta_t}{\sqrt{1 - \bar\alpha_t}}\; \varepsilon_\theta(x_t, t) \Big).
+\]</div>
+<p>When we subtract this from <span class="arithmatex">\(\tilde\mu_t\)</span>, the <span class="arithmatex">\(x_t\)</span> terms are identical and cancel, and only the difference between the two noises remains:</p>
+<div class="arithmatex">\[
+\tilde\mu_t - \mu_\theta = -\frac{\beta_t}{\sqrt{\alpha_t}\, \sqrt{1 - \bar\alpha_t}}\; \big( \varepsilon - \varepsilon_\theta(x_t, t) \big).
+\]</div>
+<p>Putting this into Result 3, and writing <span class="arithmatex">\(x_t\)</span> out with Result 1 so that the only random quantity left is <span class="arithmatex">\(\varepsilon\)</span>, gives each term of the objective as a noise-prediction problem:</p>
+<div class="admonition abstract">
+<p class="admonition-title">Result 5 (each term of the objective, as noise prediction)</p>
+<div class="arithmatex">\[
+L_{t-1} = \E_{\varepsilon \sim \N(0, I)}\!\left[\ w_t\; \norm{ \varepsilon - \varepsilon_\theta\big( \sqrt{\bar\alpha_t}\; x_0 + \sqrt{1 - \bar\alpha_t}\; \varepsilon,\ t \big) }^2 \right],
+\qquad
+w_t = \frac{\beta_t^2}{2 \sigma_t^2\, \alpha_t\, (1 - \bar\alpha_t)} .
+\]</div>
+</div>
+<p>In words: take a data point, mix in noise <span class="arithmatex">\(\varepsilon\)</span>, show the mixture to the network, and penalise the squared difference between the noise it reports and the noise that was actually used.</p>
+<details class="question">
+<summary>Why predict the noise, and not the clean point?</summary>
+<p>Mathematically it makes no difference, since each output can be converted into the others. What changes is how errors at different steps are weighed against each other and the scale of the target the network has to hit. The noise <span class="arithmatex">\(\varepsilon\)</span> has the same unit size at every step, so the network always regresses onto a target of the same size, whatever the noise level, and the DDPM paper found that this choice gave the best samples. Other choices are in use as well: predicting <span class="arithmatex">\(x_0\)</span>, or a particular combination of <span class="arithmatex">\(x_0\)</span> and <span class="arithmatex">\(\varepsilon\)</span> called the velocity, which is where flow models come in later in the series.</p>
+</details>
+<details class="question">
+<summary>Is it one network, or one network per step?</summary>
+<p>One. The step number <span class="arithmatex">\(t\)</span> is an input, usually passed through a set of sines and cosines so that the network can tell nearby noise levels apart. A single set of weights handles every noise level, which is reasonable, since removing a little noise from a nearly clean point and from a slightly noisier one are closely related jobs.</p>
+</details>
+<h3 id="55-the-simple-loss-and-what-the-network-learns">5.5 The simple loss, and what the network learns<a class="headerlink" href="#55-the-simple-loss-and-what-the-network-learns" title="Permanent link">&para;</a></h3>
+<p>Result 5 has a weight <span class="arithmatex">\(w_t\)</span> in front of every term. The last step in the DDPM paper is to drop these weights:</p>
+<div class="admonition abstract">
+<p class="admonition-title">The simple loss</p>
+<div class="arithmatex">\[
+L_{\text{simple}}(\theta) = \E_{t,\ x_0,\ \varepsilon}\Big[ \norm{ \varepsilon - \varepsilon_\theta\big( \sqrt{\bar\alpha_t}\; x_0 + \sqrt{1 - \bar\alpha_t}\; \varepsilon,\ t \big) }^2 \Big],
+\]</div>
+<p>where <span class="arithmatex">\(t\)</span> is drawn uniformly from <span class="arithmatex">\(\{1, \ldots, T\}\)</span>, <span class="arithmatex">\(x_0\)</span> is a training example, and <span class="arithmatex">\(\varepsilon \sim \N(0, I)\)</span>.</p>
+</div>
+<p>Three things changed on the way from the exact objective to this line. The sum over <span class="arithmatex">\(t\)</span> became an average over a randomly chosen <span class="arithmatex">\(t\)</span>, which changes nothing in expectation and is what makes training cheap, since each update needs only one term. The term <span class="arithmatex">\(L_0\)</span> is treated as the <span class="arithmatex">\(t = 1\)</span> case of the same regression, which is a close approximation for the data encoding used in the paper. And the weights <span class="arithmatex">\(w_t\)</span> were dropped, which does change the objective.</p>
+<p><strong>Is dropping the weights allowed?</strong> For a fixed <span class="arithmatex">\(t\)</span>, the best possible <span class="arithmatex">\(\varepsilon_\theta(\cdot, t)\)</span> is the same function whatever positive number multiplies its term, so the weights do not move the target. They only decide how a network of limited capacity trades off its errors at one noise level against its errors at another, and the exact weights make a strange trade. With the paper's schedule and <span class="arithmatex">\(\sigma_t^2 = \tilde\beta_t\)</span>:</p>
+<table>
+<thead>
+<tr>
+<th>step <span class="arithmatex">\(t\)</span></th>
+<th>2</th>
+<th>10</th>
+<th>100</th>
+<th>500</th>
+<th>1000</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(w_t\)</span></td>
+<td>0.60</td>
+<td>0.086</td>
+<td>0.010</td>
+<td>0.0055</td>
+<td>0.010</td>
+</tr>
+</tbody>
+</table>
+<p>The exact objective cares sixty to a hundred times more about the very first steps, where almost no noise has been added and the task is nearly trivial, than about the middle of the chain, where the overall shape of a sample is decided. Equal weights move the effort toward the harder, noisier steps, and the paper found that this gives visibly better samples. The price is that <span class="arithmatex">\(L_{\text{simple}}\)</span> is no longer the ELBO but a reweighted version of it, built from the same per-step regressions.</p>
+<p><strong>What the network learns.</strong> The target <span class="arithmatex">\(\varepsilon\)</span> is not determined by <span class="arithmatex">\(x_t\)</span>: many combinations of a clean point and a noise give the same noisy point. Note 3 tells us what happens when a function of an observation is fitted by squared error to such a target: the best function is the conditional mean.</p>
+<div class="arithmatex">\[
+\varepsilon_\theta^\star(x_t, t) = \E\big[ \varepsilon \mid x_t \big].
+\]</div>
+<p>So the network does not recover the noise that was actually added, which is impossible, but the average noise over all the ways of arriving at <span class="arithmatex">\(x_t\)</span>. Since <span class="arithmatex">\(x_0\)</span> and <span class="arithmatex">\(\varepsilon\)</span> are tied together by Result 1, this is the same as knowing the average clean point, <span class="arithmatex">\(\hat x_0 = \big(x_t - \sqrt{1 - \bar\alpha_t}\; \varepsilon_\theta\big) / \sqrt{\bar\alpha_t} \to \E[x_0 \mid x_t]\)</span>. That is the denoiser of note 3, now for the spiral and for every noise level at once.</p>
+<details class="question">
+<summary>The training loss levels off well above zero. Is the model failing?</summary>
+<p>No. A loss of zero would mean recovering the exact noise from the noisy point, which is impossible in principle. What remains for the best possible predictor is the variance of <span class="arithmatex">\(\varepsilon\)</span> given <span class="arithmatex">\(x_t\)</span>, averaged over the steps. At large <span class="arithmatex">\(t\)</span> the noisy point is almost pure noise, so it nearly determines <span class="arithmatex">\(\varepsilon\)</span> and the error is small; at small <span class="arithmatex">\(t\)</span> it is almost the clean point and says very little about which small noise was added, so the error is close to <span class="arithmatex">\(1\)</span>. The loss levels off at the average of these, and that floor is a property of the data and the schedule, not of the network.</p>
+</details>
+<details class="question">
+<summary>Is this related to the score?</summary>
+<p>Yes, closely. The gradient of the log-density of the noised data, <span class="arithmatex">\(\nabla_{x_t} \log q(x_t)\)</span>, equals <span class="arithmatex">\(-\E[\varepsilon \mid x_t] / \sqrt{1 - \bar\alpha_t}\)</span>. So a network trained to predict the noise has learned this gradient, called the score, at every noise level. The score-based view of diffusion models starts from exactly this fact.</p>
+</details>
+<h3 id="56-training-and-generating">5.6 Training and generating<a class="headerlink" href="#56-training-and-generating" title="Permanent link">&para;</a></h3>
+<div class="admonition abstract">
+<p class="admonition-title">Algorithm 1 (training)</p>
+<p>Repeat until satisfied:</p>
+<ol>
+<li>Take a training example <span class="arithmatex">\(x_0\)</span>.</li>
+<li>Pick a step <span class="arithmatex">\(t\)</span> uniformly from <span class="arithmatex">\(\{1, \ldots, T\}\)</span>.</li>
+<li>Draw noise <span class="arithmatex">\(\varepsilon \sim \N(0, I)\)</span>.</li>
+<li>Form the noisy point <span class="arithmatex">\(x_t = \sqrt{\bar\alpha_t}\; x_0 + \sqrt{1 - \bar\alpha_t}\; \varepsilon\)</span>.</li>
+<li>Take a gradient step on <span class="arithmatex">\(\ \norm{ \varepsilon - \varepsilon_\theta(x_t, t) }^2\)</span>.</li>
+</ol>
+</div>
+<p>That is all of training. The forward chain is never simulated step by step, the reverse chain is never run, and no samples are drawn from the model. In code, for the spiral:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">q_sample</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">eps</span><span class="p">):</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="sd">"""Closed-form jump: x_t = sqrt(abar_t) x0 + sqrt(1 - abar_t) eps.   (t is 0-indexed here)"""</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n">a</span> <span class="o">=</span> <span class="n">abar</span><span class="p">[</span><span class="n">t</span><span class="p">][:,</span> <span class="kc">None</span><span class="p">]</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span> <span class="o">*</span> <span class="n">x0</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span> <span class="o">*</span> <span class="n">eps</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="mi">6000</span><span class="p">,</span> <span class="n">batch</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">);</span> <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">EpsNet</span><span class="p">();</span> <span class="n">opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">2e-3</span><span class="p">)</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">sched</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">lr_scheduler</span><span class="o">.</span><span class="n">CosineAnnealingLR</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">steps</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        <span class="n">x0</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">sample_spiral</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span> <span class="o">*</span> <span class="n">SCALE</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        <span class="n">t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="p">(</span><span class="n">batch</span><span class="p">,))</span>            <span class="c1"># ONE random noise level per example</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        <span class="n">eps</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>        <span class="n">loss</span> <span class="o">=</span> <span class="p">((</span><span class="n">eps</span> <span class="o">-</span> <span class="n">model</span><span class="p">(</span><span class="n">q_sample</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">eps</span><span class="p">),</span> <span class="n">t</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">();</span> <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">();</span> <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">();</span> <span class="n">sched</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">1000</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">==</span> <span class="n">steps</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"step </span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">5d</span><span class="si">}</span><span class="s2">   loss </span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="k">return</span> <span class="n">model</span>
+</code></pre></div>
+<p>Each batch holds <span class="arithmatex">\(1024\)</span> spiral points, each with its own random <span class="arithmatex">\(t\)</span>, and six thousand such updates take about a minute on a laptop.</p>
+<details class="question">
+<summary>How much does one training step cost, compared with a chain of a thousand steps?</summary>
+<p>One forward and one backward pass of the network, at one noise level per example. The thousand steps do not appear in training at all. They were needed to derive the objective as a sum of many small problems, but each update looks at only one of them, chosen at random. Training a diffusion model therefore costs about as much per update as training any other network of that size. Generating is where the chain has to be paid for.</p>
+</details>
+<div class="admonition abstract">
+<p class="admonition-title">Algorithm 2 (generating)</p>
+<ol>
+<li>Draw <span class="arithmatex">\(x_T \sim \N(0, I)\)</span>.</li>
+<li>For <span class="arithmatex">\(t = T, T - 1, \ldots, 1\)</span>:<ul>
+<li>draw <span class="arithmatex">\(z \sim \N(0, I)\)</span> if <span class="arithmatex">\(t &gt; 1\)</span>, and set <span class="arithmatex">\(z = 0\)</span> if <span class="arithmatex">\(t = 1\)</span>;</li>
+<li>set <span class="arithmatex">\(\ x_{t-1} = \dfrac{1}{\sqrt{\alpha_t}} \Big( x_t - \dfrac{\beta_t}{\sqrt{1 - \bar\alpha_t}}\; \varepsilon_\theta(x_t, t) \Big) + \sigma_t\, z\)</span>.</li>
+</ul>
+</li>
+<li>Return <span class="arithmatex">\(x_0\)</span>.</li>
+</ol>
+</div>
+<p>Each pass through the loop is one draw from the model's step <span class="arithmatex">\(p_\theta(x_{t-1} \mid x_t) = \N(\mu_\theta, \sigma_t^2 I)\)</span>, written as its mean plus a scale times fresh noise, and the mean is Result 4 with the network's estimate in place of the true noise.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="sd">"""Algorithm 2. Returns the whole trajectory, shape (T+1, n, 2): index 0 is pure noise, index T is data."""</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="n">traj</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">clone</span><span class="p">()]</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">)):</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>        <span class="n">eps</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">n</span><span class="p">,),</span> <span class="n">t</span><span class="p">))</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>        <span class="n">mean</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">betas</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">abar</span><span class="p">[</span><span class="n">t</span><span class="p">])</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span> <span class="o">*</span> <span class="n">eps</span><span class="p">)</span> <span class="o">/</span> <span class="n">alphas</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>        <span class="n">x</span> <span class="o">=</span> <span class="n">mean</span> <span class="o">+</span> <span class="p">(</span><span class="n">betas</span><span class="p">[</span><span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>        <span class="n">traj</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">clone</span><span class="p">())</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span>
+</code></pre></div>
+<p>This code uses <span class="arithmatex">\(\sigma_t^2 = \beta_t\)</span>, the other of the two choices mentioned in section 5.3.</p>
+<details class="question">
+<summary>We are trying to remove noise. Why add fresh noise at every step?</summary>
+<p>Because each step is a draw from a distribution, not a move to its centre. The mean <span class="arithmatex">\(\mu_\theta\)</span> is an average over all the clean points that could lie behind <span class="arithmatex">\(x_t\)</span>, and always moving to the average would pull every sample toward the middle of the data, giving blurry samples that all look alike, the same problem as the one big jump in section 1. The fresh noise is what lets a sample commit to one of the possibilities. Over the whole chain more noise is removed than added, so the sample still ends up clean. The last step adds none, since there is no further step to clean it up.</p>
+</details>
+<details class="question">
+<summary>Can we generate with fewer steps than we trained with?</summary>
+<p>Not with this algorithm, because it is the reverse of one particular chain and each step assumes the previous one was taken. The trained network is more general than that chain, though: it knows the denoising direction at every noise level, and other samplers use this knowledge with far fewer, larger steps. That is where the probability-flow ODE and flow matching come in later in the series.</p>
+</details>
+<p><strong>Seeing it run.</strong> Below is a model trained on the spiral with the code above (<span class="arithmatex">\(T = 100\)</span> steps, <span class="arithmatex">\(\beta_t\)</span> rising from <span class="arithmatex">\(10^{-4}\)</span> to <span class="arithmatex">\(0.1\)</span>, and a small network with three hidden layers), running Algorithm 2 on four hundred particles.</p>
+<div class="widget" data-widget="ddpm"></div>
+<p class="widget-caption arithmatex">Press <em>generate</em>. The cloud starts as \(x_T \sim \N(0, I)\), and each frame applies one reverse step. For a long time little seems to happen, then the spiral appears in the last twenty or so steps. The orange particles trail their recent paths: each is a jittery walk that slowly commits to one part of the spiral. Switch to <em>the network's guess</em> and drag the slider slowly from left to right to see where the network thinks the clean point lies at each noise level.</p>
+
+<p>At high noise, every guess points to the same place, the centre of the data, because the network cannot yet tell where on the spiral a point came from. In the middle of the chain the guesses split, and points on the left are sent toward the left part of the spiral. At low noise, each guess points to the nearest arm. One network holds all of these behaviours, selected by the step number.</p>
+<h2 id="6-the-whole-path-in-one-view">6. The whole path, in one view<a class="headerlink" href="#6-the-whole-path-in-one-view" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>step</th>
+<th>what we did</th>
+<th>why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>one hidden variable</td>
+<td><span class="arithmatex">\(\log p_\theta(x) \ge \text{ELBO}\)</span></td>
+<td>the likelihood itself is an intractable integral</td>
+</tr>
+<tr>
+<td>a chain</td>
+<td><span class="arithmatex">\(x_T \to \cdots \to x_0\)</span>, Markov in both directions</td>
+<td>one big jump cannot be described by a single Gaussian</td>
+</tr>
+<tr>
+<td>a fixed proxy</td>
+<td><span class="arithmatex">\(q\)</span>: shrink a little, add a little noise</td>
+<td>nothing to learn, and it ends at <span class="arithmatex">\(\N(0, I)\)</span></td>
+</tr>
+<tr>
+<td>the bound splits</td>
+<td>a sum of KLs, one per step</td>
+<td>turning each noising step around, knowing <span class="arithmatex">\(x_0\)</span></td>
+</tr>
+<tr>
+<td>everything is Gaussian</td>
+<td><span class="arithmatex">\(x_t\)</span> in one jump, <span class="arithmatex">\(q(x_{t-1} \mid x_t, x_0)\)</span> exact</td>
+<td>each KL becomes a squared distance</td>
+</tr>
+<tr>
+<td>predict the noise</td>
+<td><span class="arithmatex">\(\E\, \norm{\varepsilon - \varepsilon_\theta(x_t, t)}^2\)</span></td>
+<td>the target, written with the noise, leaves only <span class="arithmatex">\(\varepsilon\)</span> unknown</td>
+</tr>
+</tbody>
+</table>
+<p>So a generative model for images can be trained by adding noise to pictures and asking a network which noise was added. The network has learned <span class="arithmatex">\(\E[\varepsilon \mid x_t]\)</span> at every noise level, and the rest of the series reads that same quantity in other ways: as a score, as the drift of a differential equation, and finally as the velocity of a flow.</p>
 
 
 
